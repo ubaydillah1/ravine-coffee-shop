@@ -1,26 +1,230 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Fonts */
+  --nunito: "Nunito", sans-serif;
+
+  /* Colors */
+  --B500: #8d623b;
+  --B400: #a58360;
+  --B300: #af8764;
+  --B200: #d0c2b9;
+  --B100: #f3f2f1;
+
+  /* Neutral Colors */
+  --N900: #171717;
+  --N800: #383838;
+  --N700: #57595a;
+  --N600: #797b7d;
+  --N500: #a0a1a4;
+  --N400: #b5b5b5;
+  --N300: #d0d0d3;
+  --N200: #eaeaea;
+  --N100: #f5f5f6;
+
+  /* Accent/Status Colors */
+  --R500: #ff4b4b;
+  --R300: #fd6e75;
+  --R100: #ffe2e4;
+
+  --Y500: #fcd607;
+  --Y300: #ffe9aa;
+  --Y100: #fff8d9;
+
+  --G500: #8ebd56;
+  --G300: #c5f58c;
+  --G100: #e6ffc9;
+
+  --Blue500: #2f82ff;
+  --Blue300: #8bb9ff;
+  --Blue100: #d8e7ff;
+
+  /* shadcn */
+  --radius: 0.625rem;
+  --background: var(--white);
+  --foreground: var(--N800);
+  --card: var(--white);
+  --card-foreground: var(--N800);
+  --popover: var(--white);
+  --popover-foreground: var(--N800);
+  --primary: var(--B500);
+  --primary-foreground: var(--white);
+  --secondary: var(--N200);
+  --secondary-foreground: var(--N800);
+  --muted: var(--N200);
+  --muted-foreground: var(--N600);
+  --accent: var(--N200);
+  --accent-foreground: var(--N900);
+  --destructive: var(--R500);
+  --border: var(--N300);
+  --input: var(--N300);
+  --ring: var(--B400);
+
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 }
 
-@theme inline {
+@theme {
+  --color-primary-b500: var(--B500);
+  --color-primary-b400: var(--B400);
+  --color-primary-b300: var(--B300);
+  --color-primary-b200: var(--B200);
+  --color-primary-b100: var(--B100);
+
+  --color-neutral-n900: var(--N900);
+  --color-neutral-n800: var(--N800);
+  --color-neutral-n700: var(--N700);
+  --color-neutral-n600: var(--N600);
+  --color-neutral-n500: var(--N500);
+  --color-neutral-n400: var(--N400);
+  --color-neutral-n300: var(--N300);
+  --color-neutral-n200: var(--N200);
+  --color-neutral-n100: var(--N100);
+  --color-neutral-white: var(--white);
+
+  --color-accent-r500: var(--R500);
+  --color-accent-r300: var(--R300);
+  --color-accent-r100: var(--R100);
+
+  --color-accent-y500: var(--Y500);
+  --color-accent-y300: var(--Y300);
+  --color-accent-y100: var(--Y100);
+
+  --color-accent-g500: var(--G500);
+  --color-accent-g300: var(--G300);
+  --color-accent-g100: var(--G100);
+
+  --color-accent-blue500: var(--Blue500);
+  --color-accent-blue300: var(--Blue300);
+  --color-accent-blue100: var(--Blue100);
+
+  /* shadCn */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-nunito: var(--font-nunito);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--nunito);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility flex-center {
+  @apply flex justify-center items-center;
+}
+
+@utility t1 {
+  @apply text-[64px] font-bold leading-[125%];
+}
+
+@utility t2 {
+  @apply text-[48px] font-bold leading-[125%];
+}
+
+@utility h1 {
+  @apply text-[48px] font-semibold leading-[125%];
+}
+
+@utility h2 {
+  @apply text-[40px] font-semibold leading-[125%];
+}
+
+@utility h3 {
+  @apply text-[32px] font-semibold leading-[125%];
+}
+
+@utility sub-h1 {
+  @apply text-[22px] font-medium leading-[125%];
+}
+
+@utility sub-h2 {
+  @apply text-[18px] font-medium leading-[125%];
+}
+
+@utility b1-r {
+  @apply text-[18px] font-normal leading-[150%];
+}
+@utility b1-m {
+  @apply text-[18px] font-medium leading-[150%];
+}
+@utility b2-r {
+  @apply text-[14px] font-normal leading-[150%];
+}
+@utility b2-m {
+  @apply text-[14px] font-medium leading-[150%];
+}
+@utility b3-r {
+  @apply text-[12px] font-normal leading-[150%];
+}
+@utility b3-m {
+  @apply text-[12px] font-medium leading-[150%];
+}
+
+@utility l1-r {
+  @apply text-[16px] font-normal leading-[125%];
+}
+@utility l1-m {
+  @apply text-[16px] font-medium leading-[125%];
+}
+@utility l2-r {
+  @apply text-[14px] font-normal leading-[125%];
+}
+@utility l2-m {
+  @apply text-[14px] font-medium leading-[125%];
+}
+@utility l3-r {
+  @apply text-[12px] font-normal leading-[125%];
+}
+@utility l3-m {
+  @apply text-[12px] font-medium leading-[125%];
 }
