@@ -18,6 +18,7 @@ const nextConfig: NextConfig = {
                       convertColors: {
                         currentColor: true,
                       },
+                      convertShapeToPath: false,
                     },
                   },
                 },

@@ -10,30 +10,30 @@
 
   /* Colors */
   --B500: #8d623b;
-  --B400: #a58360;
-  --B300: #af8764;
+  --B400: #956a40;
+  --B300: #a67648;
   --B200: #d0c2b9;
-  --B100: #f3f2f1;
+  --B100: #fdf7f2;
 
   /* Neutral Colors */
-  --N900: #171717;
-  --N800: #383838;
+  --N900: #1f2223;
+  --N800: #363939;
   --N700: #57595a;
-  --N600: #797b7d;
-  --N500: #a0a1a4;
-  --N400: #b5b5b5;
-  --N300: #d0d0d3;
+  --N600: #797a7b;
+  --N500: #8e9090;
+  --N400: #b1b2b2;
+  --N300: #d2d3d3;
   --N200: #eaeaea;
-  --N100: #f5f5f6;
+  --N100: #f6f6f6;
 
   /* Accent/Status Colors */
   --R500: #ff4b4b;
   --R300: #fd6e75;
   --R100: #ffe2e4;
 
-  --Y500: #fcd607;
+  --Y500: #fcd667;
   --Y300: #ffe9aa;
-  --Y100: #fff8d9;
+  --Y100: #fff6db;
 
   --G500: #8ebd56;
   --G300: #c5f58c;
@@ -169,16 +169,17 @@
   @apply text-[64px] font-bold leading-[125%];
 }
 
+/* ubah */
 @utility t2 {
-  @apply text-[48px] font-bold leading-[125%];
+  @apply text-[24px] font-bold leading-[125%];
 }
 
 @utility h1 {
-  @apply text-[48px] font-semibold leading-[125%];
+  @apply text-[48px] font-bold leading-[125%];
 }
 
 @utility h2 {
-  @apply text-[40px] font-semibold leading-[125%];
+  @apply text-[40px] font-bold leading-[125%];
 }
 
 @utility h3 {
@@ -186,7 +187,7 @@
 }
 
 @utility sub-h1 {
-  @apply text-[22px] font-medium leading-[125%];
+  @apply text-[22px] font-bold leading-[125%];
 }
 
 @utility sub-h2 {
