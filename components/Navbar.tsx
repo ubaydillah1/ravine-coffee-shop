@@ -8,7 +8,7 @@ import UserIcon from "@/public/assets/icons/user.svg";
 const Navbar = () => {
   return (
     <nav className="bg-primary-b100 h-[82px] lg:h-[88px] fixed left-0 right-0 top-0 z-99 px-[20px] md:px-[40px]">
-      <div className="flex justify-between items-center max-w-[1200px] mx-auto h-full">
+      <div className="flex justify-between items-center max-w-[1232px] mx-auto h-full">
         <Image
           src={"/assets/images/logo.png"}
           alt="logo-compony"

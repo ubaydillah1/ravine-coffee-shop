@@ -16,7 +16,7 @@
   --B100: #fdf7f2;
 
   /* Neutral Colors */
-  --N900: #1f2223;
+  --N900: #1a202c;
   --N800: #363939;
   --N700: #57595a;
   --N600: #797a7b;
@@ -156,7 +156,7 @@
 @layer base {
   body {
     background: var(--background);
-    color: var(--foreground);
+    color: var(--color-neutral-n700);
     font-family: var(--nunito);
   }
 }
@@ -166,39 +166,38 @@
 }
 
 @utility t1 {
-  @apply text-[64px] font-bold leading-[125%];
+  @apply text-[64px] font-bold leading-[125%] text-black;
 }
 
-/* ubah */
 @utility t2 {
-  @apply text-[24px] font-bold leading-[125%];
+  @apply text-[24px] font-bold leading-[125%] text-black;
 }
 
 @utility h1 {
-  @apply text-[48px] font-bold leading-[125%];
+  @apply text-[48px] font-bold leading-[125%] text-black;
 }
 
 @utility h2 {
-  @apply text-[40px] font-bold leading-[125%];
+  @apply text-[40px] font-bold leading-[125%] text-black;
 }
 
 @utility h3 {
-  @apply text-[32px] font-semibold leading-[125%];
+  @apply text-[32px] font-semibold leading-[125%] text-black;
 }
 
 @utility sub-h1 {
-  @apply text-[22px] font-bold leading-[125%];
+  @apply text-[22px] font-bold leading-[125%] text-black;
 }
 
 @utility sub-h2 {
-  @apply text-[18px] font-medium leading-[125%];
+  @apply text-[18px] font-medium leading-[125%] text-black;
 }
 
 @utility b1-r {
   @apply text-[18px] font-normal leading-[150%];
 }
 @utility b1-b {
-  @apply text-[18px] font-medium leading-[150%];
+  @apply text-[18px] font-medium leading-[150%] text-black;
 }
 @utility b2-r {
   @apply text-[14px] font-normal leading-[150%];
@@ -223,7 +222,7 @@
   @apply text-[14px] font-normal leading-[125%];
 }
 @utility l2-b {
-  @apply text-[14px] font-medium leading-[125%];
+  @apply text-[14px] font-semibold leading-[125%];
 }
 @utility l3-r {
   @apply text-[12px] font-normal leading-[125%];
