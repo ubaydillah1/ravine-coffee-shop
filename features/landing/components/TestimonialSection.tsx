@@ -2,12 +2,13 @@ import React from "react";
 import Star from "@/public/assets/icons/Star-fully.svg";
 import Image from "next/image";
 import Quote from "@/public/assets/icons/quote.svg";
+import { FadeInAndSlideUp } from "@/components/MotionWrapper";
 
 const TestimonialSection = () => {
   return (
     <div className="lg:h-screen h-full flex-center p-[20px] md:p-[40px] mb-[100px] lg:mb-0">
       <div className="max-w-[1230px] ">
-        <div className="flex flex-col gap-[86px]">
+        <FadeInAndSlideUp className="flex flex-col gap-[86px]">
           <div className="flex flex-col gap-[16px] w-fit mx-auto text-center">
             <h2 className="h2">Hear From Our Happy Customers</h2>
             <p className="b1-b">
@@ -37,7 +38,7 @@ const TestimonialSection = () => {
 
                 <div className="flex justify-between items-end">
                   <div>
-                    <strong className="b1-b">Ayu Pratiwi</strong>
+                    <strong className="b1-b text-black">Ayu Pratiwi</strong>
                     <p className="b2-b">Graphic Designer</p>
                   </div>
 
@@ -52,7 +53,7 @@ const TestimonialSection = () => {
               </div>
             </div>
           </div>
-        </div>
+        </FadeInAndSlideUp>
       </div>
     </div>
   );

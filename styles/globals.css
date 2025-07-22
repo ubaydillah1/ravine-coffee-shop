@@ -156,7 +156,7 @@
 @layer base {
   body {
     background: var(--background);
-    color: var(--color-neutral-n700);
+    color: var(--N700);
     font-family: var(--nunito);
   }
 }
@@ -197,7 +197,7 @@
   @apply text-[18px] font-normal leading-[150%];
 }
 @utility b1-b {
-  @apply text-[18px] font-medium leading-[150%] text-black;
+  @apply text-[18px] font-medium leading-[150%];
 }
 @utility b2-r {
   @apply text-[14px] font-normal leading-[150%];
