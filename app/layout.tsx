@@ -26,7 +26,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${nunito.variable} ${poppins.variable} antialiased`}>
+      <body
+        className={`${nunito.variable} ${poppins.variable} antialiased`}
+        cz-shortcut-listen="true"
+      >
         {children}
       </body>
     </html>

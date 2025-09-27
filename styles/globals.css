@@ -12,7 +12,7 @@
   --B500: #8d623b;
   --B400: #956a40;
   --B300: #a67648;
-  --B200: #d0c2b9;
+  --B200: #eee6de;
   --B100: #fdf7f2;
 
   /* Neutral Colors */
@@ -31,7 +31,7 @@
   --R300: #fd6e75;
   --R100: #ffe2e4;
 
-  --Y500: #fcd667;
+  --Y500: #f4bb00;
   --Y300: #ffe9aa;
   --Y100: #fff6db;
 
@@ -156,7 +156,7 @@
 @layer base {
   body {
     background: var(--background);
-    color: var(--N700);
+    color: var(--N900);
     font-family: var(--nunito);
   }
 }
@@ -190,26 +190,26 @@
 }
 
 @utility sub-h2 {
-  @apply text-[18px] font-medium leading-[125%] text-black;
+  @apply text-[18px] font-bold leading-[125%] text-black;
 }
 
 @utility b1-r {
   @apply text-[18px] font-normal leading-[150%];
 }
 @utility b1-b {
-  @apply text-[18px] font-medium leading-[150%];
+  @apply text-[18px] font-bold leading-[150%];
 }
 @utility b2-r {
   @apply text-[14px] font-normal leading-[150%];
 }
 @utility b2-b {
-  @apply text-[14px] font-medium leading-[150%];
+  @apply text-[14px] font-bold leading-[150%];
 }
 @utility b3-r {
   @apply text-[12px] font-normal leading-[150%];
 }
 @utility b3-b {
-  @apply text-[12px] font-medium leading-[150%];
+  @apply text-[12px] font-bold leading-[150%];
 }
 
 @utility l1-r {
@@ -229,4 +229,13 @@
 }
 @utility l3-b {
   @apply text-[12px] font-medium leading-[125%];
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
