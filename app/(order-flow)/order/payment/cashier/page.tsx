@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import DineInBadge from "@/features/(order-flow)/order/components/DineInBadge";
 import React from "react";
 import AlertTriangle from "@/public/assets/icons/alert-triangle.svg";
-import { Button } from "@/components/ui/button";
+import CashierActionButton from "@/features/(order-flow)/order/components/CashierActionButton";
 
 const CashierPaymentPage = () => {
   return (
@@ -110,7 +110,7 @@ const CashierPaymentPage = () => {
           </div>
         </div>
 
-        <Button className="w-full">New Order</Button>
+        <CashierActionButton />
       </main>
     </div>
   );

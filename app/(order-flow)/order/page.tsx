@@ -9,7 +9,7 @@ import Header from "@/components/Header";
 const OrderPage = () => {
   return (
     <div>
-      <Header title="Order" withBackArrow={true} />
+      <Header title="Order" withBackArrow={true} backTo="/menu" />
 
       <main className="py-[16px] flex flex-col gap-[16px] pb-[16px]">
         <div className="px-[21px]">

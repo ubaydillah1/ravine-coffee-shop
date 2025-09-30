@@ -10,7 +10,7 @@ import React from "react";
 const PaymentPage = () => {
   return (
     <div>
-      <Header title="Order" withBackArrow={true} />
+      <Header title="Order" withBackArrow={true} backTo="/order" />
 
       <main className="flex flex-col gap-[16px]">
         <div className="py-[24px] flex flex-col gap-[24px] bg-white px-[21px]">

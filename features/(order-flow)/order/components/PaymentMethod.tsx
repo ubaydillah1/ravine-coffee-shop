@@ -1,6 +1,6 @@
 import React from "react";
 import MobilePhone from "@/public/assets/icons/mobile-phone.svg";
-import Wallet from "@/public/assets/icons/wallet.svg";
+import Wallet from "@/public/assets/icons/Wallet.svg";
 
 const PaymentMethod = () => {
   return (
