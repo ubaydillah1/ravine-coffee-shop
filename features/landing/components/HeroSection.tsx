@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { FadeInAndSlideUp, SlideInFromRight } from "@/components/MotionWrapper";
+import { FadeInAndSlideUp } from "@/components/MotionWrapper";
 
 const HeroSection = () => {
   return (
@@ -46,14 +46,15 @@ const HeroSection = () => {
           <h1 className="t2 text-center lg:hidden md:text-[48px]">
             Brewing Connections, One Story at a Time
           </h1>
-          <SlideInFromRight className="h-[400px] md:h-[600px] w-full relative lg:h-full">
+          <FadeInAndSlideUp className="h-[400px] md:h-[600px] w-full relative lg:h-full">
             <Image
               src="/assets/illustrations/coffee-price.png"
               alt="illustrations"
               fill
               className="object-contain mt-[0px]"
+              priority
             />
-          </SlideInFromRight>
+          </FadeInAndSlideUp>
         </div>
       </div>
     </section>

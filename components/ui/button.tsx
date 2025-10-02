@@ -19,6 +19,8 @@ const buttonVariants = cva(
         link: "text-white underline-offset-4 hover:underline",
         none: "",
         light: "bg-white border border-neutral-n200 shadow-sm",
+        outlineGray:
+          "text-neutral-n700 border-neutral-n400 hover:text-neutral-900 hover:border-neutral-n500 bg-background border",
       },
       size: {
         default: "px-[32px] py-[11px] rounded-[8px]",

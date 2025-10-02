@@ -21,13 +21,13 @@
   --N700: #57595a;
   --N600: #797a7b;
   --N500: #8e9090;
-  --N400: #b1b2b2;
+  --N400: #cbd2e0;
   --N300: #d2d3d3;
-  --N200: #eaeaea;
+  --N200: #edf0f7;
   --N100: #f6f6f6;
 
   /* Accent/Status Colors */
-  --R500: #ff4b4b;
+  --R500: #c71e1e;
   --R300: #fd6e75;
   --R100: #ffe2e4;
 
@@ -35,11 +35,11 @@
   --Y300: #ffe9aa;
   --Y100: #fff6db;
 
-  --G500: #8ebd56;
+  --G500: #18721c;
   --G300: #c5f58c;
   --G100: #e6ffc9;
 
-  --Blue500: #2f82ff;
+  --Blue500: #101ac0;
   --Blue300: #8bb9ff;
   --Blue100: #d8e7ff;
 

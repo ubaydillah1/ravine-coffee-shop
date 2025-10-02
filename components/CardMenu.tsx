@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import React from "react";
 import { ProductCardProps } from "../features/(order-flow)/menu/types/CardMenuTypes";
-import Check from "@/public/assets/icons/check.svg";
 
 const CardMenu = ({ layout = "vertical" }: ProductCardProps) => {
   return (

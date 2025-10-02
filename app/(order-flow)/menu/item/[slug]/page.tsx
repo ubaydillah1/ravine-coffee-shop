@@ -4,9 +4,11 @@ import Minus from "@/public/assets/icons/minus.svg";
 import Plus from "@/public/assets/icons/plus.svg";
 import { Button } from "@/components/ui/button";
 
-const ItemPage = ({ params }: Promise<{ params: string }>) => {
+const ItemPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const { slug } = await params;
   return (
     <main className="min-h-screen">
+      <div>{slug}</div>
       <div className="relative aspect-square w-full max-h-[320px]">
         <Image
           src={"/assets/images/ba-image.png"}

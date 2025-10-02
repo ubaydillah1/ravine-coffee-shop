@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import ArrowLeft from "@/public/assets/icons/arrow-left.svg";
 import { useRouter } from "next/navigation";
 import {
@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 type ModalType = "NONE" | "CANCELQRISPAYMENT";
 
@@ -32,6 +33,10 @@ const Header = ({
   const router = useRouter();
   const [activeModal, setActiveModal] = React.useState<ModalType>("NONE");
 
+  useEffect(() => {
+    router.prefetch("/order/payment");
+  }, [router]);
+
   const handleBack = () => {
     if (modalType) {
       setActiveModal(modalType);
@@ -49,12 +54,21 @@ const Header = ({
       <header className="bg-white flex h-[60px] items-center px-[21px] shadow-sm w-full justify-between">
         <div className="w-[24px] h-[24px] flex-shrink-0">
           {withBackArrow && (
-            <ArrowLeft
-              className="w-[24px] h-[24px] cursor-pointer"
-              onClick={handleBack}
-            />
+            <>
+              {backTo && !modalType ? (
+                <Link href={backTo}>
+                  <ArrowLeft className="w-[24px] h-[24px] cursor-pointer" />
+                </Link>
+              ) : (
+                <ArrowLeft
+                  className="w-[24px] h-[24px] cursor-pointer"
+                  onClick={handleBack}
+                />
+              )}
+            </>
           )}
         </div>
+
         <p className="b1-b text-center flex-grow">{title}</p>
         <div className="w-[24px] h-[24px] flex-shrink-0"></div>
       </header>
