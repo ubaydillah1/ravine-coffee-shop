@@ -1,12 +1,21 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
 import Coffee from "@/public/assets/icons/coffe.svg";
 import Hourglass from "@/public/assets/icons/Hourglass.svg";
 import Logout from "@/public/assets/icons/log-out.svg";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const Sidebar = () => {
+  const pathname = usePathname();
+
+  const isActive = (path: string) => pathname === path;
+
   return (
-    <nav className="w-[159px] h-full py-[24px] px-[16px] flex flex-col justify-between items-center ">
+    <nav className="w-[159px] h-full py-[24px] px-[16px] flex flex-col justify-between items-center">
       <div className="space-y-[24px]">
         <Image
           src={"/assets/images/logo.png"}
@@ -16,14 +25,31 @@ const Sidebar = () => {
         />
 
         <div className="space-y-[40px]">
-          <div className="flex-center cursor-pointer flex-col gap-[4px] text-neutral-n400 p-[16px] rounded-[8px]">
-            <Coffee className="size-[32px] font-thin" />
+          <Link
+            href="/cashier/status"
+            className={cn(
+              "flex-center cursor-pointer flex-col gap-[4px] p-[16px] rounded-[8px] transition",
+              isActive("/cashier/status")
+                ? "bg-primary-b300 text-white"
+                : "text-neutral-n400 hover:bg-neutral-100"
+            )}
+          >
+            <Coffee className="size-[32px]" />
             <p className="l2-b">Order</p>
-          </div>
-          <div className="flex-center cursor-pointer flex-col gap-[4px] p-[16px] rounded-[8px] bg-primary text-white">
+          </Link>
+
+          <Link
+            href="/cashier/order"
+            className={cn(
+              "flex-center cursor-pointer flex-col gap-[4px] p-[16px] rounded-[8px] transition",
+              isActive("/cashier/order")
+                ? "bg-primary-b300 text-white"
+                : "text-neutral-n400 hover:bg-neutral-100"
+            )}
+          >
             <Hourglass className="size-[32px]" />
             <p className="l2-b">Status</p>
-          </div>
+          </Link>
         </div>
       </div>
 

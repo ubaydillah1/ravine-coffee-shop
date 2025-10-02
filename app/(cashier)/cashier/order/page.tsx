@@ -13,7 +13,7 @@ const OrderPage = () => {
         <MenuSection />
       </main>
 
-      <section className="min-w-[371px]! h-full border-l border-neutral-n100 px-[24px] py-[32px]">
+      <section className="w-[371px]! h-full border-l border-neutral-n100 px-[24px] py-[32px]">
         {/* <InputCodeCashier /> */}
         {<OrderDetail />}
       </section>

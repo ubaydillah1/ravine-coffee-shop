@@ -18,7 +18,6 @@ const badgeVariants = cva(
         outline:
           "text-foreground border border-input hover:bg-accent hover:text-accent-foreground",
 
-        // ✅ custom status variants
         success:
           "border-transparent bg-accent-g100 text-accent-g500 hover:bg-accent-g200",
         warning:

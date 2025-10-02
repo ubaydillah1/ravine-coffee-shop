@@ -1,7 +1,6 @@
 import React from "react";
-import { Badge } from "@/components/ui/badge";
 import Eye from "@/public/assets/icons/eye.svg";
-import ChevronDown from "/public/assets/icons/chevron-down.svg";
+import StatusChangeOverlay from "./StatusChangeOverlay";
 
 const StatusSection = () => {
   return (
@@ -31,7 +30,7 @@ const StatusSection = () => {
         </thead>
 
         <tbody>
-          {Array(9)
+          {Array(1)
             .fill(null)
             .map((_, i) => (
               <tr key={i} className="transition-colors relative">
@@ -48,9 +47,8 @@ const StatusSection = () => {
                 <td className="px-[32px] py-[16px] text-neutral-n900 l2-r">
                   Rp44.000
                 </td>
-                <td className="px-[32px] py-[16px] text-neutral-n900 l2-r cursor-pointer">
-                  <Badge variant="success">Completed</Badge>
-                  <ChevronDown className="size-[16px] inline-block ml-[8px]" />
+                <td className="px-[32px] py-[16px] text-neutral-n900 l2-r">
+                  <StatusChangeOverlay text="Completed" variant="success" />
                 </td>
                 <td className="px-[32px] py-[16px] text-neutral-n900 l2-r rounded-r-[8px] ">
                   <div className="size-[36px] rounded-full border border-neutral-n300 flex-center cursor-pointer hover:bg-neutral-n100">

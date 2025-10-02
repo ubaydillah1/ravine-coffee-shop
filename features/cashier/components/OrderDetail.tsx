@@ -1,7 +1,8 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import Data from "@/public/assets/icons/data.svg";
+
 import OrderTypeSwitch from "@/features/cashier/components/OrderTypeSwitch";
+import AddNotesOverlay from "./AddNotesOverlay";
 
 const OrderDetail = () => {
   return (
@@ -37,13 +38,7 @@ const OrderDetail = () => {
       </div>
 
       <div className="space-y-[12px]">
-        <Button
-          variant="outlineGray"
-          className="w-full flex-center gap-[10px] text-neutral-n600"
-        >
-          <Data className="size-[16px]" />
-          Add Notes
-        </Button>
+        <AddNotesOverlay />
 
         <div className="w-full rounded-[8px] border border-neutral-n300 p-[16px] space-y-[12px]">
           <div className="flex justify-between b2-b">
