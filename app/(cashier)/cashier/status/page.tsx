@@ -1,5 +1,5 @@
-import StatusHeader from "@/features/cashier/components/StatusHeader";
-import StatusSection from "@/features/cashier/components/StatusSection";
+import StatusHeader from "@/features/(cashier)/components/StatusHeader";
+import StatusSection from "@/features/(cashier)/components/StatusSection";
 import React from "react";
 
 const StatusPage = () => {

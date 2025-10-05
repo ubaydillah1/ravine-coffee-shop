@@ -1,8 +1,7 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
-
-import OrderTypeSwitch from "@/features/cashier/components/OrderTypeSwitch";
-import AddNotesOverlay from "./AddNotesOverlay";
+import OrderTypeSwitch from "@/features/(cashier)/components/OrderTypeSwitch";
+import AddNotesAction from "./AddNotesAction";
+import OrderAction from "./OrderAction";
 
 const OrderDetail = () => {
   return (
@@ -38,7 +37,7 @@ const OrderDetail = () => {
       </div>
 
       <div className="space-y-[12px]">
-        <AddNotesOverlay />
+        <AddNotesAction />
 
         <div className="w-full rounded-[8px] border border-neutral-n300 p-[16px] space-y-[12px]">
           <div className="flex justify-between b2-b">
@@ -58,7 +57,7 @@ const OrderDetail = () => {
           </div>
         </div>
 
-        <Button className="w-full">Process Transaction</Button>
+        <OrderAction />
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import Sidebar from "@/features/cashier/components/Sidebar";
+import Sidebar from "@/features/(cashier)/components/Sidebar";
 import React from "react";
 
 const CashierPage = ({ children }: { children: React.ReactNode }) => {

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 
-const AddNotesOverlay = () => {
+const AddNotesAction = () => {
   const [openModal, setOpenModal] = useState(false);
 
   const closeModal = () => setOpenModal(false);
@@ -48,4 +48,4 @@ const AddNotesOverlay = () => {
   );
 };
 
-export default AddNotesOverlay;
+export default AddNotesAction;

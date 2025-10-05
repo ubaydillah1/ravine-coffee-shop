@@ -4,10 +4,10 @@ import Image from "next/image";
 import React from "react";
 import Coffee from "@/public/assets/icons/coffe.svg";
 import Hourglass from "@/public/assets/icons/Hourglass.svg";
-import Logout from "@/public/assets/icons/log-out.svg";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import LogoutAction from "./LogoutAction";
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -53,10 +53,7 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div className="flex-center w-full cursor-pointer flex-col gap-[4px] p-[16px] rounded-[8px] text-neutral-n400">
-        <Logout className="size-[32px] rotate-180" />
-        <p className="l2-b">Log out</p>
-      </div>
+      <LogoutAction />
     </nav>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
-import Eye from "@/public/assets/icons/eye.svg";
 import StatusChangeOverlay from "./StatusChangeOverlay";
+import OrderDetailsAction from "./OrderDetailsAction";
 
 const StatusSection = () => {
   return (
@@ -51,9 +51,7 @@ const StatusSection = () => {
                   <StatusChangeOverlay text="Completed" variant="success" />
                 </td>
                 <td className="px-[32px] py-[16px] text-neutral-n900 l2-r rounded-r-[8px] ">
-                  <div className="size-[36px] rounded-full border border-neutral-n300 flex-center cursor-pointer hover:bg-neutral-n100">
-                    <Eye className="text-neutral-n700 size-[16px]" />
-                  </div>
+                  <OrderDetailsAction />
                 </td>
 
                 <td className="absolute left-0 right-0 -bottom-3 h-px bg-neutral-n400" />
