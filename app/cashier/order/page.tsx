@@ -1,8 +1,8 @@
-import CashierHeader from "@/features/(cashier)/components/CashierHeader";
 // import InputCodeCashier from "@/features/cashier/components/InputCodeCashier";
 // import InputCodeCashier from "@/features/cashier/components/InputCodeCashier";
-import MenuSection from "@/features/(cashier)/components/MenuSection";
-import OrderDetail from "@/features/(cashier)/components/OrderDetail";
+import CashierHeader from "@/features/cashier/components/CashierHeader";
+import MenuSection from "@/features/cashier/components/MenuSection";
+import OrderDetail from "@/features/cashier/components/OrderDetail";
 import React from "react";
 
 const OrderPage = () => {

@@ -1,7 +1,7 @@
 import React from "react";
 import Search from "@/public/assets/icons/search.svg";
-import SortDropdown from "@/features/(cashier)/components/SortDropdown";
-import FilterDropdown from "@/features/(cashier)/components/FilterDropdown";
+import SortDropdown from "@/features/cashier/components/SortDropdown";
+import FilterDropdown from "@/features/cashier/components/FilterDropdown";
 
 const StatusHeader = () => {
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import OrderTypeSwitch from "@/features/(cashier)/components/OrderTypeSwitch";
+import OrderTypeSwitch from "@/features/cashier/components/OrderTypeSwitch";
 import AddNotesAction from "./AddNotesAction";
 import OrderAction from "./OrderAction";
 

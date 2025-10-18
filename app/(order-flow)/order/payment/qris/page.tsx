@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import CallActionSection from "@/features/(order-flow)/order/components/CallActionSection";
+import CallActionSection from "@/features/order-flow/order/components/CallActionSection";
 import React from "react";
 
 const QrisPaymentPage = () => {

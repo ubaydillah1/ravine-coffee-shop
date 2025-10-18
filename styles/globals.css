@@ -17,8 +17,8 @@
 
   /* Neutral Colors */
   --N900: #1a202c;
-  --N800: #363939;
-  --N700: #57595a;
+  --N800: #2d3648;
+  --N700: #4a5468;
   --N600: #797a7b;
   --N500: #8e9090;
   --N400: #cbd2e0;
@@ -229,6 +229,9 @@
 }
 @utility l3-b {
   @apply text-[12px] font-medium leading-[125%];
+}
+@utility l4-r {
+  @apply text-[10px] font-normal leading-[125%];
 }
 
 .hide-scrollbar {
