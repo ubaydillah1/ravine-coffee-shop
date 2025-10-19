@@ -45,7 +45,6 @@ export const RangeDropdown: React.FC<RangeDropdownProps> = ({
       <DropdownMenuContent
         align="end"
         className="p-[8px] rounded-[8px] dark:bg-neutral-900 bg-white shadow-md"
-        //   style={{ minWidth: "fit-content" }}
       >
         {ranges.map((range) => (
           <DropdownMenuItem
@@ -55,7 +54,7 @@ export const RangeDropdown: React.FC<RangeDropdownProps> = ({
               selected === range
                 ? "font-semibold text-gray-900 dark:text-gray-100"
                 : "text-gray-500"
-            } cursor-pointer`}
+            } cursor-pointer l2-b text-[12px] sm:text-[14px]`}
           >
             {range}
           </DropdownMenuItem>

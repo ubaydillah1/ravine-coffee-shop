@@ -8,7 +8,7 @@ import React from "react";
 const OrderPage = () => {
   return (
     <>
-      <main className="px-[24px]  flex-1 overflow-auto flex flex-col gap-[24px] shrink-0">
+      <main className="px-[24px] flex-1 overflow-auto flex flex-col gap-[24px] shrink-0">
         <CashierHeader />
         <MenuSection />
       </main>

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
-import Coffee from "@/public/assets/icons/coffe.svg";
+import Coffee from "@/public/assets/icons/coffe-1.svg";
 import Hourglass from "@/public/assets/icons/Hourglass.svg";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,7 +11,6 @@ import LogoutAction from "./LogoutAction";
 
 const Sidebar = () => {
   const pathname = usePathname();
-
   const isActive = (path: string) => pathname === path;
 
   return (
@@ -26,10 +25,10 @@ const Sidebar = () => {
 
         <div className="space-y-[40px]">
           <Link
-            href="/cashier/status"
+            href="/cashier/order"
             className={cn(
               "flex-center cursor-pointer flex-col gap-[4px] p-[16px] rounded-[8px] transition",
-              isActive("/cashier/status")
+              isActive("/cashier/order")
                 ? "bg-primary-b300 text-white"
                 : "text-neutral-n400 hover:bg-neutral-100"
             )}
@@ -39,10 +38,10 @@ const Sidebar = () => {
           </Link>
 
           <Link
-            href="/cashier/order"
+            href="/cashier/status"
             className={cn(
               "flex-center cursor-pointer flex-col gap-[4px] p-[16px] rounded-[8px] transition",
-              isActive("/cashier/order")
+              isActive("/cashier/status")
                 ? "bg-primary-b300 text-white"
                 : "text-neutral-n400 hover:bg-neutral-100"
             )}

@@ -44,19 +44,19 @@ const Indicators = () => {
               <strong className="l2-b sm:sub-h1">{item.value}</strong>
             </div>
             {item.type === "revenue" && (
-              <Chart className="size-[28px] sm:size-[48px] text-primary-b200" />
+              <Chart className="size-[28px] sm:size-[56px] text-primary-b200" />
             )}
 
             {item.type === "orders" && (
-              <Order className="size-[28px] sm:size-[48px] text-primary-b200" />
+              <Order className="size-[28px] sm:size-[56px] text-primary-b200" />
             )}
 
             {item.type === "expenses" && (
-              <Expenses className="size-[28px] sm:size-[48px] text-primary-b200" />
+              <Expenses className="size-[28px] sm:size-[56px] text-primary-b200" />
             )}
 
             {item.type === "averageRevenue" && (
-              <Money className="size-[28px] sm:size-[48px] text-primary-b200" />
+              <Money className="size-[28px] sm:size-[56px] text-primary-b200" />
             )}
           </div>
 

@@ -16,7 +16,7 @@ const OrderAction = () => {
   const [paymentCashModal, setPaymentCashModal] = useState(false);
   const [paymentQrisModal, setPaymentQrisModal] = useState(false);
   const [successPaymentQrisModal, setSuccessPaymentQrisModal] = useState(false);
-  const [successPaymentCashModal, setSuccessPaymentCashModal] = useState(true);
+  const [successPaymentCashModal, setSuccessPaymentCashModal] = useState(false);
 
   const closeSuccessPaymentCashModal = () => setSuccessPaymentCashModal(false);
   const closeSuccessPaymentQrisModal = () => setSuccessPaymentQrisModal(false);
