@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
+import { ProductCardProps } from "@/features/order-flow/menu/types/CardMenuTypes";
 import Image from "next/image";
 import React from "react";
-import { ProductCardProps } from "../features/(order-flow)/menu/types/CardMenuTypes";
 
 const CardMenu = ({ layout = "vertical" }: ProductCardProps) => {
   return (
