@@ -38,7 +38,7 @@ export const StatusFilterBar = ({
       {title && <h1 className="sub-h1">{title}</h1>}
 
       <div className="flex sm:justify-between w-full sm:items-center sm:flex-row flex-col gap-[16px]">
-        <div className="flex gap-[24px] overflow-x-scroll min-h-full hide-scrollbar">
+        <div className="flex gap-[24px] overflow-x-scroll hide-scrollbar">
           {tabs.map((tab) => (
             <button
               key={tab}

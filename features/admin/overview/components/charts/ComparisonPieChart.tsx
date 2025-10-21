@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { useEffect, useState } from "react";
 import {
   PieChart as RechartsPieChart,
   Pie,
@@ -54,6 +55,17 @@ export const ComparisonPieChart = ({ type, data }: PieChartProps) => {
       : type === "payment"
       ? defaultPaymentMethodData
       : defaultOrderTypeData);
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className="flex items-center justify-center w-[90px] h-[90px] sm:w-[193px] sm:h-[193px] bg-gray-50 rounded-full animate-pulse" />
+    );
+  }
 
   return (
     <div className="sm:w-[193px] sm:h-[193px] w-[90px] h-[90px]">

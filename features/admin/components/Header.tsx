@@ -20,7 +20,9 @@ const Header = () => {
   return (
     <header className="py-[16px] px-[16px] sm:px-[40px] flex justify-between border-b border-neutral-n300 w-full">
       <div className="flex items-center gap-[16px]">
-        <HamburgerButton />
+        <div className="sm:hidden">
+          <HamburgerButton />
+        </div>
         <span className="sm:sub-h1 b1-b">{title}</span>
       </div>
 

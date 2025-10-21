@@ -1,10 +1,10 @@
 // import CompletePayment from "@/features/(root)/order/components/CompletePayment";
 import Header from "@/components/Header";
-import CTAPayment from "@/features/order-flow/order/components/CTAPayment";
-import DineInBadge from "@/features/order-flow/order/components/DineInBadge";
-import PaymentIllustration from "@/features/order-flow/order/components/PaymentIllustration";
-import PaymentMethod from "@/features/order-flow/order/components/PaymentMethod";
-import CustomerInformation from "@/features/order-flow/outlet/components/CustomerInformation";
+import CTAPayment from "@/features/user/order/components/CTAPayment";
+import DineInBadge from "@/features/user/order/components/DineInBadge";
+import PaymentIllustration from "@/features/user/order/components/PaymentIllustration";
+import PaymentMethod from "@/features/user/order/components/PaymentMethod";
+import CustomerInformation from "@/features/user/outlet/components/CustomerInformation";
 import React from "react";
 
 const PaymentPage = () => {

@@ -1,9 +1,9 @@
 import React from "react";
-import DineInBadge from "@/features/order-flow/order/components/DineInBadge";
-import RelatedMenu from "@/features/order-flow/order/components/RelatedMenu";
-import OrderDetails from "@/features/order-flow/order/components/OrderDetails";
-import PaymentDetails from "@/features/order-flow/order/components/PaymentDetails";
-import CTAOrder from "@/features/order-flow/order/components/CTAOrder";
+import DineInBadge from "@/features/user/order/components/DineInBadge";
+import RelatedMenu from "@/features/user/order/components/RelatedMenu";
+import OrderDetails from "@/features/user/order/components/OrderDetails";
+import PaymentDetails from "@/features/user/order/components/PaymentDetails";
+import CTAOrder from "@/features/user/order/components/CTAOrder";
 import Header from "@/components/Header";
 
 const OrderPage = () => {

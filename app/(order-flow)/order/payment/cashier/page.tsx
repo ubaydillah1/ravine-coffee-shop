@@ -1,8 +1,8 @@
 import Header from "@/components/Header";
-import DineInBadge from "@/features/order-flow/order/components/DineInBadge";
+import DineInBadge from "@/features/user/order/components/DineInBadge";
 import React from "react";
 import AlertTriangle from "@/public/assets/icons/alert-triangle.svg";
-import CashierActionButton from "@/features/order-flow/order/components/CashierActionButton";
+import CashierActionButton from "@/features/user/order/components/CashierActionButton";
 
 const CashierPaymentPage = () => {
   return (
