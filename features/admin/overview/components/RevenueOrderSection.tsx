@@ -1,8 +1,26 @@
+"use client";
+
 import React from "react";
-import ComparisonBarChart from "./charts/ComparisonBarChart";
+import ComparisonBarChart, { ChartData } from "./charts/ComparisonBarChart";
 import { RangeDropdown } from "./RangeDropdown";
+import { useGetRevenue } from "../hooks/useGetRevenue";
+import { RevenuePeriod, GetRevenuePayload } from "../api/getRevenue";
 
 const RevenueOrderSection = () => {
+  const [period, setPeriod] = React.useState<RevenuePeriod>("weekly");
+  const { data, isPending } = useGetRevenue({ period });
+
+  const chartData: ChartData[] | undefined = React.useMemo(() => {
+    if (!data) return undefined;
+
+    return data.map((item: GetRevenuePayload) => ({
+      name: item.label,
+      CurrentPeriod: item.current,
+      LastPeriod: item.last,
+      amt: Math.max(item.current, item.last),
+    }));
+  }, [data]);
+
   return (
     <section className="flex flex-col gap-[12px] sm:gap-[24px] p-[12px] sm:p-[24px] border rounded-[16px] border-neutral-n300">
       <div className="flex justify-between items-center">
@@ -14,9 +32,15 @@ const RevenueOrderSection = () => {
         <RangeDropdown
           ranges={["Weekly", "Monthly", "Annual"]}
           defaultValue="Weekly"
+          onChange={(value) => setPeriod(value.toLowerCase() as RevenuePeriod)}
         />
       </div>
-      <ComparisonBarChart />
+
+      <ComparisonBarChart
+        data={chartData}
+        isPending={isPending}
+        period={period}
+      />
     </section>
   );
 };

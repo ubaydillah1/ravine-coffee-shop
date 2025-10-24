@@ -23,7 +23,7 @@ export const queryClient = new QueryClient({
     },
     mutations: {
       onError: () => {
-        alert("Sebuah kesalahan terjadi");
+        alert("Something went wrong");
       },
     },
   },

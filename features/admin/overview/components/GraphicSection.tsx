@@ -3,15 +3,16 @@ import RevenueOrderSection from "./RevenueOrderSection";
 import OrderTypeSection from "./OrderTypeSection";
 import PaymentMethodSection from "./PaymentMethodSection";
 import CategorySalesSection from "./CategorySalesSection";
+import { Period } from "../api/getOverview";
 
-const GraphicSection = () => {
+const GraphicSection = ({ period }: { period: Period }) => {
   return (
     <div className="flex-1 flex flex-col gap-[24px]">
       <RevenueOrderSection />
 
       <div className="flex gap-[24px]">
-        <OrderTypeSection />
-        <PaymentMethodSection />
+        <OrderTypeSection period={period} />
+        <PaymentMethodSection period={period} />
       </div>
 
       <CategorySalesSection />

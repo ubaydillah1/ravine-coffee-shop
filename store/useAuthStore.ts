@@ -1,12 +1,8 @@
+"use client";
+
+import { User } from "@/features/auth/types/user";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-};
 
 type AuthState = {
   user: User | null;
@@ -14,6 +10,7 @@ type AuthState = {
   isAuthenticated: boolean;
   login: (token: string, user: User) => void;
   logout: () => void;
+  setUser: (user: User) => void;
 };
 
 export const useAuthStore = create<AuthState>()(
@@ -22,6 +19,7 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       token: null,
       isAuthenticated: false,
+      setUser: (user) => set({ user, isAuthenticated: true }),
       login: (token, user) => set({ token, user, isAuthenticated: true }),
       logout: () => set({ token: null, user: null, isAuthenticated: false }),
     }),

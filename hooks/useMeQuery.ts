@@ -1,4 +1,4 @@
-import { authService } from "@/services/auth.service";
+import { getMe } from "@/features/auth/api/getMe";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
 
@@ -6,7 +6,7 @@ export const useMeQuery = () => {
   const { isAuthenticated } = useAuthStore();
   return useQuery({
     queryKey: ["me"],
-    queryFn: authService.getMe,
+    queryFn: getMe,
     enabled: !!isAuthenticated,
   });
 };

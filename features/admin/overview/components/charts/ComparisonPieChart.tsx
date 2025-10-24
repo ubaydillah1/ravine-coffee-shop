@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useEffect, useState } from "react";
 import {
   PieChart as RechartsPieChart,
   Pie,
@@ -9,20 +8,29 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import React from "react";
 
-const defaultOrderTypeData = [
+export interface PieChartData {
+  name: string;
+  value: number;
+  color?: string;
+  [key: string]: any;
+}
+
+const defaultOrderTypeData: PieChartData[] = [
   { name: "Dine In", value: 35, color: "#C9ad91" },
   { name: "Take Away", value: 25, color: "#F5f0eb" },
 ];
 
-const defaultPaymentMethodData = [
+const defaultPaymentMethodData: PieChartData[] = [
   { name: "Qris", value: 45, color: "#C9ad91" },
   { name: "Cash", value: 20, color: "#F5f0eb" },
 ];
 
 interface PieChartProps {
   type?: "order" | "payment";
-  data?: { name: string; value: number; color?: string }[];
+  data?: PieChartData[];
+  isPending: boolean;
 }
 
 const renderCustomizedLabel = ({
@@ -47,23 +55,35 @@ const renderCustomizedLabel = ({
   );
 };
 
-export const ComparisonPieChart = ({ type, data }: PieChartProps) => {
+const PieChartSkeleton = () => (
+  <div className="flex items-center justify-center sm:w-[193px] sm:h-[193px] w-[90px] h-[90px]">
+    <div className="w-full h-full bg-gray-100 rounded-full animate-pulse" />
+  </div>
+);
+
+export const ComparisonPieChart = ({
+  type,
+  data,
+  isPending,
+}: PieChartProps) => {
   const chartData =
-    data ||
-    (type === "order"
+    data && data.length > 0
+      ? data
+      : type === "order"
       ? defaultOrderTypeData
       : type === "payment"
       ? defaultPaymentMethodData
-      : defaultOrderTypeData);
+      : defaultOrderTypeData;
 
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  if (isPending) {
+    return <PieChartSkeleton />;
+  }
 
-  if (!mounted) {
+  if (!chartData || chartData.length === 0) {
     return (
-      <div className="flex items-center justify-center w-[90px] h-[90px] sm:w-[193px] sm:h-[193px] bg-gray-50 rounded-full animate-pulse" />
+      <div className="flex items-center justify-center sm:w-[193px] sm:h-[193px] w-[90px] h-[90px] text-neutral-n600 text-sm">
+        No Data
+      </div>
     );
   }
 

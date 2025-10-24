@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,6 +16,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useLogin } from "@/features/auth/hooks/useLogin";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const loginSchema = z.object({
   email: z.email("Email tidak valid"),
@@ -26,6 +30,41 @@ type LoginSchema = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const router = useRouter();
+  const { isPending: loginLoading, mutate: login } = useLogin({
+    mutationConfig: {
+      onSuccess: (data) => {
+        console.log(data);
+        const role = data.user.role;
+
+        if (role === "USER") {
+          router.replace("/menu");
+        }
+
+        if (role === "ADMIN") {
+          router.replace("/admin/overview");
+        }
+
+        if (role === "CASHIER") {
+          router.replace("/cashier/order");
+        }
+      },
+      onError: (error) => {
+        if (axios.isAxiosError(error)) {
+          let msg = error.response?.data?.message || "Something went wrong";
+
+          if (msg === "Invalid credentials") {
+            msg = "Email or password is incorrect";
+          }
+
+          setErrorMessage(msg);
+        } else {
+          setErrorMessage("Unexpected error");
+        }
+      },
+    },
+  });
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -35,8 +74,24 @@ export default function LoginPage() {
     },
   });
 
+  const { isAuthenticated, user } = useAuthStore();
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      if (user.role === "ADMIN") {
+        router.replace("/admin/overview");
+      } else if (user.role === "CASHIER") {
+        router.replace("/cashier/order");
+      } else {
+        router.replace("/menu");
+      }
+    }
+  }, [isAuthenticated, user, router]);
+
   const onSubmit = (values: LoginSchema) => {
-    console.log("Login data:", values);
+    setErrorMessage(null);
+    login(values);
+    form.reset();
   };
 
   return (
@@ -109,8 +164,15 @@ export default function LoginPage() {
                 )}
               />
 
+              {errorMessage && (
+                <p className="text-center text-sm text-destructive mb-4 font-nunito">
+                  {errorMessage}
+                </p>
+              )}
+
               <Button
                 type="submit"
+                disabled={loginLoading}
                 className="w-full bg-[var(--color-primary)] rounded-[var(--radius-md)]"
               >
                 Login

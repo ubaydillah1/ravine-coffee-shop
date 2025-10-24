@@ -2,12 +2,20 @@
 
 import * as React from "react";
 import { RangeDropdown } from "./RangeDropdown";
+import { Period } from "../api/getOverview";
 
-export const Title: React.FC = () => {
+export const Title = ({
+  setPeriod,
+}: {
+  setPeriod: (period: Period) => void;
+}) => {
   const ranges = ["Today", "This week", "This month"];
 
   const handleRangeChange = (value: string) => {
-    console.log("Selected range:", value);
+    console.log("Value : ", value);
+    if (value === "Today") setPeriod("today");
+    if (value === "This week") setPeriod("this-week");
+    if (value === "This month") setPeriod("this-month");
   };
 
   return (

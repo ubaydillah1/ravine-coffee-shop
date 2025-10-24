@@ -2,11 +2,11 @@ import axios from "axios";
 import { useAuthStore } from "@/store/useAuthStore";
 import { config } from "./config";
 
-const api = axios.create({
+const axiosInstance = axios.create({
   baseURL: config.BASE_URL,
 });
 
-api.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   (config) => {
     const { token } = useAuthStore.getState();
 
@@ -19,7 +19,7 @@ api.interceptors.request.use(
   (err) => Promise.reject(err)
 );
 
-api.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (res) => res,
   (err) => {
     if (err.response?.status === 401) {
@@ -34,4 +34,4 @@ api.interceptors.response.use(
   }
 );
 
-export default api;
+export default axiosInstance;

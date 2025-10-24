@@ -3,11 +3,13 @@
 
 import * as React from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts";
+import { RevenuePeriod } from "../../api/getRevenue";
 
-interface ChartData {
+// INI ADALAH TIPE DATA YANG DIHARAPKAN KOMPONEN INI
+export interface ChartData {
   name: string;
-  Lastweek: number;
-  pv: number;
+  CurrentPeriod: number;
+  LastPeriod: number;
   amt: number;
 }
 
@@ -28,19 +30,12 @@ interface CustomTooltipProps {
   label?: string;
 }
 
-interface SimpleBarChartProps {
-  data?: ChartData[];
+// PERBAIKAN: KOMPONEN INI SEHARUSNYA MENGHARAPKAN ChartData[]
+interface ComparisonBarChartProps {
+  data: ChartData[] | undefined;
+  isPending: boolean;
+  period: RevenuePeriod;
 }
-
-const defaultData: ChartData[] = [
-  { name: "Monday", Lastweek: 4000, pv: 2400, amt: 2400 },
-  { name: "Tuesday", Lastweek: 3000, pv: 1398, amt: 2210 },
-  { name: "Wednesday", Lastweek: 2000, pv: 9800, amt: 2290 },
-  { name: "Thursday", Lastweek: 2780, pv: 3908, amt: 2000 },
-  { name: "Friday", Lastweek: 1890, pv: 4800, amt: 2181 },
-  { name: "Saturday", Lastweek: 2390, pv: 3800, amt: 2500 },
-  { name: "Sunday", Lastweek: 3490, pv: 4300, amt: 2100 },
-];
 
 const useMediaQuery = (query: string): boolean => {
   const [matches, setMatches] = React.useState(false);
@@ -56,7 +51,20 @@ const useMediaQuery = (query: string): boolean => {
   return matches;
 };
 
-const CustomLegend = () => {
+const CustomLegend = ({ period }: { period: RevenuePeriod }) => {
+  const currentText =
+    period === "weekly"
+      ? "This Week"
+      : period === "monthly"
+      ? "This Month"
+      : "This Year";
+  const lastText =
+    period === "weekly"
+      ? "Last Week"
+      : period === "monthly"
+      ? "Last Month"
+      : "Last Year";
+
   return (
     <div
       style={{ display: "flex" }}
@@ -73,7 +81,9 @@ const CustomLegend = () => {
           }}
           className="sm:size-[12px] size-[6px]"
         />
-        <span className="text-neutral-n700 sm:l3-b text-[8px]">This Week</span>
+        <span className="text-neutral-n700 sm:l3-b text-[8px]">
+          {currentText}
+        </span>
       </div>
 
       <div
@@ -88,7 +98,7 @@ const CustomLegend = () => {
           }}
           className="sm:size-[12px] size-[6px]"
         />
-        <span className="text-neutral-n700 sm:l3-b text-[8px]">Last Week</span>
+        <span className="text-neutral-n700 sm:l3-b text-[8px]">{lastText}</span>
       </div>
     </div>
   );
@@ -96,8 +106,8 @@ const CustomLegend = () => {
 
 const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
-    const current = payload.find((p) => p.dataKey === "pv");
-    const last = payload.find((p) => p.dataKey === "Lastweek");
+    const current = payload.find((p) => p.dataKey === "CurrentPeriod");
+    const last = payload.find((p) => p.dataKey === "LastPeriod");
 
     return (
       <div
@@ -113,13 +123,13 @@ const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
 
         {last && (
           <p style={{ margin: "4px 0 0 0", fontSize: "13px" }}>
-            Last Week: <span>{last.value.toLocaleString()}</span>
+            Last: <span>{last.value.toLocaleString()}</span>
           </p>
         )}
 
         {current && (
           <p style={{ margin: "2px 0 0 0", fontSize: "13px" }}>
-            This Week: <span>{current.value.toLocaleString()}</span>
+            Current: <span>{current.value.toLocaleString()}</span>
           </p>
         )}
       </div>
@@ -129,8 +139,44 @@ const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
   return null;
 };
 
-const ComparisonBarChart = ({ data = defaultData }: SimpleBarChartProps) => {
+const ChartSkeleton = () => (
+  <div
+    className="w-full h-[300px] bg-gray-100 rounded-lg flex flex-col justify-end animate-pulse overflow-hidden"
+    style={{ aspectRatio: 1.618 }}
+  >
+    <div className="flex justify-around items-end h-[85%] p-4">
+      {Array.from({ length: 7 }).map((_, i) => (
+        <div
+          key={i}
+          className="w-8 mx-1 bg-gray-300 rounded-t-lg"
+          style={{ height: `${20 + Math.random() * 70}%` }}
+        />
+      ))}
+    </div>
+    <div className="h-[15%] flex justify-center items-center">
+      <div className="h-2 w-full bg-gray-200" />
+    </div>
+  </div>
+);
+
+const ComparisonBarChart = ({
+  data,
+  isPending,
+  period,
+}: ComparisonBarChartProps) => {
   const isMobile = useMediaQuery("(max-width: 640px)");
+
+  if (isPending) {
+    return <ChartSkeleton />;
+  }
+
+  if (!data || data.length === 0) {
+    return (
+      <div className="p-4 text-center text-neutral-n600">
+        Tidak ada data pendapatan untuk periode ini.
+      </div>
+    );
+  }
 
   return (
     <BarChart
@@ -141,7 +187,7 @@ const ComparisonBarChart = ({ data = defaultData }: SimpleBarChartProps) => {
       }}
       className="text-neutral-n700! l3-r!"
       responsive
-      data={data}
+      data={data} 
       margin={{
         top: 5,
         right: 0,
@@ -149,13 +195,15 @@ const ComparisonBarChart = ({ data = defaultData }: SimpleBarChartProps) => {
         bottom: 5,
       }}
     >
-      <Legend content={<CustomLegend />} />
+      <Legend content={<CustomLegend period={period} />} />
       <XAxis
         dataKey="name"
         tickLine={false}
-        tickFormatter={(value: string) =>
-          isMobile ? value.slice(0, 3) : value
-        }
+        tickFormatter={(value: string) => {
+          if (period === "annual") return value;
+          if (isMobile) return value.slice(0, 3);
+          return value;
+        }}
         className="text-neutral-n700 text-[8px] sm:l3-r"
       />
       <YAxis
@@ -163,8 +211,29 @@ const ComparisonBarChart = ({ data = defaultData }: SimpleBarChartProps) => {
         axisLine={false}
         tickLine={false}
         tickFormatter={(value: number) => {
-          const num = value / 1000;
-          return `${num % 1 === 0 ? num.toFixed(0) : num.toFixed(1)} jt`;
+          // Cari nilai terbesar dari dataset untuk menentukan skala
+          const maxValue = Math.max(
+            ...data.map((d) => Math.max(d.CurrentPeriod, d.LastPeriod))
+          );
+
+          let divisor = 1;
+          let suffix = "";
+
+          if (maxValue >= 1_000_000_000) {
+            divisor = 1_000_000_000;
+            suffix = " Miliar";
+          } else if (maxValue >= 1_000_000) {
+            divisor = 1_000_000;
+            suffix = " Juta";
+          } else if (maxValue >= 1_000) {
+            divisor = 1_000;
+            suffix = " Ribu";
+          }
+
+          const num = value / divisor;
+          const formatted = num % 1 === 0 ? num.toFixed(0) : num.toFixed(1);
+
+          return `${formatted}${suffix}`;
         }}
         className="text-neutral-n700 text-[8px] sm:l3-r"
       />
@@ -174,7 +243,7 @@ const ComparisonBarChart = ({ data = defaultData }: SimpleBarChartProps) => {
       />
 
       <Bar
-        dataKey="pv"
+        dataKey="CurrentPeriod"
         fill="#C9Ad91"
         shape={(props: any) => {
           const { x, y, width, height, fill } = props as BarShapeProps;
@@ -196,7 +265,7 @@ const ComparisonBarChart = ({ data = defaultData }: SimpleBarChartProps) => {
       />
 
       <Bar
-        dataKey="Lastweek"
+        dataKey="LastPeriod"
         fill="#F5F0EB"
         shape={(props: any) => {
           const { x, y, width, height, fill } = props as BarShapeProps;

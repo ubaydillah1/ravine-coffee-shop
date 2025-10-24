@@ -3,33 +3,88 @@ import Chart from "@/public/assets/icons/chart.svg";
 import Order from "@/public/assets/icons/coffe-1.svg";
 import Expenses from "@/public/assets/icons/Money.svg";
 import Money from "@/public/assets/icons/money-paper.svg";
+import IndicatorSkeleton from "./skeletons/IndicatorSceleton";
+import { OverviewPayload } from "../api/getOverview";
 
-const indicators = [
-  {
-    title: "Total Revenue",
-    value: "Rp1.280.000",
-    growth: "+7%",
-    type: "revenue",
-  },
-  { title: "Total Orders", value: "320", growth: "+12%", type: "orders" },
-  {
-    title: "Average Expenses",
-    value: "Rp32.000",
-    growth: "+4%",
-    type: "expenses",
-  },
-  {
-    title: "Average Revenue",
-    value: "Rp1.100.000",
-    growth: "+9%",
-    type: "averageRevenue",
-  },
-];
+type IndicatorItem = {
+  title: string;
+  value: string;
+  growth: string;
+  type: "revenue" | "orders" | "expenses" | "averageRevenue";
+};
 
-const Indicators = () => {
+type IndicatorsProps = {
+  data: OverviewPayload | undefined;
+  isPending: boolean;
+};
+
+const formatRupiah = (amount: number) => {
+  return `Rp${amount.toLocaleString("id-ID")}`;
+};
+
+const DUMMY_SKELETON_COUNT = 4;
+
+const Indicators = ({ data, isPending }: IndicatorsProps) => {
+  const indicatorData = React.useMemo(() => {
+    if (!data) return [];
+
+    const {
+      totalRevenue,
+      totalOrders,
+      averageExpenses,
+      averageRevenue,
+      growth,
+    } = data;
+
+    return [
+      {
+        title: "Total Revenue",
+        value: formatRupiah(totalRevenue),
+        growth: `+${growth.totalRevenue}%`,
+        type: "revenue",
+      },
+      {
+        title: "Total Orders",
+        value: totalOrders.toString(),
+        growth: `+${growth.totalOrders}%`,
+        type: "orders",
+      },
+      {
+        title: "Average Expenses",
+        value: formatRupiah(averageExpenses),
+        growth: `+${growth.averageExpenses}%`,
+        type: "expenses",
+      },
+      {
+        title: "Average Revenue",
+        value: formatRupiah(averageRevenue),
+        growth: `+${growth.averageRevenue}%`,
+        type: "averageRevenue",
+      },
+    ] as IndicatorItem[];
+  }, [data]);
+
+  if (isPending) {
+    return (
+      <div className="flex flex-wrap justify-between gap-[16px] sm:gap-[32px]">
+        {Array.from({ length: DUMMY_SKELETON_COUNT }).map((_, idx) => (
+          <IndicatorSkeleton key={idx} />
+        ))}
+      </div>
+    );
+  }
+
+  if (!indicatorData || indicatorData.length === 0) {
+    return (
+      <div className="p-4 text-center text-gray-500">
+        Tidak ada data tersedia untuk periode ini.
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-wrap justify-between gap-[16px] sm:gap-[32px]">
-      {indicators.map((item, idx) => (
+      {indicatorData.map((item, idx) => (
         <div
           key={idx}
           className="
@@ -60,7 +115,13 @@ const Indicators = () => {
             )}
           </div>
 
-          <div className="py-[4px] px-[8px] rounded-full bg-accent-g500 w-fit text-white l4-r sm:l3-r">
+          <div
+            className={`py-[4px] px-[8px] rounded-full w-fit text-white l4-r sm:l3-r ${
+              item.growth.startsWith("0") || item.growth.startsWith("-")
+                ? "bg-accent-r500"
+                : "bg-accent-g500"
+            }`}
+          >
             {item.growth}
           </div>
         </div>
