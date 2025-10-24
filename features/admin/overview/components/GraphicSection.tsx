@@ -15,7 +15,7 @@ const GraphicSection = ({ period }: { period: Period }) => {
         <PaymentMethodSection period={period} />
       </div>
 
-      <CategorySalesSection />
+      <CategorySalesSection period={period} />
     </div>
   );
 };

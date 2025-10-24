@@ -11,14 +11,10 @@ import {
 } from "recharts";
 import { useEffect, useState } from "react";
 
-const data = [
-  { category: "Coffee", sales: 50 },
-  { category: "Tea", sales: 18 },
-  { category: "Pastry", sales: 22 },
-  { category: "Juice", sales: 12 },
-  { category: "Bread", sales: 15 },
-  { category: "Dessert", sales: 10 },
-];
+type HorizontalBarData = {
+  category: string;
+  total: number;
+};
 
 const BAR_COLOR = "#c9ad91";
 const BORDER_COLOR = "#8b6d4f";
@@ -39,7 +35,13 @@ const CustomBar = (props: any) => {
   );
 };
 
-export default function HorizontalBarChart() {
+export default function HorizontalBarChart({
+  data,
+  isPending,
+}: {
+  data: HorizontalBarData[];
+  isPending: boolean;
+}) {
   const [isSmall, setIsSmall] = useState(false);
 
   useEffect(() => {
@@ -48,6 +50,33 @@ export default function HorizontalBarChart() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  if (isPending) {
+    return (
+      <div className="min-w-full h-[135px] sm:h-[300px] flex flex-col justify-center gap-3 animate-pulse">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div
+            key={i}
+            className="h-[20px] sm:h-[30px] w-full bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 rounded-[8px]"
+            style={{
+              animation: "shimmer 1.5s infinite linear",
+              backgroundSize: "200% 100%",
+            }}
+          ></div>
+        ))}
+        <style jsx>{`
+          @keyframes shimmer {
+            0% {
+              background-position: -200% 0;
+            }
+            100% {
+              background-position: 200% 0;
+            }
+          }
+        `}</style>
+      </div>
+    );
+  }
 
   return (
     <div className="min-w-full h-[135px] sm:h-[300px] l3-r text-[5.67px] sm:text-[12px]">
@@ -83,7 +112,7 @@ export default function HorizontalBarChart() {
             cursor={{ fill: "#f5f5f5" }}
           />
           <Bar
-            dataKey="sales"
+            dataKey="total"
             shape={<CustomBar />}
             barSize={isSmall ? 13 : 25}
           />
