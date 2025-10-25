@@ -35,7 +35,6 @@ export default function LoginPage() {
   const { isPending: loginLoading, mutate: login } = useLogin({
     mutationConfig: {
       onSuccess: (data) => {
-        console.log(data);
         const role = data.user.role;
 
         if (role === "USER") {

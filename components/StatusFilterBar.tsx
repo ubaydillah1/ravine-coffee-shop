@@ -4,21 +4,24 @@ import React from "react";
 import Search from "@/public/assets/icons/search.svg";
 import { DatePicker } from "@/components/ui/date-picker";
 import { cn } from "@/lib/utils";
+import { OrderTableType } from "@/types/order";
 
 interface StatusFilterBarProps {
-  activeTab: string;
-  onTabChange: (tab: string) => void;
+  activeTab: OrderTableType;
+  onTabChange: (tab: OrderTableType) => void;
   showSearch?: boolean;
   title?: string;
   mobileTitle?: string;
+  date?: Date;
+  setDate: (date: Date | undefined) => void;
 }
 
-const tabs = [
-  "All Orders",
-  "Completed",
-  "In Progress",
-  "Open Bill",
-  "Canceled",
+const tabs: { label: string; value: OrderTableType }[] = [
+  { label: "All Orders", value: "all-orders" },
+  { label: "Completed", value: "completed" },
+  { label: "In Progress", value: "in-progress" },
+  { label: "Open Bill", value: "open-bill" },
+  { label: "Canceled", value: "canceled" },
 ];
 
 export const StatusFilterBar = ({
@@ -27,6 +30,8 @@ export const StatusFilterBar = ({
   showSearch = true,
   title,
   mobileTitle,
+  date,
+  setDate,
 }: StatusFilterBarProps) => {
   return (
     <header
@@ -41,16 +46,16 @@ export const StatusFilterBar = ({
         <div className="flex gap-[24px] overflow-x-scroll hide-scrollbar">
           {tabs.map((tab) => (
             <button
-              key={tab}
-              onClick={() => onTabChange(tab)}
+              key={tab.value}
+              onClick={() => onTabChange(tab.value)}
               className={cn(
                 "transition-all duration-150 cursor-pointer shrink-0",
-                activeTab === tab
+                activeTab === tab.value
                   ? "l2-b sm:b1-b text-neutral-n900 underline"
                   : "b2-r text-neutral-n600 hover:text-neutral-n800"
               )}
             >
-              {tab}
+              {tab.label}
             </button>
           ))}
         </div>
@@ -71,7 +76,7 @@ export const StatusFilterBar = ({
 
           <div className="w-full flex justify-between items-center">
             <p className="b1-b text-neutral-n900 sm:hidden">{mobileTitle}</p>
-            <DatePicker />
+            <DatePicker value={date} onChange={setDate} />
           </div>
         </div>
       </div>

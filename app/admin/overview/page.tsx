@@ -11,7 +11,6 @@ import React, { useState } from "react";
 
 const OverviewPage = () => {
   const [period, setPeriod] = useState<Period>("today");
-  console.log(period);
   const { data: overviewData, isPending: overviewIsPending } = useGetOverview({
     period,
   });

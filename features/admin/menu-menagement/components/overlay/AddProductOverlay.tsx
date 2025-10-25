@@ -20,47 +20,82 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { ModalProps } from "@/features/cashier/types/modal";
-import { Upload } from "lucide-react";
+import { Upload, Loader2 } from "lucide-react";
+import { useCreateProduct } from "../../hooks/useCreateProduct";
+import { toast } from "sonner";
+import { Category } from "../../types";
+import { useForm } from "react-hook-form";
+import { toastError, toastSuccess } from "@/components/ui/sonner";
 
-type AddProductOverlayProps = ModalProps;
+type FormValues = {
+  name: string;
+  price: string;
+  description?: string;
+  category: Category;
+  image: File | null;
+};
 
-const AddProductOverlay = ({
-  openModal,
-  closeModal,
-}: AddProductOverlayProps) => {
-  const [category, setCategory] = useState("Coffee");
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState<File | null>(null);
+const AddProductOverlay = ({ openModal, closeModal }: ModalProps) => {
   const [preview, setPreview] = useState<string | null>(null);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImage(file);
-      setPreview(URL.createObjectURL(file));
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm<FormValues>({
+    defaultValues: {
+      name: "",
+      price: "",
+      category: "coffee",
+      description: "",
+      image: null,
+    },
+  });
+
+  watch("image");
+  const category = watch("category");
+
+  const { mutate, isPending } = useCreateProduct({});
+
+  const onSubmit = (data: FormValues) => {
+    if (!data.image) {
+      toastError("Image is required");
+      return;
     }
+
+    const rawPrice = data.price.replace(/\D/g, "");
+
+    mutate(
+      {
+        name: data.name,
+        category: data.category.toUpperCase(),
+        price: rawPrice,
+        description: data.description || "",
+        image: data.image,
+      },
+      {
+        onSuccess: () => {
+          toastSuccess("New product has been created");
+          reset();
+          setPreview(null); 
+          closeModal();
+        },
+        onError: () => toast.error("Failed to create product"),
+      }
+    );
+  };
+
+  const handleImage = (file: File | null) => {
+    setValue("image", file);
+    setPreview(file ? URL.createObjectURL(file) : null);
   };
 
   const clearAll = () => {
-    setCategory("Coffee");
-    setName("");
-    setPrice("");
-    setDescription("");
-    setImage(null);
+    reset();
     setPreview(null);
-  };
-
-  const handleSave = () => {
-    console.log({
-      category,
-      name,
-      price,
-      description,
-      image,
-    });
-    closeModal();
   };
 
   return (
@@ -75,7 +110,10 @@ const AddProductOverlay = ({
           </DialogTitle>
         </DialogHeader>
 
-        <div className="p-[24px] w-full flex flex-col gap-6">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="p-[24px] w-full flex flex-col gap-6"
+        >
           <div className="flex justify-center">
             <label
               htmlFor="product-image"
@@ -96,24 +134,35 @@ const AddProductOverlay = ({
                 id="product-image"
                 type="file"
                 accept="image/*"
-                onChange={handleImageChange}
+                onChange={(e) => handleImage(e.target.files?.[0] || null)}
                 className="hidden"
               />
             </label>
           </div>
+          {errors.image && (
+            <p className="text-red-500 text-xs text-center">
+              Image is required
+            </p>
+          )}
 
           {/* Category */}
           <div className="flex flex-col gap-2">
             <label className="text-gray-700 b2-b">Category</label>
-            <Select value={category} onValueChange={setCategory}>
+            <Select
+              value={category}
+              onValueChange={(v: Category) => setValue("category", v)}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select category" />
               </SelectTrigger>
               <SelectContent className="w-[--radix-select-trigger-width] bg-white">
-                <SelectItem value="Coffee">Coffee</SelectItem>
-                <SelectItem value="Tea">Tea</SelectItem>
-                <SelectItem value="Milk">Milk</SelectItem>
-                <SelectItem value="Food">Food</SelectItem>
+                {["coffee", "tea", "milk", "food", "snack", "bundle"].map(
+                  (c) => (
+                    <SelectItem key={c} value={c}>
+                      {c.charAt(0).toUpperCase() + c.slice(1)}
+                    </SelectItem>
+                  )
+                )}
               </SelectContent>
             </Select>
           </div>
@@ -123,10 +172,12 @@ const AddProductOverlay = ({
             <label className="text-gray-700 b2-b ">Product Name</label>
             <Input
               placeholder="Enter product name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              {...register("name", { required: true })}
               className="b2-r"
             />
+            {errors.name && (
+              <p className="text-red-500 text-xs">Name is required</p>
+            )}
           </div>
 
           {/* Price */}
@@ -137,17 +188,20 @@ const AddProductOverlay = ({
               <Input
                 type="text"
                 placeholder="Enter price"
-                value={price}
+                {...register("price", { required: true })}
                 onChange={(e) => {
-                  const rawValue = e.target.value.replace(/\D/g, "");
+                  const raw = e.target.value.replace(/\D/g, "");
                   const formatted = new Intl.NumberFormat("id-ID").format(
-                    Number(rawValue || 0)
+                    Number(raw || 0)
                   );
-                  setPrice(formatted);
+                  setValue("price", formatted);
                 }}
                 className="flex-1 pl-10 pr-3 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
             </div>
+            {errors.price && (
+              <p className="text-red-500 text-xs">Price is required</p>
+            )}
           </div>
 
           {/* Description */}
@@ -158,25 +212,37 @@ const AddProductOverlay = ({
             </label>
             <Textarea
               placeholder="Enter product description..."
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              {...register("description")}
               className="b2-r"
             />
           </div>
 
           <DialogFooter className="flex justify-between w-full">
             <Button
+              type="button"
               variant="outline"
               className="flex-1 mr-3"
               onClick={clearAll}
+              disabled={isPending}
             >
               Clear All
             </Button>
-            <Button className="flex-1 text-white" onClick={handleSave}>
-              Save
+            <Button
+              type="submit"
+              className="flex-1 text-white"
+              disabled={isPending}
+            >
+              {isPending ? (
+                <div className="flex items-center gap-2 justify-center">
+                  <Loader2 className="animate-spin w-4 h-4" />
+                  Saving...
+                </div>
+              ) : (
+                "Save"
+              )}
             </Button>
           </DialogFooter>
-        </div>
+        </form>
       </DialogContent>
     </Dialog>
   );

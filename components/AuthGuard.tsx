@@ -14,12 +14,11 @@ export default function AuthGuard({ children, allowedRoles }: AuthGuardProps) {
   const { isAuthenticated, user } = useAuthStore();
   const [hydrated, setHydrated] = useState(false);
 
-  // Tunggu sampai Zustand selesai rehydrate
   useEffect(() => {
     const unsub = useAuthStore.persist.onFinishHydration(() => {
       setHydrated(true);
     });
-    setHydrated(useAuthStore.persist.hasHydrated()); // jaga-jaga kalau udah hydrate duluan
+    setHydrated(useAuthStore.persist.hasHydrated()); 
     return () => unsub();
   }, []);
 

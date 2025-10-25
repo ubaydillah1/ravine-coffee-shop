@@ -12,7 +12,6 @@ export const Title = ({
   const ranges = ["Today", "This week", "This month"];
 
   const handleRangeChange = (value: string) => {
-    console.log("Value : ", value);
     if (value === "Today") setPeriod("today");
     if (value === "This week") setPeriod("this-week");
     if (value === "This month") setPeriod("this-month");

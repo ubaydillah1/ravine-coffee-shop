@@ -1,36 +1,81 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Category } from "../types";
+import { useGetProducts } from "../hooks/useGetProducts";
+import { useInView } from "react-intersection-observer";
+import ToggleSwitch from "./ToggleSwitch";
 
-const MenuCards = () => {
-  const [displayStates, setDisplayStates] = useState(Array(10).fill(true));
+const MenuCards = ({ category }: { category: Category }) => {
+  const { data, isPending, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useGetProducts({ category, limit: 8 });
 
-  const handleToggle = (index: number) => {
-    setDisplayStates((prev) =>
-      prev.map((state, i) => (i === index ? !state : state))
-    );
-  };
+  const products = data?.pages.flatMap((page) => page.products) ?? [];
+
+  const [displayStates, setDisplayStates] = useState<boolean[]>([]);
+
+  useEffect(() => {
+    if (products.length > displayStates.length) {
+      setDisplayStates((prev) => [
+        ...prev,
+        ...Array(products.length - prev.length).fill(true),
+      ]);
+    }
+  }, [products.length, displayStates.length]);
+
+  const { ref, inView } = useInView({
+    root: null,
+    rootMargin: "300px",
+    threshold: 0,
+  });
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) fetchNextPage();
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  const skeletons = new Array(8).fill(null);
 
   return (
-    <section className="w-full flex-1 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-[16px] sm:gap-[32px]">
-      {Array(10)
-        .fill(null)
-        .map((_, i) => {
-          const active = displayStates[i];
-
-          return (
+    <main className="min-h-screen w-full pb-[24px] sm:pb-[40px]">
+      <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-[16px] sm:gap-[32px]">
+        {isPending &&
+          skeletons.map((_, i) => (
             <div
-              key={i}
-              className="border border-neutral-n100 rounded-[16px] p-[16px] flex flex-col gap-[16px]"
+              key={`sk-${i}`}
+              className="border border-neutral-n100 rounded-[16px] p-[16px] flex flex-col gap-[16px] animate-pulse"
+            >
+              <div className="bg-neutral-n200 rounded-[12px] w-full aspect-square" />
+              <div className="space-y-[8px]">
+                <div className="bg-neutral-n200 w-1/3 h-[20px] rounded" />
+                <div className="bg-neutral-n200 w-2/3 h-[20px] rounded" />
+                <div className="bg-neutral-n200 w-1/2 h-[20px] rounded" />
+              </div>
+              <div className="w-full h-[22px] bg-neutral-n200 rounded" />
+            </div>
+          ))}
+
+        {!isPending && products.length === 0 && (
+          <p className="col-span-full text-center py-[60px] text-neutral-n700">
+            No products available
+          </p>
+        )}
+
+        {products.map((product) => {
+          return (
+            <motion.div
+              key={product.id}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.25 }}
+              className="border border-neutral-n300 rounded-[16px] p-[16px] flex flex-col gap-[16px] hover:shadow-lg transition-shadow"
             >
               <div className="bg-[#fdf7f1] rounded-[12px] p-[2px]">
                 <div className="w-full aspect-square relative">
                   <Image
-                    src="/assets/images/Varian 1.png"
-                    alt="coffee"
+                    src={product.image}
+                    alt={product.name}
                     fill
                     className="object-contain"
                   />
@@ -38,35 +83,47 @@ const MenuCards = () => {
               </div>
 
               <div className="space-y-[8px]">
-                <Badge className="text-white">Coffee</Badge>
-                <p className="l2-b">Hazelnut Latte</p>
-                <p className="l2-r text-neutral-n700">Rp20.000</p>
+                <p className="l2-b line-clamp-1">{product.name}</p>
+                <p className="l2-r text-neutral-n700">
+                  Rp{Number(product.price).toLocaleString("id-ID")}
+                </p>
               </div>
 
               <div className="flex justify-between items-center pt-[8px] border-t border-neutral-n100">
                 <span className="l3-r text-neutral-n800">Display</span>
-
-                <button
-                  onClick={() => handleToggle(i)}
-                  className="relative w-[40px] h-[22px] flex items-center rounded-full transition-colors"
-                  style={{
-                    backgroundColor: active ? "#a37343" : "#d4d4d4",
-                  }}
-                >
-                  <motion.div
-                    layout
-                    transition={{ type: "spring", stiffness: 600, damping: 30 }}
-                    className="absolute bg-white rounded-full w-[18px] h-[18px] shadow-sm"
-                    style={{
-                      left: active ? "calc(100% - 20px)" : "2px",
-                    }}
-                  />
-                </button>
+                <ToggleSwitch
+                  productId={product.id}
+                  defaultActive={product.isAvailable}
+                />
               </div>
-            </div>
+            </motion.div>
           );
         })}
-    </section>
+
+        {hasNextPage && (
+          <div
+            ref={ref}
+            className="col-span-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-[16px] sm:gap-[32px] pt-[12px]"
+          >
+            {isFetchingNextPage &&
+              [...Array(4)].map((_, i) => (
+                <div
+                  key={`fetch-sk-${i}`}
+                  className="border border-neutral-n100 rounded-[16px] p-[16px] flex flex-col gap-[16px] animate-pulse"
+                >
+                  <div className="bg-neutral-n200 rounded-[12px] w-full aspect-square" />
+                  <div className="space-y-[8px]">
+                    <div className="bg-neutral-n200 w-1/3 h-[20px] rounded" />
+                    <div className="bg-neutral-n200 w-2/3 h-[20px] rounded" />
+                    <div className="bg-neutral-n200 w-1/2 h-[20px] rounded" />
+                  </div>
+                  <div className="w-full h-[22px] bg-neutral-n200 rounded" />
+                </div>
+              ))}
+          </div>
+        )}
+      </section>
+    </main>
   );
 };
 

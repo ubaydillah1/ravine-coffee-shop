@@ -19,17 +19,22 @@ interface DatePickerProps {
 
 export function DatePicker({ value, onChange }: DatePickerProps) {
   const [open, setOpen] = React.useState(false);
-  const defaultDate = value ?? new Date();
-  const [date, setDate] = React.useState<Date | undefined>(defaultDate);
+  const [date, setDate] = React.useState<Date | undefined>(value);
 
   React.useEffect(() => {
-    if (value) setDate(value);
+    setDate(value);
   }, [value]);
 
   const handleToday = () => {
     const today = new Date();
     setDate(today);
     onChange?.(today);
+    setOpen(false);
+  };
+
+  const handleClear = () => {
+    setDate(undefined);
+    onChange?.(undefined);
     setOpen(false);
   };
 
@@ -61,7 +66,19 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
           }}
           disabled={{ after: new Date() }}
         />
-        <div className="flex justify-end pt-1">
+
+        <div className="flex justify-between pt-1">
+          {date && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleClear}
+              className="text-sm text-neutral-n600 hover:text-neutral-n800"
+            >
+              Clear
+            </Button>
+          )}
+
           <Button
             variant="ghost"
             size="sm"

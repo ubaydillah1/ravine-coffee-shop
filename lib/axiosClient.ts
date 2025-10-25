@@ -22,6 +22,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (res) => res,
   (err) => {
+    console.log(err);
     if (err.response?.status === 401) {
       useAuthStore.getState().logout();
     }
