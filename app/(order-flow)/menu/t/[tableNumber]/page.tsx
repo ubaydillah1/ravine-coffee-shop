@@ -8,7 +8,11 @@ import { redirect } from "next/navigation";
 import MenuWrapper from "@/features/user/menu/components/MenuWrapper";
 import Image from "next/image";
 
-const MenuPage = async ({ params }: { params: { tableNumber: string } }) => {
+const MenuPage = async ({
+  params,
+}: {
+  params: Promise<{ tableNumber: string }>;
+}) => {
   const tableNumber = Number((await params).tableNumber);
 
   if (isNaN(tableNumber)) return redirect("/error");
