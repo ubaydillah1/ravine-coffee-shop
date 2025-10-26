@@ -23,6 +23,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (res) => res,
   (err) => {
+    console.log(err);
     const message =
       err.response?.data?.message || "Terjadi kesalahan pada server.";
 
