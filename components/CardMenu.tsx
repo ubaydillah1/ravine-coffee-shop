@@ -3,7 +3,7 @@ import { ProductCardProps } from "@/features/user/menu/types/CardMenuTypes";
 import Image from "next/image";
 import React from "react";
 
-const CardMenu = ({ layout = "vertical" }: ProductCardProps) => {
+const CardMenu = ({ layout = "vertical", data }: ProductCardProps) => {
   return (
     <div
       className={`${layout === "vertical" && "w-[164px] flex-col gap-[8px]"} ${
@@ -20,13 +20,14 @@ const CardMenu = ({ layout = "vertical" }: ProductCardProps) => {
             layout === "vertical" && "h-[132px] w-[132px]"
           } ${
             layout === "small-horizontal" && "w-[64px] h-[64px]"
-          } relative rounded-[8px] overflow-hidden bg-black`}
+          } relative rounded-[8px] overflow-hidden bg-white`}
         >
           <Image
-            src={"/assets/images/ba-image.png"}
+            src={data.image ?? "/assets/images/ba-image.png"}
             fill
-            alt="menu-image"
-            className="object-cover"
+            alt={data.name}
+            sizes="100%"
+            className="object-contain"
           />
         </div>
       </div>
@@ -39,12 +40,8 @@ const CardMenu = ({ layout = "vertical" }: ProductCardProps) => {
             layout === "small-vertical" && "l3-r"
           } text-neutral-n900`}
         >
-          Bundling Coffee + Toast + French Fries
+          {data.name}
         </p>
-
-        {/* <div className="flex-center bg-accent-g500 rounded-full p-[2px] aspect-square h-fit w-fit">
-          <Check className="h-[16px] w-[16px] text-white" />
-        </div> */}
 
         <div
           className={`${layout === "vertical" && "flex-col gap-[8px]"} ${
@@ -53,7 +50,9 @@ const CardMenu = ({ layout = "vertical" }: ProductCardProps) => {
             layout === "small-horizontal" && "justify-between items-center"
           } flex `}
         >
-          <p className="text-primary-b300 l2-b">$9.9</p>
+          <p className="text-primary-b300 l2-b">
+            Rp {Number(data.price).toLocaleString("id-ID")}
+          </p>
           <Button
             variant={"outline"}
             size={"sm"}
@@ -61,7 +60,7 @@ const CardMenu = ({ layout = "vertical" }: ProductCardProps) => {
               layout === "horizontal" && "w-[72px]"
             } ${layout === "small-horizontal" && "hidden"}  ${
               layout === "small-vertical" && "hidden"
-            } text-primary-b500 font-bold`}
+            } text-primary-b500 font-bold rounded-[6px]!`}
           >
             Add
           </Button>

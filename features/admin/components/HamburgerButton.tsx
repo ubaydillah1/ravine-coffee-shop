@@ -59,6 +59,8 @@ const HamburgerButton = () => {
                 src={"/assets/images/white-logo.png"}
                 fill
                 alt="Logo"
+                priority
+                sizes="100%"
                 className="object-contain"
               />
             </div>

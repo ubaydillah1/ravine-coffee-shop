@@ -40,7 +40,7 @@ const Header = () => {
           }`}
         />
         <div className="rounded-full size-[32px] bg-black relative flex-center overflow-hidden">
-          <Image src={"/assets/images/ba-image.png"} fill alt="avatar" />
+          <Image src={"/assets/images/ba-image.png"} fill alt="avatar" sizes="100%"/>
         </div>
       </div>
     </header>

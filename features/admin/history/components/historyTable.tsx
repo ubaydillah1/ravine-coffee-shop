@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { Badge } from "@/components/ui/badge";
 import User from "@/public/assets/icons/user.svg";
@@ -53,7 +53,7 @@ const HistoryTable = ({ status, date }: HistoryTableProps) => {
     threshold: 0.3,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
@@ -66,7 +66,6 @@ const HistoryTable = ({ status, date }: HistoryTableProps) => {
       </div>
     );
 
-  // ✅ Skeleton awal
   if (isPending) {
     return (
       <div className="flex-1 overflow-y-scroll hide-scrollbar mt-[24px] animate-pulse">
@@ -129,7 +128,6 @@ const HistoryTable = ({ status, date }: HistoryTableProps) => {
     );
   }
 
-  // ✅ Kosong
   if (histories.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-[300px] text-neutral-n600 animate-pulse">
@@ -138,7 +136,6 @@ const HistoryTable = ({ status, date }: HistoryTableProps) => {
     );
   }
 
-  // ✅ Data tampil
   return (
     <div className="flex-1 overflow-y-scroll hide-scrollbar mt-[24px]">
       <table className="w-full text-sm text-neutral-n900 border-separate border-spacing-y-[24px] -mt-[24px] pb-[24px] hidden sm:table">

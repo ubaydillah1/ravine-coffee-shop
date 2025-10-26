@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useAuthStore } from "@/store/useAuthStore";
 import { config } from "./config";
+import { useUIStore } from "@/store/useUiStore";
 
 const axiosInstance = axios.create({
   baseURL: config.BASE_URL,
@@ -22,12 +23,12 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (res) => res,
   (err) => {
-    console.log(err);
-    if (err.response?.status === 401) {
-      useAuthStore.getState().logout();
-    }
+    const message =
+      err.response?.data?.message || "Terjadi kesalahan pada server.";
 
-    if (err.response?.status === 403) {
+    useUIStore.getState().setError(message);
+
+    if (err.response?.status === 401 || err.response?.status === 403) {
       useAuthStore.getState().logout();
     }
 

@@ -23,7 +23,12 @@ const AboutSection = () => {
             Brew Joy into Every Morning
           </h2>
           <FadeInAndSlideUp className="relative w-[240px] h-[240px] lg:w-[444px] lg:h-[444px] rounded-full overflow-hidden my-[48px] lg:my-0 mx-auto md:w-[400px] md:aspect-square! md:h-full">
-            <Image src={"/assets/images/ba-image.png"} fill alt="bg-image" />
+            <Image
+              src={"/assets/images/ba-image.png"}
+              fill
+              alt="bg-image"
+              sizes="100%"
+            />
           </FadeInAndSlideUp>
         </div>
       </div>

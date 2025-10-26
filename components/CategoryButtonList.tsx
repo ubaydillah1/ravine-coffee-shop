@@ -50,6 +50,7 @@ const CategoryButtonList = ({
                 src={icon}
                 alt={name}
                 fill
+                sizes="100%"
                 className="object-contain p-[4px]"
               />
             </div>

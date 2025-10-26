@@ -1,9 +1,14 @@
+"use client";
+
 import React from "react";
 import ShoppingCart from "@/public/assets/icons/shopping-cart.svg";
+import { useCartStore } from "@/store/useCartStore";
 
 const CheckoutButton = () => {
+  const itemsCount = useCartStore((state) => state.itemsCount());
+
   return (
-    <div className="sticky right-[0] left-[0] bottom-[21px] px-[21px]">
+    <div className="fixed right-[0] left-[0] bottom-[21px] px-[21px]">
       <div className="h-[64px] bg-primary-b300 flex shadow-lg rounded-[8px] overflow-hidden">
         <div className="relative flex-center w-[59px] bg-white">
           <ShoppingCart className="text-primary-b300" />
@@ -16,7 +21,7 @@ const CheckoutButton = () => {
             <p className="l2-r text-white">Total</p>
             <p className="l2-r text-white">$9.9</p>
           </div>
-          <p className="l2-b text-white">CHECK OUT (1)</p>
+          <p className="l2-b text-white">CHECK OUT ({`${itemsCount}`})</p>
         </div>
       </div>
     </div>

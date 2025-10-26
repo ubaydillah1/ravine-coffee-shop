@@ -38,7 +38,8 @@ export default function LoginPage() {
         const role = data.user.role;
 
         if (role === "USER") {
-          router.replace("/menu");
+          localStorage.removeItem("auth-storage");
+          router.replace("/");
         }
 
         if (role === "ADMIN") {
@@ -82,7 +83,7 @@ export default function LoginPage() {
       } else if (user.role === "CASHIER") {
         router.replace("/cashier/order");
       } else {
-        router.replace("/menu");
+        router.replace("/");
       }
     }
   }, [isAuthenticated, user, router]);

@@ -1,3 +1,5 @@
+import { Product } from "@/features/admin/menu-menagement/types";
+
 type CardLayout =
   | "vertical"
   | "horizontal"
@@ -12,6 +14,6 @@ type CardLayout =
 // }
 
 export interface ProductCardProps {
-  // item: Item;
+  data: Product;
   layout?: CardLayout;
 }

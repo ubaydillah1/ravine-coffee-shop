@@ -32,6 +32,8 @@ const Sidebar = () => {
             <Image
               src={"/assets/images/white-logo.png"}
               fill
+              sizes="100%"
+              priority
               alt="Logo"
               className="object-contain"
             />
