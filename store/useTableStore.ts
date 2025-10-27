@@ -7,7 +7,7 @@ type TableState = {
   clearTableNumber: () => void;
 };
 
-export const useCartStore = create(
+export const useTableStore = create(
   persist<TableState>(
     (set) => ({
       tableNumber: null,

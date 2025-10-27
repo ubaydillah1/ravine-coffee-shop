@@ -1,16 +1,38 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { ProductCardProps } from "@/features/user/menu/types/CardMenuTypes";
+import { useCartStore } from "@/store/useCartStore";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const CardMenu = ({ layout = "vertical", data }: ProductCardProps) => {
+  const addItem = useCartStore((state) => state.addItem);
+  const router = useRouter();
+
+  const handleAddItem = () => {
+    const quantity = 1;
+    const price = Number(data.price);
+
+    addItem({
+      productId: data.id,
+      quantity,
+      productName: data.name,
+      productImage: data.image,
+      productPrice: price,
+      productCategory: data.category,
+    });
+  };
+
   return (
     <div
+      onClick={() => router.push("/item/" + data.slug)}
       className={`${layout === "vertical" && "w-[164px] flex-col gap-[8px]"} ${
         layout === "small-vertical" && "p-[8px]! w-[112px] flex-col gap-[8px]"
       } ${
         layout === "small-horizontal" && "min-w-[240px]"
-      } p-[16px] border border-neutral-n100 shadow-md rounded-[8px] flex gap-[12px] reltaive bg-white`}
+      } p-[16px] border border-neutral-n100 shadow-md rounded-[8px] flex gap-[12px] reltaive bg-white cursor-pointer`}
     >
       <div className="w-auto">
         <div
@@ -61,6 +83,11 @@ const CardMenu = ({ layout = "vertical", data }: ProductCardProps) => {
             } ${layout === "small-horizontal" && "hidden"}  ${
               layout === "small-vertical" && "hidden"
             } text-primary-b500 font-bold rounded-[6px]!`}
+            onClick={(e: React.MouseEvent) => {
+              e.preventDefault();
+              e.stopPropagation();
+              handleAddItem();
+            }}
           >
             Add
           </Button>

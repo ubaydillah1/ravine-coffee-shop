@@ -7,6 +7,7 @@ import CheckoutButton from "@/features/user/menu/components/CheckoutButton";
 import { redirect } from "next/navigation";
 import MenuWrapper from "@/features/user/menu/components/MenuWrapper";
 import Image from "next/image";
+import TableInitializer from "@/components/TableInitializer";
 
 const MenuPage = async ({
   params,
@@ -27,6 +28,7 @@ const MenuPage = async ({
           <Menu className="text-neutral-n900" />
         </div>
       </nav> */}
+      <TableInitializer tableNumber={tableNumber} />
 
       <div className="relative h-full">
         <Image
@@ -39,7 +41,7 @@ const MenuPage = async ({
         />
         <div className="relative z-10 p-6 flex flex-col gap-[24px]">
           <TitleCard />
-          <TableCard tableNumber={tableNumber} />
+          <TableCard  />
         </div>
       </div>
       <main className="pb-[40px]">

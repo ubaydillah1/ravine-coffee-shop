@@ -1,30 +1,37 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-type ProductCategory = "COFFEE" | "MILK" | "TEA" | "FOOD" | "SNACK" | "BUNDLE";
-
 type CartItem = {
   quantity: number;
-  subtotal: number;
+  subtotal?: number;
   productName: string;
   productImage: string;
   productPrice: number;
   productId: string;
-  productCategory: ProductCategory;
+  productCategory?: string;
 };
 
 type CartState = {
   items: CartItem[];
+  tax: number;
+  discount: number;
+
   addItem: (item: CartItem) => void;
   removeItem: (productId: string) => void;
   clearCart: () => void;
-  itemsCount: () => number;
+
+  totalPrice: () => number;
+  setTax: (value: number) => void;
+  setDiscount: (value: number) => void;
+  grandTotal: () => number;
 };
 
 export const useCartStore = create(
   persist<CartState>(
     (set, get) => ({
       items: [],
+      tax: 0.1,
+      discount: 0,
 
       addItem: (item) =>
         set((state) => {
@@ -32,16 +39,28 @@ export const useCartStore = create(
             (i) => i.productId === item.productId
           );
 
+          let newItems: CartItem[];
           if (existing) {
-            return {
-              items: state.items.map((i) =>
-                i.productId === item.productId
-                  ? { ...i, quantity: i.quantity + item.quantity }
-                  : i
-              ),
-            };
+            newItems = state.items.map((i) =>
+              i.productId === item.productId
+                ? {
+                    ...i,
+                    quantity: i.quantity + item.quantity,
+                    subtotal: (i.quantity + item.quantity) * i.productPrice,
+                  }
+                : i
+            );
+          } else {
+            newItems = [
+              ...state.items,
+              {
+                ...item,
+                subtotal: item.quantity * item.productPrice,
+              },
+            ];
           }
-          return { items: [...state.items, item] };
+
+          return { items: newItems };
         }),
 
       removeItem: (productId) =>
@@ -51,9 +70,22 @@ export const useCartStore = create(
 
       clearCart: () => set({ items: [] }),
 
-      itemsCount: () =>
-        get().items.reduce((acc, item) => acc + item.quantity, 0),
+      totalPrice: () =>
+        get().items.reduce((acc, item) => acc + (item.subtotal ?? 0), 0),
+
+      setTax: (value) => set({ tax: value }),
+      setDiscount: (value) => set({ discount: value }),
+
+      grandTotal: () => {
+        const { totalPrice, tax, discount } = get();
+        const subtotal = totalPrice();
+        const taxAmount = subtotal * tax;
+        const discountAmount = subtotal * discount;
+        return subtotal + taxAmount - discountAmount;
+      },
     }),
-    { name: "cart-storage" }
+    {
+      name: "cart-storage",
+    }
   )
 );

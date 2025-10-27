@@ -8,6 +8,7 @@ export interface Product {
   isAvailable: boolean;
   price: string;
   description: string;
+  slug: string;
 }
 
 export interface ProductEditPayload {

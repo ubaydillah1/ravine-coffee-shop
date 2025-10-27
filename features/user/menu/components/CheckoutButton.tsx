@@ -3,12 +3,19 @@
 import React from "react";
 import ShoppingCart from "@/public/assets/icons/shopping-cart.svg";
 import { useCartStore } from "@/store/useCartStore";
+import Link from "next/link";
 
 const CheckoutButton = () => {
-  const itemsCount = useCartStore((state) => state.itemsCount());
+  const items = useCartStore((state) => state.items);
+  const itemsCount = items.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <div className="fixed right-[0] left-[0] bottom-[21px] px-[21px]">
+    <Link
+      href={"/"}
+      className={`right-[0] left-[0] bottom-[21px] px-[21px] ${
+        itemsCount > 0 ? "fixed" : "hidden"
+      }`}
+    >
       <div className="h-[64px] bg-primary-b300 flex shadow-lg rounded-[8px] overflow-hidden">
         <div className="relative flex-center w-[59px] bg-white">
           <ShoppingCart className="text-primary-b300" />
@@ -24,7 +31,7 @@ const CheckoutButton = () => {
           <p className="l2-b text-white">CHECK OUT ({`${itemsCount}`})</p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
