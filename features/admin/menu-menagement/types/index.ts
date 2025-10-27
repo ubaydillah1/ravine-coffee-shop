@@ -10,6 +10,14 @@ export interface Product {
   description: string;
 }
 
+export interface ProductEditPayload {
+  name: string;
+  image?: File | undefined;
+  category: string;
+  price: string;
+  description: string;
+}
+
 export interface ProductPayload {
   products: Product[];
   nextCursor: string | null;

@@ -17,8 +17,6 @@ export const createProduct = async (data: CreateProductInput) => {
   formData.append("category", data.category);
   formData.append("image", data.image);
 
-  console.log(data);
-
   const res = await axiosInstance.post<ApiResponse>(
     `/api/admin/products`,
     formData,
@@ -28,8 +26,6 @@ export const createProduct = async (data: CreateProductInput) => {
       },
     }
   );
-
-  console.log("Message error: ", res.data.message);
 
   return res.data.message;
 };

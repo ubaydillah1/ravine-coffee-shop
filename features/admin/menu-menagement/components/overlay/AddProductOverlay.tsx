@@ -80,7 +80,7 @@ const AddProductOverlay = ({ openModal, closeModal }: ModalProps) => {
         onSuccess: () => {
           toastSuccess("New product has been created");
           reset();
-          setPreview(null); 
+          setPreview(null);
           closeModal();
         },
         onError: () => toast.error("Failed to create product"),

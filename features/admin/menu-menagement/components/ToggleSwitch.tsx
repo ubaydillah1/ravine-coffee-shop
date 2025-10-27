@@ -14,7 +14,8 @@ const ToggleSwitch = ({ productId, defaultActive }: ToggleSwitchProps) => {
   const [active, setActive] = useState(defaultActive);
   const { mutate } = useUpdateActiveStatusProduct({});
 
-  const handleToggle = () => {
+  const handleToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
     const next = !active;
     setActive(next);
     mutate(

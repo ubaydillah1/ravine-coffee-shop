@@ -1,13 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import ComparisonBarChart, { ChartData } from "./charts/ComparisonBarChart";
 import { RangeDropdown } from "./RangeDropdown";
 import { useGetRevenue } from "../hooks/useGetRevenue";
 import { RevenuePeriod, GetRevenuePayload } from "../api/getRevenue";
 
 const RevenueOrderSection = () => {
-  const [period, setPeriod] = React.useState<RevenuePeriod>("weekly");
+  const [period, setPeriod] = useState<RevenuePeriod>("weekly");
   const { data, isPending } = useGetRevenue({ period });
 
   const chartData: ChartData[] | undefined = React.useMemo(() => {
@@ -26,7 +26,7 @@ const RevenueOrderSection = () => {
       <div className="flex justify-between items-center">
         <div className="flex gap-[12px] items-center">
           <span className="l3-b sm:b1-b font-bold">Total Revenue</span>
-          <span className="l4-r sm:l2-r text-neutral-n600">Total Order</span>
+          {/* <span className="l4-r sm:l2-r text-neutral-n600">Total Order</span> */}
         </div>
 
         <RangeDropdown
