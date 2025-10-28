@@ -4,7 +4,7 @@ import React from "react";
 const CTAOrder = () => {
   return (
     <div
-      className="sticky bottom-0 left-0 right-0 px-[21px] py-[16px] flex justify-between bg-white"
+      className="sticky bottom-0 left-0 right-0 px-[21px] py-[16px] flex justify-between bg-white "
       style={{
         boxShadow: "0px -4px 16px #00000014",
         color: "red",

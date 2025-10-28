@@ -22,6 +22,7 @@ const CardMenu = ({ layout = "vertical", data }: ProductCardProps) => {
       productImage: data.image,
       productPrice: price,
       productCategory: data.category,
+      productSlug: data.slug,
     });
   };
 

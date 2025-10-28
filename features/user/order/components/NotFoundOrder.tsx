@@ -1,9 +1,15 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
 import React from "react";
 import EmptyCart from "@/public/assets/icons/empty-cart.svg";
 import Header from "@/components/Header";
+import { useTableStore } from "@/store/useTableStore";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 const NotFoundOrder = () => {
+  const tableNumber = useTableStore((state) => state.tableNumber);
+  const router = useRouter();
   return (
     <div className="max-w-[390px] mx-auto border min-h-screen flex-col flex justify-between">
       <Header title="Order" withBackArrow={true} />
@@ -22,7 +28,18 @@ const NotFoundOrder = () => {
       </div>
 
       <div className="sticky bottom-[21px] px-[21px]">
-        <Button className="rounded-[8px] w-full">Find Menu</Button>
+        <Button
+          onClick={() => {
+            if (tableNumber) {
+              router.replace(`/menu/t/${tableNumber}`);
+            } else {
+              router.replace("/");
+            }
+          }}
+          className="rounded-[8px] w-full"
+        >
+          Find Menu
+        </Button>
       </div>
     </div>
   );

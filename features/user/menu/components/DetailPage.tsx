@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Minus from "@/public/assets/icons/minus.svg";
 import Plus from "@/public/assets/icons/plus.svg";
 import { Button } from "@/components/ui/button";
@@ -11,28 +11,16 @@ import { useRouter } from "next/navigation";
 import { useCartStore } from "@/store/useCartStore";
 import { Check } from "lucide-react";
 import { useTableStore } from "@/store/useTableStore";
+import useNotes from "@/hooks/useNotes";
 
 const DetailPage = ({ slug }: { slug: string }) => {
   const router = useRouter();
   const { data, isPending } = useGetMenuBySlug({ slug });
-  const [notes, setNotes] = useState("");
+  const [notes, setNotes] = useNotes();
   const [quantity, setQuantity] = useState(1);
   const [isSuccess, setIsSuccess] = useState(false);
   const tableNumber = useTableStore((state) => state.tableNumber);
   const addItem = useCartStore((state) => state.addItem);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("notes");
-    if (saved) setNotes(saved);
-  }, []);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      localStorage.setItem("notes", notes);
-    }, 300);
-
-    return () => clearTimeout(timeout);
-  }, [notes]);
 
   const formattedPrice = data?.price
     ? new Intl.NumberFormat("id-ID", {
@@ -79,7 +67,10 @@ const DetailPage = ({ slug }: { slug: string }) => {
         <XIcon className="size-[12px]" />
       </div>
       <div className="flex-center size-[28px] bg-white z-90 rounded-full absolute right-4 top-4 cursor-pointer">
-        <ShoppingCart className="size-[12px]" />
+        <ShoppingCart
+          className="size-[12px]"
+          onClick={() => router.push("/order")}
+        />
       </div>
 
       <div className="relative aspect-square w-full h-[268px] bg-[#fdf7f2]">

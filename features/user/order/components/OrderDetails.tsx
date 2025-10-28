@@ -1,88 +1,74 @@
-import React from "react";
-import OrderItemNotes from "@/public/assets/icons/data.svg";
-import EditSecondForm from "@/public/assets/icons/edit-2.svg";
+"use client";
+
 import Edit from "@/public/assets/icons/edit.svg";
-import Minus from "@/public/assets/icons/minus.svg";
 import Plus from "@/public/assets/icons/plus.svg";
 import { Button } from "@/components/ui/button";
+import OrderItem from "./OrderItem";
+import { useCartStore } from "@/store/useCartStore";
+import { useRouter } from "next/navigation";
+import { useTableStore } from "@/store/useTableStore";
+import { useState } from "react";
+import NotesOverlay from "./overlay/NotesOverlay";
 
 const OrderDetails = () => {
+  const { items, totalItems } = useCartStore();
+  const [isNotesOpen, setIsNotesOpen] = useState(false);
+  const tableNumber = useTableStore((state) => state.tableNumber);
+  const router = useRouter();
+
+  const handleAddItem = () => {
+    router.replace(`/menu/t/${tableNumber}`);
+  };
+
   return (
     <>
       <div className="flex items-center justify-between">
-        <p className="b2-b">Order Items (2)</p>
-        <Button variant={"outline"} className="rounded-[8px] px-[16px]">
+        <p className="b2-b">Order Items ({totalItems()})</p>
+        <Button
+          variant="outline"
+          className="rounded-[8px] px-[16px]"
+          onClick={handleAddItem}
+        >
           <Plus />
           Add Item
         </Button>
       </div>
 
-      <div className="h-[1px] w-full bg-neutral-n300"></div>
+      <div className="h-[1px] w-full bg-neutral-n300" />
 
-      <div className="flex flex-col gap-[12px]">
-        <div className="flex justify-between items-center">
-          <div className="b2-b">Mineral Water</div>
-          <div className="flex gap-[8px] items-center b3-b text-neutral-n700">
-            <EditSecondForm className="size-[16px]" />
-            Edit
+      {items.length > 0 ? (
+        items.map((item) => (
+          <div key={item.productId}>
+            <OrderItem
+              productId={item.productId}
+              productImage={item.productImage}
+              productName={item.productName}
+              productPrice={item.productPrice}
+              productCategory={item.productImage}
+              productSlug={item.productSlug}
+              quantity={item.quantity}
+            />
+            <div className="h-[1px] w-full bg-neutral-n300" />
           </div>
+        ))
+      ) : (
+        <div className="py-4 text-center text-neutral-n500">
+          No items in cart
         </div>
+      )}
 
-        <div className="flex gap-[8px] items-center text-neutral-600">
-          <OrderItemNotes className="size-[20px]" />
-          <p className="b3-b">No notes yet</p>
-        </div>
-
-        <div className="flex justify-between items-center">
-          <p className="b2-b">$1.9</p>
-          <div className="flex gap-[24px] items-center">
-            <span>
-              <Minus className="size-[14px]" />
-            </span>
-            <span>1</span>
-            <span>
-              <Plus className="size-[14px]" />
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div className="h-[1px] w-full bg-neutral-n300"></div>
-
-      <div className="flex flex-col gap-[12px]">
-        <div className="flex justify-between items-center">
-          <div className="b2-b">Mineral Water</div>
-          <div className="flex gap-[8px] items-center b3-b text-neutral-n700">
-            <EditSecondForm className="size-[16px]" />
-            Edit
-          </div>
-        </div>
-
-        <div className="flex gap-[8px] items-center text-neutral-600">
-          <OrderItemNotes className="size-[20px]" />
-          <p className="b3-b">No notes yet</p>
-        </div>
-
-        <div className="flex justify-between items-center">
-          <p className="b2-b">$1.9</p>
-          <div className="flex gap-[24px] items-center">
-            <span>
-              <Minus className="size-[14px]" />
-            </span>
-            <span>1</span>
-            <span>
-              <Plus className="size-[14px]" />
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div className="h-[1px] w-full bg-neutral-n300"></div>
-
-      <div className="border-l-[2px] border-primary-b300 pl-[8px] gap-[8px] text-neutral-n600 b2-b flex">
+      <div
+        className="border-l-[2px] border-primary-b300 pl-[8px] gap-[8px] text-neutral-n600 b2-b flex items-center cursor-pointer"
+        onClick={() => setIsNotesOpen(true)}
+      >
         <Edit className="size-[20px] text-neutral-700" />
         Add another notes
       </div>
+
+      <NotesOverlay
+        openModal={isNotesOpen}
+        closeModal={() => setIsNotesOpen(false)}
+      />
     </>
   );
 };

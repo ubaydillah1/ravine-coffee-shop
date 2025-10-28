@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-type CartItem = {
+export type CartItem = {
   quantity: number;
   subtotal?: number;
   productName: string;
@@ -9,6 +9,7 @@ type CartItem = {
   productPrice: number;
   productId: string;
   productCategory?: string;
+  productSlug?: string;
 };
 
 type CartState = {
@@ -20,10 +21,18 @@ type CartState = {
   removeItem: (productId: string) => void;
   clearCart: () => void;
 
-  totalPrice: () => number;
+  subTotal: () => number;
+  getTaxRate: () => number;
+  getDiscountRate: () => number;
+
   setTax: (value: number) => void;
   setDiscount: (value: number) => void;
-  grandTotal: () => number;
+
+  taxAmount: () => number;
+  discountAmount: () => number;
+
+  totalPrice: () => number;
+  totalItems: () => number;
 };
 
 export const useCartStore = create(
@@ -70,18 +79,33 @@ export const useCartStore = create(
 
       clearCart: () => set({ items: [] }),
 
-      totalPrice: () =>
+      subTotal: () =>
         get().items.reduce((acc, item) => acc + (item.subtotal ?? 0), 0),
 
       setTax: (value) => set({ tax: value }),
       setDiscount: (value) => set({ discount: value }),
 
-      grandTotal: () => {
-        const { totalPrice, tax, discount } = get();
-        const subtotal = totalPrice();
-        const taxAmount = subtotal * tax;
-        const discountAmount = subtotal * discount;
-        return subtotal + taxAmount - discountAmount;
+      getTaxRate: () => get().tax,
+      getDiscountRate: () => get().discount,
+
+      taxAmount: () => {
+        const { subTotal, tax } = get();
+        return subTotal() * tax;
+      },
+
+      discountAmount: () => {
+        const { subTotal, discount } = get();
+        return subTotal() * discount;
+      },
+
+      totalPrice: () => {
+        const { subTotal, taxAmount, discountAmount } = get();
+
+        return subTotal() + taxAmount() - discountAmount();
+      },
+
+      totalItems: () => {
+        return get().items.reduce((total, item) => total + item.quantity, 0);
       },
     }),
     {

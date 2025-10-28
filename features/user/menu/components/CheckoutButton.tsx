@@ -11,7 +11,7 @@ const CheckoutButton = () => {
 
   return (
     <Link
-      href={"/"}
+      href={"/order"}
       className={`right-[0] left-[0] bottom-[21px] px-[21px] ${
         itemsCount > 0 ? "fixed" : "hidden"
       }`}
