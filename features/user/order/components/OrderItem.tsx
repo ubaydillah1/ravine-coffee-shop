@@ -16,10 +16,12 @@ const OrderItem = ({
   quantity,
   productCategory,
 }: CartItem) => {
-  const { addItem, removeItem } = useCartStore();
+  const { addItem, decreaseItem } = useCartStore();
   const router = useRouter();
 
   const handleIncrease = () => {
+    if (quantity >= 10) return;
+
     const itemToAdd: CartItem = {
       productId,
       productName,
@@ -34,23 +36,7 @@ const OrderItem = ({
   };
 
   const handleDecrease = () => {
-    if (quantity > 1) {
-      const currentItem: CartItem = {
-        productId,
-        productName,
-        productPrice,
-        productImage,
-        productSlug,
-        productCategory,
-        quantity: quantity - 1,
-        subtotal: productPrice * (quantity - 1),
-      };
-
-      removeItem(productId);
-      addItem(currentItem);
-    } else {
-      removeItem(productId);
-    }
+    decreaseItem(productId);
   };
 
   const handleEdit = () => {

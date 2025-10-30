@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ArrowLeft from "@/public/assets/icons/arrow-left.svg";
 import { useRouter } from "next/navigation";
 import {
@@ -31,7 +31,7 @@ const Header = ({
   modalType,
 }: HeaderProps) => {
   const router = useRouter();
-  const [activeModal, setActiveModal] = React.useState<ModalType>("NONE");
+  const [activeModal, setActiveModal] = useState<ModalType>("NONE");
 
   useEffect(() => {
     router.prefetch("/order/payment");
@@ -51,7 +51,7 @@ const Header = ({
 
   return (
     <>
-      <header className="bg-white flex h-[60px] items-center px-[21px] shadow-sm w-full justify-between">
+      <header className="bg-white flex h-[60px] items-center px-[21px] shadow-sm w-full justify-between sticky top-0 z-20">
         <div className="w-[24px] h-[24px] flex-shrink-0">
           {withBackArrow && (
             <>
@@ -81,6 +81,8 @@ const Header = ({
                 <Image
                   src="/assets/illustrations/qr-cancel-illustration.png"
                   alt="qr-cancel-illustration"
+                  sizes="100%"
+                  priority
                   fill
                 />
               </div>

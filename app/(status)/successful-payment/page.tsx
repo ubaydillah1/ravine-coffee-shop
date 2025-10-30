@@ -1,9 +1,16 @@
+"use client";
+
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
+import { useTableStore } from "@/store/useTableStore";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const SuccessfulPaymenPage = () => {
+  const tableNumber = useTableStore((state) => state.tableNumber);
+  const router = useRouter();
+
   return (
     <div className="h-screen bg-white flex flex-col px-[20px] sm:px-[40px]">
       <Header title="QRIS" withBackArrow={true} />
@@ -27,7 +34,18 @@ const SuccessfulPaymenPage = () => {
           </div>
         </div>
 
-        <Button className="w-full max-w-[348px]">New Order</Button>
+        <Button
+          className="w-full max-w-[348px]"
+          onClick={() => {
+            if (tableNumber) {
+              router.push(`/menu/t/${tableNumber}`);
+            } else {
+              router.push("/");
+            }
+          }}
+        >
+          New Order
+        </Button>
       </main>
     </div>
   );

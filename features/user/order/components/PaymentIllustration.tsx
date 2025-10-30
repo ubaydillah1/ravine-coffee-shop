@@ -8,6 +8,8 @@ const PaymentIllustration = () => {
         <Image
           src={"/assets/illustrations/payment-with-qr-illustration.webp"}
           alt="qr-payment-illustration"
+          sizes="100%"
+          priority
           fill
         />
       </div>

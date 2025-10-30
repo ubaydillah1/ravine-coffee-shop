@@ -11,9 +11,12 @@ import {
 } from "@/components/ui/dialog";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useTableStore } from "@/store/useTableStore";
 
 const CashierActionButton = () => {
   const [openModal, setOpenModal] = useState(false);
+  const tableNumber = useTableStore((state) => state.tableNumber);
+
   const router = useRouter();
 
   const closeModal = () => setOpenModal(false);
@@ -32,6 +35,8 @@ const CashierActionButton = () => {
             <Image
               src="/assets/illustrations/qr-cancel-illustration.png"
               alt="qr-cancel-illustration"
+              sizes="100%"
+              priority
               fill
             />
           </div>
@@ -51,7 +56,7 @@ const CashierActionButton = () => {
             <Button
               className="w-1/2"
               onClick={() => {
-                router.push("/menu");
+                router.push("/menu/t/" + tableNumber);
               }}
             >
               New Order

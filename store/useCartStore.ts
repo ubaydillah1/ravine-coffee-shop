@@ -18,6 +18,7 @@ type CartState = {
   discount: number;
 
   addItem: (item: CartItem) => void;
+  decreaseItem: (productId: string) => void;
   removeItem: (productId: string) => void;
   clearCart: () => void;
 
@@ -78,6 +79,29 @@ export const useCartStore = create(
         })),
 
       clearCart: () => set({ items: [] }),
+      decreaseItem: (productId: string) =>
+        set((state) => {
+          const existing = state.items.find((i) => i.productId === productId);
+
+          if (!existing) return state;
+
+          if (existing.quantity === 1) {
+            return {
+              items: state.items.filter((i) => i.productId !== productId),
+            };
+          }
+
+          const newItems = state.items.map((i) =>
+            i.productId === productId
+              ? {
+                  ...i,
+                  quantity: i.quantity - 1,
+                  subtotal: (i.quantity - 1) * i.productPrice,
+                }
+              : i
+          );
+          return { items: newItems };
+        }),
 
       subTotal: () =>
         get().items.reduce((acc, item) => acc + (item.subtotal ?? 0), 0),

@@ -13,28 +13,64 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import Image from "next/image";
+import { useOrderStore } from "@/store/useOrderStore";
+import { checkOrderStatus } from "../api/checkOrderStatus";
+import { useRouter } from "next/navigation";
+import { useUserInfoStore } from "@/store/useUserInfoStore";
+import { useCartStore } from "@/store/useCartStore";
 
-const CallActionSection = () => {
+const CallActionSection = ({ timeLeft }: { timeLeft: string }) => {
   const [openModal, setOpenModal] = useState(false);
+  const { OrderInformation } = useOrderStore((state) => state);
+  const clearUserInfo = useUserInfoStore((state) => state.clearUserInfo);
+  const clearCart = useCartStore((state) => state.clearCart);
+  const router = useRouter();
 
   const closeModal = () => setOpenModal(false);
 
+  const qrisUrl = OrderInformation?.payment?.qrisUrl;
+
+  const handleCheckPaymentStatus = async () => {
+    const orderId = OrderInformation!.order.id!;
+    const result = await checkOrderStatus(orderId);
+
+    if (result.orderStatus === "COMPLETED") {
+      localStorage.removeItem("notes");
+      clearUserInfo();
+      clearCart();
+      router.replace("/successful-payment");
+      return;
+    }
+
+    setOpenModal(true);
+  };
+
   return (
     <section className="flex gap-[16px]">
-      <Button
-        onClick={() => {
-          setOpenModal(true);
-        }}
-      >
-        Check Payment Status
-      </Button>
-      <div className="flex-center size-[52px] border-2 border-primary-b300 rounded-[6px] overflow-hidden cursor-pointer">
-        <Download className="text-primary-b300" />
-      </div>
+      <Button onClick={handleCheckPaymentStatus}>Check Payment Status</Button>
+
+      {qrisUrl ? (
+        <a
+          href={qrisUrl}
+          download="qris-code.png"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-center size-[52px] border-2 border-primary-b300 rounded-[6px] overflow-hidden cursor-pointer"
+        >
+          <Download className="text-primary-b300" />
+        </a>
+      ) : (
+        <div
+          className="flex-center size-[52px] border-2 border-gray-300 rounded-[6px] opacity-50 cursor-not-allowed"
+          title="QR not available yet"
+        >
+          <Download className="text-gray-400" />
+        </div>
+      )}
 
       <Dialog open={openModal} onOpenChange={closeModal}>
         <DialogContent
-          className="max-w-[350px] bg-white!"
+          className="max-w-[350px] bg-white"
           showCloseButton={false}
         >
           <div className="flex flex-row justify-between">
@@ -46,16 +82,17 @@ const CallActionSection = () => {
 
           <div className="mx-auto relative size-[160px]">
             <Image
-              src={"/assets/illustrations/Waiting.png"}
+              src="/assets/illustrations/Waiting.png"
               fill
-              alt="Waiting Illustrations"
+              alt="Waiting Illustration"
             />
           </div>
-          <DialogHeader className="text-center!">
+
+          <DialogHeader className="text-center">
             <DialogTitle className="sub-h1 text-[22px]">
               Payment still waiting
             </DialogTitle>
-            <div className="sub-h1 text-[22px]">09.53</div>
+            <div className="sub-h1 text-[22px]">{timeLeft}</div>
             <DialogDescription>
               Please complete your payment before time runs out.
             </DialogDescription>

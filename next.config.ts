@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: "xdngzcfffaqezcrelqya.supabase.co",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "api.sandbox.midtrans.com",
+        pathname: "/**",
+      },
     ],
   },
 

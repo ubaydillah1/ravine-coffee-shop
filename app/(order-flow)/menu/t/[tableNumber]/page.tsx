@@ -28,7 +28,7 @@ const MenuPage = async ({
           <Menu className="text-neutral-n900" />
         </div>
       </nav> */}
-      <TableInitializer tableNumber={tableNumber} />
+      <TableInitializer tableNumber={tableNumber.toString()} />
 
       <div className="relative h-full">
         <Image
@@ -41,7 +41,7 @@ const MenuPage = async ({
         />
         <div className="relative z-10 p-6 flex flex-col gap-[24px]">
           <TitleCard />
-          <TableCard  />
+          <TableCard />
         </div>
       </div>
       <main className="pb-[40px]">

@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useTableStore } from "@/store/useTableStore";
 
-const TableInitializer = ({ tableNumber }: { tableNumber: number }) => {
+const TableInitializer = ({ tableNumber }: { tableNumber: string }) => {
   const { setTableNumber } = useTableStore();
 
   useEffect(() => {
