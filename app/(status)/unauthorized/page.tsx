@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import LockIcon from "@/public/assets/icons/Lock.svg";
+import LockIcon from "@/public/assets/icons/lock.svg";
 import Link from "next/link";
 
 const UnauthorizedPage = () => {
