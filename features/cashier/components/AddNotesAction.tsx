@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Data from "@/public/assets/icons/data.svg";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,9 +10,16 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
+import useNotes from "@/hooks/useNotes";
 
 const AddNotesAction = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [notes, setNotes] = useNotes();
+
+  useEffect(() => {
+    const saved = localStorage.getItem("notes");
+    if (saved) setNotes(saved);
+  }, [setNotes]);
 
   const closeModal = () => setOpenModal(false);
   return (
@@ -40,6 +47,11 @@ const AddNotesAction = () => {
             <Textarea
               placeholder="Write a note here"
               className="focus-visible:ring-0 max-h-[300px] resize-none h-full"
+              value={notes}
+              onChange={(e) => {
+                setNotes(e.target.value);
+                localStorage.setItem("notes", e.target.value);
+              }}
             />
           </div>
         </DialogContent>

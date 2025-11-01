@@ -1,3 +1,4 @@
+import { OrderType } from "@/features/user/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -12,6 +13,8 @@ export type PaymentMethod = "QRIS" | "CASH";
 export type UserInfoState = {
   userInfo: UserInfo;
   paymentMethod: PaymentMethod;
+  orderType: OrderType;
+  setOrderType: (orderType: OrderType) => void;
   setPaymentMethod: (method: PaymentMethod) => void;
   setUserInfo: (userInfo: UserInfo) => void;
   clearUserInfo: () => void;
@@ -26,6 +29,7 @@ export const useUserInfoStore = create(
         phone: "",
       },
       paymentMethod: "QRIS",
+      orderType: "DINE_IN",
 
       setPaymentMethod: (method: PaymentMethod) => {
         set({ paymentMethod: method });
@@ -33,6 +37,7 @@ export const useUserInfoStore = create(
       setUserInfo: (userInfo: UserInfo) => set({ userInfo }),
       clearUserInfo: () =>
         set({ userInfo: { fullname: "", email: "", phone: "" } }),
+      setOrderType: (orderType: OrderType) => set({ orderType }),
     }),
     {
       name: "userInfo",

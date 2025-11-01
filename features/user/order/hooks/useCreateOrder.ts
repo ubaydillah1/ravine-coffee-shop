@@ -8,7 +8,7 @@ export type UseCreateOrderParams = {
 
 export const useCreateOrder = (params: UseCreateOrderParams) => {
   return useMutation({
-    mutationFn: createOrder,
     ...params.mutationConfig,
+    mutationFn: createOrder,
   });
 };

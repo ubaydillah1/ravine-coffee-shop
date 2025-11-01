@@ -1,21 +1,19 @@
 import { MutationConfig, queryClient } from "@/lib/reactQuery";
+import { updateStatusOrder } from "../api/updateStatusOrder";
 import { useMutation } from "@tanstack/react-query";
-import { getProductsQueryKey } from "./useGetProducts";
-import { updateActiveStatusProduct } from "../api/updateActiveStatusProduct";
+import { getOrdersQueryKey } from "./useGetOrders";
 
-export type UseUpdateActiveStatusProductParams = {
-  mutationConfig?: MutationConfig<typeof updateActiveStatusProduct>;
+export type UpdateStatusOrderPayload = {
+  mutationConfig?: MutationConfig<typeof updateStatusOrder>;
 };
 
-export const useUpdateActiveStatusProduct = (
-  params: UseUpdateActiveStatusProductParams
-) => {
+export const useUpdateStatusOrder = (params: UpdateStatusOrderPayload) => {
   return useMutation({
     ...params.mutationConfig,
-    mutationFn: updateActiveStatusProduct,
+    mutationFn: updateStatusOrder,
     onSuccess: (data, variables, onMutateResult, context) => {
       queryClient.invalidateQueries({
-        queryKey: getProductsQueryKey({}),
+        queryKey: getOrdersQueryKey({}),
         exact: false,
       });
 

@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useUserInfoStore } from "@/store/useUserInfoStore";
 import { motion } from "framer-motion";
 
 export default function OrderTypeSwitch() {
-  const [selected, setSelected] = useState<"dinein" | "takeaway">("dinein");
+  const { orderType, setOrderType } = useUserInfoStore();
 
   return (
     <div className="relative flex w-[320px] bg-gray-200 rounded-xl p-1">
@@ -12,7 +12,7 @@ export default function OrderTypeSwitch() {
         layout
         initial={false}
         animate={{
-          x: selected === "dinein" ? 0 : "95%",
+          x: orderType === "DINE_IN" ? 0 : "95%",
         }}
         transition={{
           type: "spring",
@@ -25,18 +25,18 @@ export default function OrderTypeSwitch() {
       {/* Buttons */}
       <button
         className={`relative z-10 flex-1 py-3 text-center font-medium ${
-          selected === "dinein" ? "text-black" : "text-gray-600"
+          orderType === "DINE_IN" ? "text-black" : "text-gray-600"
         }`}
-        onClick={() => setSelected("dinein")}
+        onClick={() => setOrderType("DINE_IN")}
       >
         Dine In
       </button>
 
       <button
         className={`relative z-10 flex-1 py-3 text-center font-medium ${
-          selected === "takeaway" ? "text-black" : "text-gray-600"
+          orderType === "TAKE_AWAY" ? "text-black" : "text-gray-600"
         }`}
-        onClick={() => setSelected("takeaway")}
+        onClick={() => setOrderType("TAKE_AWAY")}
       >
         Take Away
       </button>

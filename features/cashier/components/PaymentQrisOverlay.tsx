@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -7,8 +9,69 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ModalProps } from "../types/modal";
+import { useOrderStore } from "@/store/useOrderStore";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useUpdateStatusOrder } from "../hooks/useUpdateStatusOrder";
 
-const PaymentQrisOverlay = ({ openModal, closeModal }: ModalProps) => {
+interface PaymentQrisOverlayProps extends ModalProps {
+  setOpenSuccessPaymentQrisModal: (value: boolean) => void;
+}
+
+const PaymentQrisOverlay = ({
+  openModal,
+  closeModal,
+  setOpenSuccessPaymentQrisModal,
+}: PaymentQrisOverlayProps) => {
+  const { OrderInformation } = useOrderStore();
+  const [timeLeft, setTimeLeft] = useState<number>(0);
+  const { mutate, isPending } = useUpdateStatusOrder({
+    mutationConfig: {
+      onSuccess: () => {
+        setOpenSuccessPaymentQrisModal(true);
+        closeModal();
+      },
+    },
+  });
+  const router = useRouter();
+
+  const order = OrderInformation!.order;
+  const payment = OrderInformation!.payment;
+
+  useEffect(() => {
+    if (!order?.expiredQrisMidtransUrl) return;
+
+    const expiredTime = new Date(order.expiredQrisMidtransUrl).getTime();
+
+    const updateCountdown = () => {
+      const now = Date.now();
+      const diff = expiredTime - now;
+
+      if (diff <= 0) {
+        setTimeLeft(0);
+        closeModal();
+        return;
+      }
+
+      setTimeLeft(diff);
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(interval);
+  }, [order?.expiredQrisMidtransUrl, closeModal, router]);
+
+  const minutes = Math.floor((timeLeft / 1000 / 60) % 60);
+  const seconds = Math.floor((timeLeft / 1000) % 60);
+  const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
+    seconds
+  ).padStart(2, "0")}`;
+
+  if (!OrderInformation) return null;
+
+  const handlePayment = () => mutate({ id: order.id, status: "inprogress" });
+
   return (
     <Dialog open={openModal} onOpenChange={closeModal}>
       <DialogContent
@@ -28,24 +91,38 @@ const PaymentQrisOverlay = ({ openModal, closeModal }: ModalProps) => {
               <span className="b1-r text-neutral-n700">
                 Complete payment in
               </span>
-              <span className="h3">09:53</span>
+              <span className="h3">
+                {timeLeft > 0 ? formattedTime : "00:00"}
+              </span>
             </div>
 
-            <div className="size-[240px] bg-black"></div>
+            <div className="size-[240px] relative">
+              <Image
+                src={payment.qrisUrl!}
+                alt="payment"
+                fill
+                sizes="100%"
+                priority
+              />
+            </div>
           </div>
 
           <div className="flex-1 p-[24px] flex flex-col justify-between">
             <div className="flex justify-between items-center">
               <span className="b1-r text-neutral-n700">Total</span>
-              <span className="h3">Rp44.000</span>
+              <span className="h3">
+                Rp{Number(order?.totalAmount).toLocaleString("id-ID")}
+              </span>
             </div>
 
             <div className="space-y-[24px]">
-              <div className="flex justify-between">
-                <span className="b1-r text-neutral-n700">Balance</span>
-                <span className="b1-b text-primary-b300">Rp6.000</span>
-              </div>
-              <Button className="w-full">Confirm Payment</Button>
+              <Button
+                className="w-full"
+                onClick={handlePayment}
+                disabled={isPending}
+              >
+                Confirm Payment
+              </Button>
             </div>
           </div>
         </div>

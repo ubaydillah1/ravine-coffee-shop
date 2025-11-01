@@ -12,9 +12,13 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useRouter } from "next/navigation";
 
 const LogoutAction = () => {
   const [openModal, setOpenModal] = useState(false);
+  const { logout } = useAuthStore();
+  const router = useRouter()
 
   const closeModal = () => setOpenModal(false);
   return (
@@ -47,21 +51,23 @@ const LogoutAction = () => {
           </DialogHeader>
           <DialogFooter className="flex! w-full justify-between gap-4">
             <Button
-              variant="outline"
-              onClick={() => {
-                closeModal();
-              }}
               className="flex-1 w-full shrink-0"
-            >
-              Log out
-            </Button>
-            <Button
-              className="w-1/2"
               onClick={() => {
                 closeModal();
               }}
             >
               Back
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                logout();
+                router.push("/login");
+                closeModal();
+              }}
+              className="w-1/2"
+            >
+              Log out
             </Button>
           </DialogFooter>
         </DialogContent>

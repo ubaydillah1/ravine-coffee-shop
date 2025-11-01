@@ -23,14 +23,24 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (res) => res,
   (err) => {
-    console.log(err);
-    const message =
-      err.response?.data?.message || "Terjadi kesalahan pada server.";
+    const { logout } = useAuthStore.getState();
+    const { setError, setRedirectTo } = useUIStore.getState();
 
-    useUIStore.getState().setError(message);
+    const status = err.response?.status;
+    const message = err.response?.data?.message || "Something went wrong";
 
-    if (err.response?.status === 401 || err.response?.status === 403) {
-      useAuthStore.getState().logout();
+
+    if (status === 401 && message.toLowerCase().includes("token")) {
+      logout();
+      setError("Your session has expired. Please login again.");
+      setRedirectTo("/login");
+      return Promise.reject(err);
+    }
+
+    if (status === 403) {
+      setError("You don’t have permission to view this page.");
+      setRedirectTo("/unauthorized");
+      return Promise.reject(err);
     }
 
     return Promise.reject(err);

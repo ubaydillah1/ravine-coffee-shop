@@ -13,12 +13,16 @@ import SuccessPaymentCashModal from "./SuccessPaymentCashOverlay";
 const OrderAction = () => {
   const [customerDetailsModal, setCustomerDetailsModal] = useState(false);
   const [orderDetailsModal, setOrderDetailsModal] = useState(false);
+  const [orderDetailsCompletedModal, setOrderDetailsCompletedModal] =
+    useState(false);
   const [paymentCashModal, setPaymentCashModal] = useState(false);
   const [paymentQrisModal, setPaymentQrisModal] = useState(false);
   const [successPaymentQrisModal, setSuccessPaymentQrisModal] = useState(false);
   const [successPaymentCashModal, setSuccessPaymentCashModal] = useState(false);
 
   const closeSuccessPaymentCashModal = () => setSuccessPaymentCashModal(false);
+  const closeOrderDetailModalCompleted = () =>
+    setOrderDetailsCompletedModal(false);
   const closeSuccessPaymentQrisModal = () => setSuccessPaymentQrisModal(false);
   const closePaymentQrisModal = () => setPaymentQrisModal(false);
   const closePaymentCashModal = () => setPaymentCashModal(false);
@@ -33,30 +37,45 @@ const OrderAction = () => {
       <CustomerDetailOverlay
         customerDetailsModal={customerDetailsModal}
         closeCustomerDetailModal={closeCustomerDetailModal}
+        setOrderDetailsModal={setOrderDetailsModal}
       />
 
       <OrderDetailsOverlay
         closeModal={closeOrderDetailModal}
         openModal={orderDetailsModal}
         isCompleted={false}
+        setOpenPaymentCashModal={setPaymentCashModal}
+        setOpenPaymentQrisModal={setPaymentQrisModal}
+      />
+
+      <OrderDetailsOverlay
+        isCompleted={true}
+        closeModal={closeOrderDetailModalCompleted}
+        openModal={orderDetailsCompletedModal}
+        setOpenPaymentCashModal={setPaymentCashModal}
+        setOpenPaymentQrisModal={setPaymentQrisModal}
       />
 
       <PaymentCashOverlay
         closeModal={closePaymentCashModal}
         openModal={paymentCashModal}
+        setOpenSuccessPaymentCashModal={setSuccessPaymentCashModal}
       />
 
       <PaymentQrisOverlay
         closeModal={closePaymentQrisModal}
         openModal={paymentQrisModal}
+        setOpenSuccessPaymentQrisModal={setSuccessPaymentQrisModal}
       />
 
       <SuccessPaymentQrisOverlay
         closeModal={closeSuccessPaymentQrisModal}
         openModal={successPaymentQrisModal}
+        setOrderDetailsModal={setOrderDetailsCompletedModal}
       />
 
       <SuccessPaymentCashModal
+        setOrderDetailsModal={setOrderDetailsCompletedModal}
         closeModal={closeSuccessPaymentCashModal}
         openModal={successPaymentCashModal}
       />

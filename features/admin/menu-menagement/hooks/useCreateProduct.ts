@@ -10,6 +10,7 @@ export type UseCreateProductParams = {
 
 export const useCreateProduct = (params: UseCreateProductParams) => {
   return useMutation({
+    ...params.mutationConfig,
     mutationFn: createProduct,
     onSuccess: (data, variables, onMutateResult, context) => {
       queryClient.invalidateQueries({
@@ -28,7 +29,5 @@ export const useCreateProduct = (params: UseCreateProductParams) => {
         context
       );
     },
-
-    ...params.mutationConfig,
   });
 };

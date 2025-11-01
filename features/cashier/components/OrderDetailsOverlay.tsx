@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Data from "@/public/assets/icons/data.svg";
 import {
   Dialog,
@@ -13,21 +13,56 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ModalProps } from "../types/modal";
-
+import { useOrderStore } from "@/store/useOrderStore";
+import { format } from "date-fns";
+import { id } from "date-fns/locale";
+import ViewNotesOverlay from "@/features/user/order/components/overlay/ViewNotesOverlay";
 interface OrderDetailsOverlayProps extends ModalProps {
   isCompleted?: boolean;
+  setOpenPaymentCashModal: (value: boolean) => void;
+  setOpenPaymentQrisModal: (value: boolean) => void;
 }
 
 const OrderDetailsOverlay = ({
   openModal,
   closeModal,
+  setOpenPaymentCashModal,
+  setOpenPaymentQrisModal,
   isCompleted = true,
 }: OrderDetailsOverlayProps) => {
+  const { OrderInformation } = useOrderStore();
+  const order = OrderInformation?.order;
+  const [openNotesModal, setOpenNotesModal] = useState(false);
+
+  const closeNotesModal = () => setOpenNotesModal(false);
+
+  if (!order) {
+    return null;
+  }
+
+  const orderDate = format(new Date(order.createdAt), "dd MMM yyyy - HH.mm", {
+    locale: id,
+  });
+
+  const items = order.OrderItem;
+
+  const handlePayment = () => {
+    if (order.paymentMethod === "CASH") {
+      setOpenPaymentCashModal(true);
+    } else {
+      setOpenPaymentQrisModal(true);
+    }
+
+    closeNotesModal();
+    closeModal();
+  };
+
   return (
     <Dialog open={openModal} onOpenChange={closeModal}>
       <DialogContent
         className="bg-white p-[0] flex gap-[0] flex-col outline-0 border-0 overflow-hidden min-w-[490px]"
         showCloseButton={true}
+        onInteractOutside={(e) => e.preventDefault()}
       >
         <DialogHeader>
           <DialogTitle className="bg-neutral-n200 text-center py-[12px] b1-b">
@@ -35,29 +70,30 @@ const OrderDetailsOverlay = ({
           </DialogTitle>
         </DialogHeader>
         <div className="px-[32px] py-[24px] w-full flex flex-col gap-[24px]">
-          {/* <div className="px-[32px] py-[16px] w-full flex flex-col gap-[16px]"> */}
           <div className="w-full flex justify-between items-end">
             <div className="space-y-[16px]">
               {isCompleted && <Badge variant="success">Completed</Badge>}
 
               <div className="flex flex-col gap-[4px]">
                 <span className="b3-r text-neutral-n700">Order ID</span>
-                <strong className="b3-b">#A2305001</strong>
+                <strong className="b3-b">#{OrderInformation?.order.id}</strong>
               </div>
 
               <div className="flex flex-col gap-[4px]">
                 <span className="b3-r text-neutral-n700">Order Date</span>
-                <strong className="b3-b">23 Sep 2025 - 17.14</strong>
+                <strong className="b3-b">{orderDate}</strong>
               </div>
 
               <div className="flex flex-col gap-[4px]">
                 <span className="b3-r text-neutral-n700">Order Type</span>
-                <strong className="b3-b">Dine In</strong>
+                <strong className="b3-b">{order.orderType}</strong>
               </div>
 
               <div className="flex flex-col gap-[4px]">
                 <span className="b3-r text-neutral-n700">Cashier</span>
-                <strong className="b3-b">Affandy</strong>
+                <strong className="b3-b">
+                  {order.Cashier?.fullName || "-"}
+                </strong>
               </div>
             </div>
 
@@ -67,21 +103,25 @@ const OrderDetailsOverlay = ({
                   <span className="b3-r text-neutral-n700">
                     Customer’s Name
                   </span>
-                  <strong className="b3-b">Ubay</strong>
+                  <strong className="b3-b">
+                    {order.Customer.fullName || "-"}
+                  </strong>
                 </div>
 
                 <div className="flex flex-col gap-[4px]">
                   <span className="b3-r text-neutral-n700">Phone Number</span>
-                  <strong className="b3-b">-</strong>
+                  <strong className="b3-b">
+                    {order.Customer.phoneNumber || "-"}
+                  </strong>
                 </div>
 
                 <div className="flex flex-col gap-[4px]">
                   <span className="b3-r text-neutral-n700">Voucher Code</span>
-                  <strong className="b3-b">-</strong>
+                  <strong className="b3-b">{order.Voucher?.code || "-"}</strong>
                 </div>
                 <div className="flex flex-col gap-[4px]">
                   <span className="b3-r text-neutral-n700">Payment Method</span>
-                  <strong className="b3-b">Cash</strong>
+                  <strong className="b3-b">{order.paymentMethod}</strong>
                 </div>
               </div>
             </div>
@@ -95,41 +135,59 @@ const OrderDetailsOverlay = ({
                 <span className="flex-1">Price</span>
               </div>
 
-              <div className="space-y-[16px] h-[92px] overflow-y-scroll hide-scrollbar">
-                <div className="flex gap-[32px] px-[16px] items-center">
-                  <div className="w-[246px] flex gap-[8px] items-center">
-                    <div className="size-[40px] bg-neutral-n100 flex-center">
-                      <div className="size-[32px] relative">
-                        <Image
-                          src={"/assets/images/Varian 1.png"}
-                          alt={"menu"}
-                          fill
-                          className="object-contain"
-                        />
+              <div className="space-y-[16px] h-[100px] overflow-y-scroll hide-scrollbar">
+                {items.map((item, id) => (
+                  <div
+                    key={id}
+                    className="flex gap-[32px] px-[16px] items-center"
+                  >
+                    <div className="w-[246px] flex gap-[8px] items-center">
+                      <div className="size-[40px] bg-neutral-n100 flex-center">
+                        <div className="size-[32px] relative">
+                          <Image
+                            src={
+                              item.productImage || "/assets/images/default.png"
+                            }
+                            alt={item.productName}
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
                       </div>
+
+                      <p className="l3-b truncate w-full min-w-0">
+                        {item.productName}
+                      </p>
                     </div>
 
-                    <p className="l3-b truncate w-full min-w-0">
-                      Bundling Coffee + Toast +
-                      Frenchslkdfjalkfjdsajfldsajlkfksdjlf
-                    </p>
+                    <span className="l3-r text-neutral-n700">
+                      {item.quantity}x
+                    </span>
+
+                    <span className="l3-b text-neutral-n700">
+                      Rp{Number(item.subtotal).toLocaleString("id-ID")}
+                    </span>
                   </div>
-
-                  <span className="l3-r text-neutral-n700">1x</span>
-
-                  <span className="l3-b text-neutral-n700">Rp20.000</span>
-                </div>
+                ))}
               </div>
             </div>
 
             <div className="text-end">
               <Button
-                variant={"ghost"}
-                className="hover:border-neutral-n300 border border-transparent b2-r text-neutral-n600 hover:text-neutral-n600"
+                variant="none"
+                className="border border-transparent b2-r py-1 text-neutral-n600 
+             hover:!border-transparent hover:!text-neutral-n600 
+             hover:!bg-transparent hover:!shadow-none hover:!opacity-100"
+                onClick={() => setOpenNotesModal(true)}
               >
                 <Data />
                 <span>View Notes</span>
               </Button>
+              <ViewNotesOverlay
+                closeModal={closeNotesModal}
+                openModal={openNotesModal}
+                notes={order.notes}
+              />
             </div>
 
             <DialogFooter className="rounded-[8px] bg-neutral-n100 space-y-[8px] p-[16px] b3-r text-neutral-n700">
@@ -137,22 +195,28 @@ const OrderDetailsOverlay = ({
                 <div>
                   Sub Total <span className="text-neutral-n500">(2 menu)</span>
                 </div>
-                <span>Rp20.000</span>
+                <span>
+                  Rp{Number(order.subTotalAmount).toLocaleString("id-ID")}
+                </span>
               </div>
               <div className="flex justify-between">
                 <div>Tax</div>
-                <span>Rp20.000</span>
+                <span>Rp{Number(order.taxAmount).toLocaleString("id-ID")}</span>
               </div>
               <div className="flex justify-between">
                 <div>Voucher</div>
-                <span>-</span>
+                <span>
+                  Rp{Number(order.discountAmount).toLocaleString("id-ID")}
+                </span>
               </div>
 
               <div className="w-full h-px bg-neutral-n300"></div>
 
               <div className="flex justify-between b2-b text-primary-b300 ">
                 <span>Total</span>
-                <span>Rp20.000</span>
+                <span>
+                  Rp{Number(order.totalAmount).toLocaleString("id-ID")}
+                </span>
               </div>
             </DialogFooter>
           </div>
@@ -165,7 +229,9 @@ const OrderDetailsOverlay = ({
               >
                 Back
               </Button>
-              <Button className="flex-1">Pay Bill</Button>
+              <Button className="flex-1" onClick={handlePayment}>
+                Pay Bill
+              </Button>
             </div>
           )}
         </div>

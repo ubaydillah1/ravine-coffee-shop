@@ -11,7 +11,7 @@ export type OrderPayload = {
   fullName: string;
   email: string;
   phoneNumber?: string;
-  tableNumber: string;
+  tableNumber?: string;
   orderType: OrderType;
   paymentMethod: PaymentMethod;
   notes: string;
@@ -46,7 +46,9 @@ type OrderDetails = {
   internalQrCode: string;
   discountAmount: string;
   notes: string;
-  Voucher: string | null;
+  Voucher: {
+    code: string;
+  } | null;
   Customer: User;
   expiredInternalQrCode: string | null;
   expiredQrisMidtransUrl: string | null;

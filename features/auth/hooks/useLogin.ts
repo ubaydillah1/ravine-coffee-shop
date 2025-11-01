@@ -11,8 +11,8 @@ export const useLogin = (params: useLoginParams = {}) => {
   const { login: loginStore } = useAuthStore();
 
   return useMutation({
-    mutationFn: login,
     ...params.mutationConfig,
+    mutationFn: login,
     onSuccess: (data, variables, onMutateResult, context) => {
       loginStore(data.token, data.user);
       queryClient.invalidateQueries({ queryKey: ["me"] });

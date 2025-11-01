@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -6,8 +8,22 @@ import { DialogTitle } from "@radix-ui/react-dialog";
 import Data from "@/public/assets/icons/data.svg";
 import Paper from "@/public/assets/icons/paperclip.svg";
 import { ModalProps } from "../types/modal";
+import { useOrderStore } from "@/store/useOrderStore";
+import { toastError } from "@/components/ui/sonner";
 
-const SuccessPaymentCashModal = ({ openModal, closeModal }: ModalProps) => {
+interface SuccessPaymentCashModalProps extends ModalProps {
+  setOrderDetailsModal: (value: boolean) => void;
+}
+
+const SuccessPaymentCashModal = ({
+  openModal,
+  closeModal,
+  setOrderDetailsModal,
+}: SuccessPaymentCashModalProps) => {
+  const { OrderInformation } = useOrderStore();
+
+  const order = OrderInformation!.order;
+
   return (
     <Dialog open={openModal} onOpenChange={closeModal}>
       <DialogContent
@@ -24,19 +40,16 @@ const SuccessPaymentCashModal = ({ openModal, closeModal }: ModalProps) => {
           <span className="h3">Payment Success</span>
         </div>
 
-        <div className="text-center flex flex-col gap-[4px]">
-          <span className="b1-r text-neutral-n700">Order ID</span>
-          <span className="b1-b">#A2305001</span>
-        </div>
-
         <div className="px-[24px] flex justify-between">
           <div className="text-center flex flex-col gap-[4px]">
-            <span className="b1-r text-neutral-n700">Total Paid</span>
-            <span className="b1-b">Rp50.000</span>
+            <span className="b1-r text-neutral-n700">Order ID</span>
+            <span className="b1-b">#{order.id}</span>
           </div>
           <div className="text-center flex flex-col gap-[4px]">
-            <span className="b1-r text-neutral-n700">Change</span>
-            <span className="b1-b">Rp.4.000</span>
+            <span className="b1-r text-neutral-n700">Total Paid</span>
+            <span className="b1-b">
+              Rp{Number(order.totalAmount).toLocaleString("id-ID")}
+            </span>
           </div>
         </div>
 
@@ -45,15 +58,22 @@ const SuccessPaymentCashModal = ({ openModal, closeModal }: ModalProps) => {
             <Button
               className="space-y-[10px] space-x-[10px] flex-1"
               variant="outline"
+              onClick={() => {
+                setOrderDetailsModal(true);
+                closeModal();
+              }}
             >
-              <Data className="text-primary-b300 size-[16px]" />
+              <Data className="size-[16px]" />
               View Order
             </Button>
             <Button
               className="space-y-[10px] space-x-[10px] flex-1"
               variant="outline"
+              onClick={() => {
+                toastError("Upcomming");
+              }}
             >
-              <Paper className="text-primary-b300 size-[16px]" />
+              <Paper className="size-[16px]" />
               Print Receipt
             </Button>
           </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,9 +9,35 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ModalProps } from "../types/modal";
+import { useOrderStore } from "@/store/useOrderStore";
+import { useUpdateStatusOrder } from "../hooks/useUpdateStatusOrder";
 
-const PaymentCashOverlay = ({ openModal, closeModal }: ModalProps) => {
-  const [amount, setAmount] = React.useState("50000");
+interface PaymentCashOverlayProps extends ModalProps {
+  setOpenSuccessPaymentCashModal: (value: boolean) => void;
+}
+
+const PaymentCashOverlay = ({
+  openModal,
+  closeModal,
+  setOpenSuccessPaymentCashModal,
+}: PaymentCashOverlayProps) => {
+  const [amount, setAmount] = useState("0");
+  const { OrderInformation } = useOrderStore();
+  const { mutate, isPending } = useUpdateStatusOrder({
+    mutationConfig: {
+      onSuccess: () => {
+        setAmount("0");
+        setOpenSuccessPaymentCashModal(true);
+        closeModal();
+      },
+    },
+  });
+
+  const order = OrderInformation!.order;
+
+  const handlePayment = () => {
+    mutate({ id: order.id, status: "inprogress" }, { onSuccess: closeModal });
+  };
 
   const handleKeyPress = (key: string) => {
     if (key === "⌫") {
@@ -81,15 +107,33 @@ const PaymentCashOverlay = ({ openModal, closeModal }: ModalProps) => {
           <div className="flex-1 p-[24px] flex flex-col justify-between">
             <div className="flex justify-between items-center">
               <span className="b1-r text-neutral-n700">Total</span>
-              <span className="h3">Rp44.000</span>
+              <span className="h3">
+                Rp{Number(order?.totalAmount).toLocaleString("id-ID")}
+              </span>
             </div>
 
             <div className="space-y-[24px]">
               <div className="flex justify-between">
                 <span className="b1-r text-neutral-n700">Balance</span>
-                <span className="b1-b text-primary-b300">Rp6.000</span>
+                <span className="b1-b text-primary-b300">
+                  <span className="b1-b text-primary-b300">
+                    Rp
+                    {Math.max(
+                      Number(amount) - Number(order?.totalAmount),
+                      0
+                    ).toLocaleString("id-ID")}
+                  </span>
+                </span>
               </div>
-              <Button className="w-full">Confirm Payment</Button>
+              <Button
+                className="w-full"
+                disabled={
+                  isPending || Number(amount) < Number(order?.totalAmount)
+                }
+                onClick={handlePayment}
+              >
+                Confirm Payment
+              </Button>
             </div>
           </div>
         </div>

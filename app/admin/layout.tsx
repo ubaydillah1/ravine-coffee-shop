@@ -10,9 +10,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <Sidebar />
       <div className="flex-1 flex flex-col min-w-0">
         <Header />
-        <AuthGuard>
+        <AuthGuard allowedRoles={["ADMIN"]}>
           <main className="px-[16px] sm:px-[40px] flex-1 overflow-auto hide-scrollbar">
-            <ErrorDialog />
+            <ErrorDialog  />
             {children}
           </main>
         </AuthGuard>
