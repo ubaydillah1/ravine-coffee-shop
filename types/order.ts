@@ -10,4 +10,5 @@ export type OrderStatus =
   | "inprogress"
   | "canceled"
   | "openbill"
+  | "draft"
   | "";

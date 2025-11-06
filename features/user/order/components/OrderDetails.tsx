@@ -8,7 +8,7 @@ import { useCartStore } from "@/store/useCartStore";
 import { useRouter } from "next/navigation";
 import { useTableStore } from "@/store/useTableStore";
 import { useState } from "react";
-import NotesOverlay from "./overlay/NotesOverlay";
+import NotesOverlay from "../../../../components/overlays/NotesOverlay";
 
 const OrderDetails = () => {
   const { items, totalItems } = useCartStore();

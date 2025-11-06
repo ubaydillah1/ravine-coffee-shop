@@ -85,7 +85,7 @@ const QrisPaymentPage = () => {
             <p className="b1-r">Payment Total</p>
             <p className="sub-h1">
               Rp
-              {Number(OrderInformation.order.subTotalAmount).toLocaleString(
+              {Number(OrderInformation.order.totalAmount).toLocaleString(
                 "id-ID"
               )}
             </p>

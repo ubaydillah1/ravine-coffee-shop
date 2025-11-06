@@ -21,12 +21,12 @@ import {
 } from "@/components/ui/select";
 import { ModalProps } from "@/features/cashier/types/modal";
 import { Upload, Loader2 } from "lucide-react";
-import { Category, Product } from "../../types";
+import { Category, Product } from "../../features/admin/menu-menagement/types";
 import { useForm } from "react-hook-form";
 import { toastError, toastSuccess } from "@/components/ui/sonner";
-import { useUpdateProduct } from "../../hooks/useUpdateProduct";
+import { useUpdateProduct } from "../../features/admin/menu-menagement/hooks/useUpdateProduct";
 import Trash from "@/public/assets/icons/trash.svg";
-import { useDeleteProduct } from "../../hooks/useDeleteProduct";
+import { useDeleteProduct } from "../../features/admin/menu-menagement/hooks/useDeleteProduct";
 
 type FormValues = {
   name: string;

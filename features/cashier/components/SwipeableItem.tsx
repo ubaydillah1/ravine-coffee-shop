@@ -21,18 +21,10 @@ export const SwipeableItem = ({
       drag="x"
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.5}
-      whileTap={{ scale: 0.95 }} // ⬅️ Efek tekan
-      onDrag={(e, info) => {
-        console.log(
-          `Geser item: ${item.productName}, offsetX: ${info.offset.x.toFixed(
-            2
-          )}`
-        );
-      }}
+      whileTap={{ scale: 0.95 }}
       onDragEnd={(e, info) => {
         if (Math.abs(info.offset.x) > 150) {
           onRemove(item.productId);
-          console.log(`Hapus item: ${item.productName}`);
         }
       }}
       className="flex items-center justify-between w-full bg-white rounded-lg p-4 cursor-grab active:cursor-grabbing transition-all"

@@ -10,8 +10,6 @@ const HistoryPage = () => {
   const [activeTab, setActiveTab] = useState<OrderTableType>("all-orders");
   const [date, setDate] = useState<Date | undefined>(undefined);
 
-  console.log("DATE : ", date);
-
   return (
     <section className="space-y-[12px] sm:space-y-[24px] h-full md:py-[40px] sm:py-[24px] py-[12px]">
       <Indicators />

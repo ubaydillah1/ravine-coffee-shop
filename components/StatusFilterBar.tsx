@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Search from "@/public/assets/icons/search.svg";
 import { DatePicker } from "@/components/ui/date-picker";
 import { cn } from "@/lib/utils";
@@ -11,6 +11,8 @@ interface StatusFilterBarProps {
   onTabChange: (tab: OrderTableType) => void;
   showSearch?: boolean;
   title?: string;
+  setSearch?: (search: string) => void;
+  search?: string;
   mobileTitle?: string;
   date?: Date;
   setDate: (date: Date | undefined) => void;
@@ -31,8 +33,24 @@ export const StatusFilterBar = ({
   title,
   mobileTitle,
   date,
+  search,
   setDate,
+  setSearch,
 }: StatusFilterBarProps) => {
+  const [localSearch, setLocalSearch] = useState(search);
+
+  useEffect(() => {
+    if (setSearch) {
+      const handler = setTimeout(() => {
+        setSearch(localSearch || "");
+      }, 500);
+
+      return () => {
+        clearTimeout(handler);
+      };
+    }
+  }, [localSearch, setSearch]);
+
   return (
     <header
       className={cn(
@@ -70,11 +88,13 @@ export const StatusFilterBar = ({
               <input
                 className="focus:outline-0 w-full b3-r text-neutral-n700 placeholder:text-neutral-n600"
                 placeholder="Search order ID or customer"
+                value={localSearch}
+                onChange={(e) => setLocalSearch(e.target.value)}
               />
             </div>
           )}
 
-          <div className="w-full flex justify-between items-center">
+          <div className="flex justify-between items-center w-fit">
             <p className="b1-b text-neutral-n900 sm:hidden">{mobileTitle}</p>
             <DatePicker value={date} onChange={setDate} />
           </div>

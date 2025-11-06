@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import ToggleSwitch from "./ToggleSwitch";
 import { Product } from "../types";
 import { useState } from "react";
-import EditProductOverlay from "./overlay/EditProductOverlay";
+import EditProductOverlay from "../../../../components/overlays/EditProductOverlay";
 
 type Props = {
   product: Product;

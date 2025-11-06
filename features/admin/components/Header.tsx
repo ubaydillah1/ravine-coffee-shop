@@ -20,7 +20,9 @@ const Header = () => {
   return (
     <header className="py-[16px] px-[16px] sm:px-[40px] flex justify-between border-b border-neutral-n300 w-full">
       <div className="flex items-center gap-[16px]">
-        <HamburgerButton />
+        <div className="xl:hidden">
+          <HamburgerButton />
+        </div>
         <span className="sm:sub-h1 b1-b">{title}</span>
       </div>
 
@@ -40,7 +42,12 @@ const Header = () => {
           }`}
         />
         <div className="rounded-full size-[32px] bg-black relative flex-center overflow-hidden">
-          <Image src={"/assets/images/ba-image.png"} fill alt="avatar" sizes="100%"/>
+          <Image
+            src={"/assets/images/ba-image.png"}
+            fill
+            alt="avatar"
+            sizes="100%"
+          />
         </div>
       </div>
     </header>

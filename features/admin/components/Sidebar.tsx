@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Logout from "@/public/assets/icons/log-out.svg";
 import PieChart from "@/public/assets/icons/pie-chart.svg";
 import History from "@/public/assets/icons/history.svg";
@@ -11,9 +11,18 @@ import Coffee from "@/public/assets/icons/coffe-1.svg";
 // import Coupon from "@/public/assets/icons/coupon.svg";
 import Image from "next/image";
 import Link from "next/link";
+import { useAuthStore } from "@/store/useAuthStore";
+import { Button } from "@/components/ui/button";
 
 const Sidebar = () => {
   const pathname = usePathname();
+  const logout = useAuthStore((state) => state.logout);
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout();
+    router.replace("/login");
+  };
 
   const links = [
     { href: "/admin/overview", label: "Overview", Icon: PieChart },
@@ -63,13 +72,14 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <Link
-        href="/logout"
+      <Button
+        onClick={handleLogout}
+        variant={"ghost"}
         className="flex-center gap-[8px] b2-r text-white/32 w-full py-[20px] hover:bg-neutral-n800 hover:text-white transition-all rounded-[4px] cursor-pointer"
       >
         <Logout />
         <p className="font-bold">Logout</p>
-      </Link>
+      </Button>
     </nav>
   );
 };

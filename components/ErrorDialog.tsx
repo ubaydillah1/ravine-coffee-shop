@@ -7,15 +7,10 @@ import WarningIcon from "@/public/assets/icons/alert-circle.svg";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 export default function ErrorDialog() {
   const { errorMessage, isErrorOpen, clearError, redirectTo } = useUIStore();
   const router = useRouter();
-
-  useEffect(() => {
-    console.log(redirectTo);
-  }, [redirectTo]);
 
   return (
     <Dialog

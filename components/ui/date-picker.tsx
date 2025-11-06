@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { CalendarIcon } from "lucide-react";
-import { format } from "date-fns";
+import { format, isToday } from "date-fns";
 import { id } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -38,6 +38,8 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
     setOpen(false);
   };
 
+  const isDateToday = date ? isToday(date) : false;
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -67,26 +69,28 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
           disabled={{ after: new Date() }}
         />
 
-        <div className="flex justify-between pt-1">
-          {date && (
+        <div className="flex justify-between pt-1 w-full">
             <Button
               variant="ghost"
               size="sm"
               onClick={handleClear}
-              className="text-sm text-neutral-n600 hover:text-neutral-n800"
+                className={`text-sm text-neutral-n600 hover:text-neutral-n800 flex-1 ${
+                date ? "flex" : "hidden"
+              }`}
             >
-              Clear
+              Hapus
             </Button>
-          )}
 
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleToday}
-            className="text-sm text-primary hover:text-primary/80"
-          >
-            Today
-          </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleToday}
+              className={`text-sm text-primary hover:text-primary/80 flex-1 ${
+                !isDateToday ? "flex" : "hidden"
+              }`}
+            >
+              Hari Ini
+            </Button>
         </div>
       </PopoverContent>
     </Popover>

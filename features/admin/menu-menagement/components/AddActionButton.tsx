@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Plus from "@/public/assets/icons/plus.svg";
 import { Button } from "@/components/ui/button";
-import AddProductOverlay from "./overlay/AddProductOverlay";
+import AddProductOverlay from "../../../../components/overlays/AddProductOverlay";
 
 const AddActionButton = () => {
   const [openModal, setOpenModal] = useState(false);

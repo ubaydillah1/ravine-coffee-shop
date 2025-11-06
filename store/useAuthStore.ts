@@ -13,6 +13,8 @@ type AuthState = {
   setUser: (user: User) => void;
 };
 
+let isLoggingOut = false;
+
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
@@ -22,9 +24,12 @@ export const useAuthStore = create<AuthState>()(
       setUser: (user) => set({ user, isAuthenticated: true }),
       login: (token, user) => set({ token, user, isAuthenticated: true }),
       logout: () => {
+        isLoggingOut = true;
         set({ token: null, user: null, isAuthenticated: false });
       },
     }),
     { name: "auth-storage", storage: createJSONStorage(() => localStorage) }
   )
 );
+
+export const isCurrentlyLoggingOut = () => isLoggingOut;

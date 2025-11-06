@@ -8,11 +8,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { ModalProps } from "../types/modal";
+import { ModalProps } from "../../features/cashier/types/modal";
 import { useOrderStore } from "@/store/useOrderStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useUpdateStatusOrder } from "../hooks/useUpdateStatusOrder";
+import { useUpdateStatusOrder } from "../../features/cashier/hooks/useUpdateStatusOrder";
 
 interface PaymentQrisOverlayProps extends ModalProps {
   setOpenSuccessPaymentQrisModal: (value: boolean) => void;
@@ -35,8 +35,8 @@ const PaymentQrisOverlay = ({
   });
   const router = useRouter();
 
-  const order = OrderInformation!.order;
-  const payment = OrderInformation!.payment;
+  const order = OrderInformation?.order;
+  const payment = OrderInformation?.payment;
 
   useEffect(() => {
     if (!order?.expiredQrisMidtransUrl) return;
@@ -68,7 +68,7 @@ const PaymentQrisOverlay = ({
     seconds
   ).padStart(2, "0")}`;
 
-  if (!OrderInformation) return null;
+  if (!OrderInformation || !order || !payment) return null;
 
   const handlePayment = () => mutate({ id: order.id, status: "inprogress" });
 

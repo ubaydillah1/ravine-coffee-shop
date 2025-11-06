@@ -77,6 +77,8 @@ export default function LoginPage() {
   const { isAuthenticated, user } = useAuthStore();
 
   useEffect(() => {
+    if (!isAuthenticated || !user) return;
+    
     if (isAuthenticated && user) {
       if (user.role === "ADMIN") {
         router.replace("/admin/overview");

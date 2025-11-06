@@ -44,10 +44,10 @@ const MenuSection = ({
   };
 
   return (
-    <section className="flex-1 flex flex-col gap-[24px] w-full overflow-auto">
+    <section className="flex-1 flex flex-col gap-[24px] w-full overflow-auto hide-scrollbar">
       <h1 className="sub-h1">Order Menu</h1>
 
-      <div className="flex flex-wrap gap-[24px] flex-1 overflow-y-scroll hide-scrollbar pb-[32px]">
+      <div className="flex flex-wrap gap-[24px] pb-[32px]">
         {products.map((product) => (
           <div
             key={product.id}

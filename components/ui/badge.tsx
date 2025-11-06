@@ -26,6 +26,8 @@ const badgeVariants = cva(
         info: "border-transparent bg-accent-blue100 text-accent-blue500 hover:bg-accent-blue200",
         danger:
           "border-transparent bg-accent-r100 text-accent-r500 hover:bg-accent-r200",
+        neutral:
+          "border-transparent bg-slate-100 text-slate-600 hover:bg-slate-200",
 
         category:
           "rounded-full px-3 py-1 text-sm border-transparent bg-primary-b100/80 text-primary-b500/90 hover:bg-primary-b100 hover:text-primary-b500",

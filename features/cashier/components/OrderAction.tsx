@@ -3,17 +3,18 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 
-import OrderDetailsOverlay from "./OrderDetailsOverlay";
-import PaymentCashOverlay from "./PaymentCashOverlay";
-import PaymentQrisOverlay from "./PaymentQrisOverlay";
-import SuccessPaymentQrisOverlay from "./SuccessPaymentQrisOverlay";
-import CustomerDetailOverlay from "./CustomerDetailOverlay";
-import SuccessPaymentCashModal from "./SuccessPaymentCashOverlay";
+import PaymentCashOverlay from "../../../components/overlays/PaymentCashOverlay";
+import PaymentQrisOverlay from "../../../components/overlays/PaymentQrisOverlay";
+import SuccessPaymentQrisOverlay from "../../../components/overlays/SuccessPaymentQrisOverlay";
+import CustomerDetailOverlay from "../../../components/overlays/CustomerDetailOverlay";
+import SuccessPaymentCashModal from "../../../components/overlays/SuccessPaymentCashOverlay";
+import OrderDetailsWrapper from "./OrderDetailsWrapper";
 
 const OrderAction = () => {
   const [customerDetailsModal, setCustomerDetailsModal] = useState(false);
-  const [orderDetailsModal, setOrderDetailsModal] = useState(false);
-  const [orderDetailsCompletedModal, setOrderDetailsCompletedModal] =
+  const [orderDetailsModalCompleteFalse, setOrderDetailsModalCompleteFalse] =
+    useState(false);
+  const [orderDetailsModalCompleteTrue, setOrderDetailsModalCompleteTrue] =
     useState(false);
   const [paymentCashModal, setPaymentCashModal] = useState(false);
   const [paymentQrisModal, setPaymentQrisModal] = useState(false);
@@ -21,12 +22,14 @@ const OrderAction = () => {
   const [successPaymentCashModal, setSuccessPaymentCashModal] = useState(false);
 
   const closeSuccessPaymentCashModal = () => setSuccessPaymentCashModal(false);
-  const closeOrderDetailModalCompleted = () =>
-    setOrderDetailsCompletedModal(false);
+
   const closeSuccessPaymentQrisModal = () => setSuccessPaymentQrisModal(false);
   const closePaymentQrisModal = () => setPaymentQrisModal(false);
   const closePaymentCashModal = () => setPaymentCashModal(false);
-  const closeOrderDetailModal = () => setOrderDetailsModal(false);
+  const closeOrderDetailModalCompleteFalse = () =>
+    setOrderDetailsModalCompleteFalse(false);
+  const closeOrderDetailModalCompleteTrue = () =>
+    setOrderDetailsModalCompleteTrue(false);
   const closeCustomerDetailModal = () => setCustomerDetailsModal(false);
   return (
     <>
@@ -37,23 +40,16 @@ const OrderAction = () => {
       <CustomerDetailOverlay
         customerDetailsModal={customerDetailsModal}
         closeCustomerDetailModal={closeCustomerDetailModal}
-        setOrderDetailsModal={setOrderDetailsModal}
+        setOrderDetailsModal={setOrderDetailsModalCompleteFalse}
       />
 
-      <OrderDetailsOverlay
-        closeModal={closeOrderDetailModal}
-        openModal={orderDetailsModal}
-        isCompleted={false}
-        setOpenPaymentCashModal={setPaymentCashModal}
-        setOpenPaymentQrisModal={setPaymentQrisModal}
-      />
-
-      <OrderDetailsOverlay
-        isCompleted={true}
-        closeModal={closeOrderDetailModalCompleted}
-        openModal={orderDetailsCompletedModal}
-        setOpenPaymentCashModal={setPaymentCashModal}
-        setOpenPaymentQrisModal={setPaymentQrisModal}
+      <OrderDetailsWrapper
+        setPaymentQrisModal={setPaymentQrisModal}
+        setPaymentCashModal={setPaymentCashModal}
+        openModalCompleteFalse={orderDetailsModalCompleteFalse}
+        openModalCompleteTrue={orderDetailsModalCompleteTrue}
+        closeModalCompleteTrue={closeOrderDetailModalCompleteTrue}
+        closeModalCompleteFalse={closeOrderDetailModalCompleteFalse}
       />
 
       <PaymentCashOverlay
@@ -71,11 +67,11 @@ const OrderAction = () => {
       <SuccessPaymentQrisOverlay
         closeModal={closeSuccessPaymentQrisModal}
         openModal={successPaymentQrisModal}
-        setOrderDetailsModal={setOrderDetailsCompletedModal}
+        setOrderDetailsModal={setOrderDetailsModalCompleteTrue}
       />
 
       <SuccessPaymentCashModal
-        setOrderDetailsModal={setOrderDetailsCompletedModal}
+        setOrderDetailsModal={setOrderDetailsModalCompleteTrue}
         closeModal={closeSuccessPaymentCashModal}
         openModal={successPaymentCashModal}
       />

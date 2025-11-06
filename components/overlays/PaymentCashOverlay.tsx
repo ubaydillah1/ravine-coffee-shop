@@ -8,9 +8,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { ModalProps } from "../types/modal";
+import { ModalProps } from "../../features/cashier/types/modal";
 import { useOrderStore } from "@/store/useOrderStore";
-import { useUpdateStatusOrder } from "../hooks/useUpdateStatusOrder";
+import { useUpdateStatusOrder } from "../../features/cashier/hooks/useUpdateStatusOrder";
 
 interface PaymentCashOverlayProps extends ModalProps {
   setOpenSuccessPaymentCashModal: (value: boolean) => void;
@@ -33,7 +33,10 @@ const PaymentCashOverlay = ({
     },
   });
 
-  const order = OrderInformation!.order;
+  const order = OrderInformation?.order;
+
+
+  if (!order) return null;
 
   const handlePayment = () => {
     mutate({ id: order.id, status: "inprogress" }, { onSuccess: closeModal });

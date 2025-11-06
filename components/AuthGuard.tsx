@@ -1,9 +1,9 @@
 "use client";
 
-import { useAuthStore } from "@/store/useAuthStore";
+import { isCurrentlyLoggingOut, useAuthStore } from "@/store/useAuthStore";
 import { useEffect, useState } from "react";
 import { Role } from "@/features/auth/types/user";
-import { useUIStore } from "@/store/useUiStore";
+import { useRouter } from "next/navigation";
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -12,8 +12,8 @@ interface AuthGuardProps {
 
 export default function AuthGuard({ children, allowedRoles }: AuthGuardProps) {
   const { isAuthenticated, user } = useAuthStore();
-  const { setError, setRedirectTo } = useUIStore();
   const [hydrated, setHydrated] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const unsub = useAuthStore.persist.onFinishHydration(() => {
@@ -25,14 +25,16 @@ export default function AuthGuard({ children, allowedRoles }: AuthGuardProps) {
 
   useEffect(() => {
     if (!hydrated) return;
+    if (isCurrentlyLoggingOut()) return;
+
     if (!isAuthenticated) {
-      setError("You must be logged in to access this page.");
-      setRedirectTo("/login");
-    } else if (allowedRoles && user && !allowedRoles.includes(user.role)) {
-      setError("You do not have access to this page.");
-      setRedirectTo("/login");
+      router.replace("/login");
     }
-  }, [hydrated, isAuthenticated, user, allowedRoles, setError, setRedirectTo]);
+
+    if (allowedRoles && user && !allowedRoles.includes(user.role)) {
+      router.replace("/login");
+    }
+  }, [hydrated, isAuthenticated, user, allowedRoles, router]);
 
   if (!hydrated) {
     return (

@@ -11,10 +11,12 @@ const ViewNotesOverlay = ({
   openModal,
   closeModal,
   notes,
+  isCompleted
 }: {
   openModal: boolean;
   closeModal: () => void;
   notes: string;
+  isCompleted: boolean;
 }) => {
   return (
     <Dialog open={openModal} onOpenChange={closeModal}>
@@ -30,8 +32,8 @@ const ViewNotesOverlay = ({
         <div className="p-[16px] w-full flex flex-col gap-[8px]">
           <Textarea
             disabled
-            placeholder="Write a note here"
-            value={notes || "sadfdsa"}
+            placeholder={isCompleted ? "No Notes" : "Write a note here"}
+            value={notes || ""}
             className="focus-visible:ring-0 max-h-[300px] min-h-[100px] resize-none h-full text-neutral-n700 disabled:opacity-100"
           />
         </div>

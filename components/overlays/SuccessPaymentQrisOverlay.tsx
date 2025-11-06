@@ -7,22 +7,25 @@ import CheckButton from "@/public/assets/icons/check.svg";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import Data from "@/public/assets/icons/data.svg";
 import Paper from "@/public/assets/icons/paperclip.svg";
-import { ModalProps } from "../types/modal";
+import { ModalProps } from "../../features/cashier/types/modal";
 import { useOrderStore } from "@/store/useOrderStore";
 import { toastError } from "@/components/ui/sonner";
 
-interface SuccessPaymentCashModalProps extends ModalProps {
+interface SuccessPaymentQrisModalProps extends ModalProps {
   setOrderDetailsModal: (value: boolean) => void;
 }
 
-const SuccessPaymentCashModal = ({
+const SuccessPaymentQrisOverlay = ({
   openModal,
   closeModal,
   setOrderDetailsModal,
-}: SuccessPaymentCashModalProps) => {
+}: SuccessPaymentQrisModalProps) => {
   const { OrderInformation } = useOrderStore();
 
-  const order = OrderInformation!.order;
+  const order = OrderInformation?.order;
+
+
+  if (!order) return null;
 
   return (
     <Dialog open={openModal} onOpenChange={closeModal}>
@@ -31,6 +34,7 @@ const SuccessPaymentCashModal = ({
         showCloseButton={false}
       >
         <DialogTitle className="hidden"></DialogTitle>
+
         <div className="space-y-[16px] text-center mx-auto">
           <div className="mx-auto size-[88px] rounded-full border border-primary-b300 flex-center">
             <div className="size-[80px] rounded-full bg-primary-b300 flex-center">
@@ -66,6 +70,7 @@ const SuccessPaymentCashModal = ({
               <Data className="size-[16px]" />
               View Order
             </Button>
+
             <Button
               className="space-y-[10px] space-x-[10px] flex-1"
               variant="outline"
@@ -87,4 +92,4 @@ const SuccessPaymentCashModal = ({
   );
 };
 
-export default SuccessPaymentCashModal;
+export default SuccessPaymentQrisOverlay;

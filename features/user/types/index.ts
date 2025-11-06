@@ -1,3 +1,5 @@
+import { OrderStatus } from "@/types/order";
+
 type OrderItem = {
   productId: string;
   quantity: number;
@@ -26,7 +28,7 @@ type User = {
   email: string;
 };
 
-type OrderItemResponse = {
+export type OrderItemResponse = {
   quantity: number;
   subtotal: string;
   productImage: string;
@@ -34,7 +36,7 @@ type OrderItemResponse = {
   productPrice: string;
 };
 
-type OrderDetails = {
+export type OrderDetails = {
   id: string;
   tableNumber: string;
   createdAt: string;
@@ -45,6 +47,7 @@ type OrderDetails = {
   subTotalAmount: string;
   internalQrCode: string;
   discountAmount: string;
+  orderStatus: OrderStatus;
   notes: string;
   Voucher: {
     code: string;

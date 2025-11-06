@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 const LogoutAction = () => {
   const [openModal, setOpenModal] = useState(false);
   const { logout } = useAuthStore();
-  const router = useRouter()
+  const router = useRouter();
 
   const closeModal = () => setOpenModal(false);
   return (
@@ -60,10 +60,10 @@ const LogoutAction = () => {
             </Button>
             <Button
               variant="outline"
-              onClick={() => {
-                logout();
-                router.push("/login");
+              onClick={async () => {
                 closeModal();
+                await router.push("/login");
+                logout();
               }}
               className="w-1/2"
             >

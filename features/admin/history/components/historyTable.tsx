@@ -165,7 +165,7 @@ const HistoryTable = ({ status, date }: HistoryTableProps) => {
           {histories.map((item: HistoryItem, i: number) => (
             <tr key={i} className="transition-colors relative">
               <td className="px-[32px] py-[16px] l2-r rounded-l-[8px]">
-                #{item.id.slice(0, 8).toUpperCase()}
+                #{item.Order.id}
               </td>
               <td className="px-[32px] py-[16px] l2-r flex flex-col gap-[4px]">
                 {format(new Date(item.Order.createdAt), "dd MMM yyyy", {
