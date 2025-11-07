@@ -13,6 +13,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ModalProps } from "@/features/cashier/types/modal";
 import { useUpdateStatusOrder } from "@/features/cashier/hooks/useUpdateStatusOrder";
+import { useCartStore } from "@/store/useCartStore";
 
 interface PaymentQrisOverlayProps extends ModalProps {
   setOpenSuccessPaymentQrisModal: (value: boolean) => void;
@@ -25,9 +26,11 @@ const PaymentQrisOverlay = ({
 }: PaymentQrisOverlayProps) => {
   const { OrderInformation } = useOrderStore();
   const [timeLeft, setTimeLeft] = useState<number>(0);
+  const { clearCart } = useCartStore();
   const { mutate, isPending } = useUpdateStatusOrder({
     mutationConfig: {
       onSuccess: () => {
+        clearCart();
         setOpenSuccessPaymentQrisModal(true);
         closeModal();
       },

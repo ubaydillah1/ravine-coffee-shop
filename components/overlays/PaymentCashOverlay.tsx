@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { ModalProps } from "../../features/cashier/types/modal";
 import { useOrderStore } from "@/store/useOrderStore";
 import { useUpdateStatusOrder } from "../../features/cashier/hooks/useUpdateStatusOrder";
+import { useCartStore } from "@/store/useCartStore";
 
 interface PaymentCashOverlayProps extends ModalProps {
   setOpenSuccessPaymentCashModal: (value: boolean) => void;
@@ -23,10 +24,12 @@ const PaymentCashOverlay = ({
 }: PaymentCashOverlayProps) => {
   const [amount, setAmount] = useState("0");
   const { OrderInformation } = useOrderStore();
+  const { clearCart } = useCartStore();
   const { mutate, isPending } = useUpdateStatusOrder({
     mutationConfig: {
       onSuccess: () => {
         setAmount("0");
+        clearCart();
         setOpenSuccessPaymentCashModal(true);
         closeModal();
       },
@@ -34,7 +37,6 @@ const PaymentCashOverlay = ({
   });
 
   const order = OrderInformation?.order;
-
 
   if (!order) return null;
 
