@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import Plus from "@/public/assets/icons/plus.svg";
 import { Button } from "@/components/ui/button";
 import AddProductOverlay from "../../../../components/overlays/AddProductOverlay";
+import { Category } from "../types";
 
-const AddActionButton = () => {
+const AddActionButton = ({ category }: { category: Category }) => {
   const [openModal, setOpenModal] = useState(false);
   return (
     <>
@@ -18,6 +19,7 @@ const AddActionButton = () => {
       <AddProductOverlay
         openModal={openModal}
         closeModal={() => setOpenModal(false)}
+        category={category}
       />
     </>
   );

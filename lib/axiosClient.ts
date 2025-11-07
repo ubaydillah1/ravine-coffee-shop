@@ -29,6 +29,9 @@ axiosInstance.interceptors.response.use(
     const status = err.response?.status;
     const message = err.response?.data?.message || "Something went wrong";
 
+    console.log(err);
+    console.log(message);
+
     if (status === 401 && message.toLowerCase().includes("token")) {
       logout();
       setError("Your session has expired. Please login again.");

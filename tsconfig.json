@@ -28,6 +28,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "features/(order-flow)/menu/components/NavigationMenu.tsx"
-  ],
+, "features/profile/hooks/useDeleteAvatarts"  ],
   "exclude": ["node_modules"]
 }

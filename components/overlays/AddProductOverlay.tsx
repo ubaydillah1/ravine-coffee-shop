@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   Dialog,
@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,28 +36,48 @@ type FormValues = {
   image: File | null;
 };
 
-const AddProductOverlay = ({ openModal, closeModal }: ModalProps) => {
+interface AddProductOverlayProps extends ModalProps {
+  category: Category;
+}
+
+const AddProductOverlay = ({
+  openModal,
+  closeModal,
+  category: defaultCategory,
+}: AddProductOverlayProps) => {
   const [preview, setPreview] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
-    watch,
     setValue,
+    watch,
     reset,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
       name: "",
       price: "",
-      category: "coffee",
+      category: defaultCategory,
       description: "",
       image: null,
     },
   });
 
-  watch("image");
-  const category = watch("category");
+  const selectedCategory = watch("category");
+
+  useEffect(() => {
+    if (openModal) {
+      reset({
+        name: "",
+        price: "",
+        category: defaultCategory,
+        description: "",
+        image: null,
+      });
+      setPreview(null);
+    }
+  }, [openModal, defaultCategory, reset]);
 
   const { mutate, isPending } = useCreateProduct({});
 
@@ -94,7 +115,13 @@ const AddProductOverlay = ({ openModal, closeModal }: ModalProps) => {
   };
 
   const clearAll = () => {
-    reset();
+    reset({
+      name: "",
+      price: "",
+      category: defaultCategory, // Kembali ke default category saat clear
+      description: "",
+      image: null,
+    });
     setPreview(null);
   };
 
@@ -108,6 +135,10 @@ const AddProductOverlay = ({ openModal, closeModal }: ModalProps) => {
           <DialogTitle className="bg-neutral-100 text-center py-[12px] font-semibold text-lg m-0">
             Add Product
           </DialogTitle>
+          {/* Tambahkan DialogDescription untuk menghilangkan warning */}
+          <DialogDescription className="sr-only">
+            Form untuk menambahkan produk baru
+          </DialogDescription>
         </DialogHeader>
 
         <form
@@ -149,8 +180,8 @@ const AddProductOverlay = ({ openModal, closeModal }: ModalProps) => {
           <div className="flex flex-col gap-2">
             <label className="text-gray-700 b2-b">Category</label>
             <Select
-              value={category}
-              onValueChange={(v: Category) => setValue("category", v)}
+              value={selectedCategory}
+              onValueChange={(value) => setValue("category", value as Category)}
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select category" />

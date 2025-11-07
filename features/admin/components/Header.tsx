@@ -2,13 +2,15 @@
 
 import React from "react";
 import Search from "@/public/assets/icons/search.svg";
-import Bell from "@/public/assets/icons/bell.svg";
+// import Bell from "@/public/assets/icons/bell.svg";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import HamburgerButton from "./HamburgerButton";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const Header = () => {
   const pathname = usePathname();
+  const { user } = useAuthStore();
 
   const rawTitle = pathname.split("/").pop() || "overview";
 
@@ -34,16 +36,16 @@ const Header = () => {
               : ""
           }`}
         />
-        <Bell
+        {/* <Bell
           className={`size-[24px] ${
             pathname.includes("notifications")
               ? "text-neutral-n900 brightness-125"
               : ""
           }`}
-        />
+        /> */}
         <div className="rounded-full size-[32px] bg-black relative flex-center overflow-hidden">
           <Image
-            src={"/assets/images/ba-image.png"}
+            src={user?.avatar || "/assets/images/ba-image.png"}
             fill
             alt="avatar"
             sizes="100%"

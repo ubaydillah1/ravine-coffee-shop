@@ -14,8 +14,8 @@ import Logout from "@/public/assets/icons/log-out.svg";
 import PieChart from "@/public/assets/icons/pie-chart.svg";
 import History from "@/public/assets/icons/history.svg";
 import Coffee from "@/public/assets/icons/coffe-1.svg";
-// import Users from "@/public/assets/icons/user.svg";
-// import Settings from "@/public/assets/icons/settings.svg";
+import Users from "@/public/assets/icons/user.svg";
+import Settings from "@/public/assets/icons/settings.svg";
 // import Coupon from "@/public/assets/icons/coupon.svg";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,8 +29,8 @@ const HamburgerButton = () => {
     { href: "/admin/history", label: "History", Icon: History },
     { href: "/admin/menu-management", label: "Menu Management", Icon: Coffee },
     // { href: "/admin/voucher", label: "Voucher Management", Icon: Coupon },
-    // { href: "/admin/cashier", label: "Cashier Account", Icon: Users },
-    // { href: "/admin/settings", label: "Settings", Icon: Settings },
+    { href: "/admin/cashier", label: "Cashier Account", Icon: Users },
+    { href: "/admin/settings", label: "Settings", Icon: Settings },
   ];
 
   return (

@@ -1,13 +1,13 @@
 import axiosInstance from "@/lib/axiosClient";
 import { ApiResponse } from "@/types/api";
 
-export interface CreateProductInput {
+type CreateProductInput = {
   name: string;
   description: string;
   price: string;
   category: string;
   image: File;
-}
+};
 
 export const createProduct = async (data: CreateProductInput) => {
   const formData = new FormData();

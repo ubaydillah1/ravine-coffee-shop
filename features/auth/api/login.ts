@@ -21,5 +21,6 @@ export const login = async ({ email, password }: LoginPayload) => {
       password,
     }
   );
+  
   return res.data.result!;
 };

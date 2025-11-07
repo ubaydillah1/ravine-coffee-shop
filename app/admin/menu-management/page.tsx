@@ -20,7 +20,7 @@ const MenuPage = () => {
         <MenuCards category={activeCategory} />
       </div>
 
-      <AddActionButton />
+      <AddActionButton category={activeCategory} />
     </section>
   );
 };

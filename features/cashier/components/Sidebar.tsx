@@ -8,6 +8,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import LogoutAction from "./LogoutAction";
+import Settings from "@/public/assets/icons/settings.svg";
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -48,6 +49,19 @@ const Sidebar = () => {
           >
             <Hourglass className="size-[32px]" />
             <p className="l2-b">Status</p>
+          </Link>
+
+          <Link
+            href="/cashier/settings"
+            className={cn(
+              "flex-center cursor-pointer flex-col gap-[4px] p-[16px] rounded-[8px] transition",
+              isActive("/cashier/settings")
+                ? "bg-primary-b300 text-white"
+                : "text-neutral-n400 hover:bg-neutral-100"
+            )}
+          >
+            <Settings className="size-[32px]" />
+            <p className="l2-b">Settings</p>
           </Link>
         </div>
       </div>
