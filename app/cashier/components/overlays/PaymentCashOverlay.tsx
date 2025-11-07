@@ -8,9 +8,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { ModalProps } from "../../features/cashier/types/modal";
 import { useOrderStore } from "@/store/useOrderStore";
-import { useUpdateStatusOrder } from "../../features/cashier/hooks/useUpdateStatusOrder";
+import { ModalProps } from "@/features/cashier/types/modal";
+import { useUpdateStatusOrder } from "@/features/cashier/hooks/useUpdateStatusOrder";
 
 interface PaymentCashOverlayProps extends ModalProps {
   setOpenSuccessPaymentCashModal: (value: boolean) => void;

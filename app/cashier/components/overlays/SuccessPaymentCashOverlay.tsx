@@ -7,9 +7,9 @@ import CheckButton from "@/public/assets/icons/check.svg";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import Data from "@/public/assets/icons/data.svg";
 import Paper from "@/public/assets/icons/paperclip.svg";
-import { ModalProps } from "../../features/cashier/types/modal";
 import { useOrderStore } from "@/store/useOrderStore";
 import { toastError } from "@/components/ui/sonner";
+import { ModalProps } from "@/features/cashier/types/modal";
 
 interface SuccessPaymentCashModalProps extends ModalProps {
   setOrderDetailsModal: (value: boolean) => void;

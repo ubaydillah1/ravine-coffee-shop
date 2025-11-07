@@ -8,11 +8,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { ModalProps } from "../../features/cashier/types/modal";
 import { useOrderStore } from "@/store/useOrderStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useUpdateStatusOrder } from "../../features/cashier/hooks/useUpdateStatusOrder";
+import { ModalProps } from "@/features/cashier/types/modal";
+import { useUpdateStatusOrder } from "@/features/cashier/hooks/useUpdateStatusOrder";
 
 interface PaymentQrisOverlayProps extends ModalProps {
   setOpenSuccessPaymentQrisModal: (value: boolean) => void;
