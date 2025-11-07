@@ -21,11 +21,11 @@ import {
 } from "@/components/ui/select";
 import { ModalProps } from "@/features/cashier/types/modal";
 import { Upload, Loader2 } from "lucide-react";
-import { useCreateProduct } from "../../features/admin/menu-menagement/hooks/useCreateProduct";
 import { toast } from "sonner";
-import { Category } from "../../features/admin/menu-menagement/types";
 import { useForm } from "react-hook-form";
 import { toastError, toastSuccess } from "@/components/ui/sonner";
+import { Category } from "@/features/admin/menu-menagement/types";
+import { useCreateProduct } from "@/features/admin/menu-menagement/hooks/useCreateProduct";
 
 type FormValues = {
   name: string;
