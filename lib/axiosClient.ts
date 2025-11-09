@@ -4,7 +4,7 @@ import { config } from "./config";
 import { useUIStore } from "@/store/useUiStore";
 
 const axiosInstance = axios.create({
-  baseURL: config.BASE_URL,
+  baseURL: config.API_URL,
 });
 
 axiosInstance.interceptors.request.use(

@@ -12,10 +12,14 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTableStore } from "@/store/useTableStore";
+import { useCartStore } from "@/store/useCartStore";
+import { useOrderStore } from "@/store/useOrderStore";
 
 const CashierActionButton = () => {
   const [openModal, setOpenModal] = useState(false);
   const tableNumber = useTableStore((state) => state.tableNumber);
+  const clearCart = useCartStore((state) => state.clearCart);
+  const clearOrderData = useOrderStore((state) => state.clearOrderData);
 
   const router = useRouter();
 
@@ -56,6 +60,8 @@ const CashierActionButton = () => {
             <Button
               className="w-1/2"
               onClick={() => {
+                clearCart();
+                clearOrderData();
                 router.push("/menu/t/" + tableNumber);
               }}
             >

@@ -10,6 +10,7 @@ import Paper from "@/public/assets/icons/paperclip.svg";
 import { ModalProps } from "../../features/cashier/types/modal";
 import { useOrderStore } from "@/store/useOrderStore";
 import { toastError } from "@/components/ui/sonner";
+import { useCartStore } from "@/store/useCartStore";
 
 interface SuccessPaymentQrisModalProps extends ModalProps {
   setOrderDetailsModal: (value: boolean) => void;
@@ -21,14 +22,29 @@ const SuccessPaymentQrisOverlay = ({
   setOrderDetailsModal,
 }: SuccessPaymentQrisModalProps) => {
   const { OrderInformation } = useOrderStore();
+  const clearCart = useCartStore((state) => state.clearCart);
+  const clearOrderData = useOrderStore((state) => state.clearOrderData);
 
   const order = OrderInformation?.order;
 
+  const handleClose = (open: boolean) => {
+    if (!open) {
+      clearCart();
+      clearOrderData();
+      closeModal();
+    }
+  };
+
+  const handleNewOrder = () => {
+    clearCart();
+    clearOrderData();
+    closeModal();
+  };
 
   if (!order) return null;
 
   return (
-    <Dialog open={openModal} onOpenChange={closeModal}>
+    <Dialog open={openModal} onOpenChange={handleClose}>
       <DialogContent
         className="bg-white outline-0 border-0 overflow-hidden min-w-[520px] flex flex-col gap-[40px] p-[48px]"
         showCloseButton={false}
@@ -83,7 +99,7 @@ const SuccessPaymentQrisOverlay = ({
             </Button>
           </div>
 
-          <Button className="w-full" onClick={closeModal}>
+          <Button className="w-full" onClick={handleNewOrder}>
             New Order
           </Button>
         </div>

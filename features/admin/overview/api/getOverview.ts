@@ -1,5 +1,4 @@
 import axiosInstance from "@/lib/axiosClient";
-import { config } from "@/lib/config";
 import { ApiResponse } from "@/types/api";
 
 export type Period = "today" | "this-week" | "this-month";
@@ -19,7 +18,7 @@ export type OverviewPayload = {
 
 export const getOverview = async (period: Period) => {
   const res = await axiosInstance.get<ApiResponse<OverviewPayload>>(
-    `${config.BASE_URL}/api/admin/overview`,
+    `/api/admin/overview`,
     {
       params: {
         period,

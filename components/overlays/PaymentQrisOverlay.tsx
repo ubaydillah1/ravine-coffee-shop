@@ -24,7 +24,7 @@ const PaymentQrisOverlay = ({
   closeModal,
   setOpenSuccessPaymentQrisModal,
 }: PaymentQrisOverlayProps) => {
-  const { OrderInformation} = useOrderStore();
+  const { OrderInformation } = useOrderStore();
   const [timeLeft, setTimeLeft] = useState<number>(0);
   const { clearCart } = useCartStore();
   const { mutate, isPending } = useUpdateStatusOrder({

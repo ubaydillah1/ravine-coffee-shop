@@ -2,6 +2,7 @@
 
 import Header from "@/components/Header";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { OrderTrackerJoiner } from "@/components/OrderTrackerJoiner";
 import CallActionSection from "@/features/user/order/components/CallActionSection";
 import NotFoundOrder from "@/features/user/order/components/NotFoundOrder";
 import { useOrderStore } from "@/store/useOrderStore";
@@ -14,7 +15,6 @@ const QrisPaymentPage = () => {
   const [loading, setLoading] = useState(true);
   const [timeLeft, setTimeLeft] = useState<number>(0);
   const router = useRouter();
-
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 2000);
@@ -62,6 +62,7 @@ const QrisPaymentPage = () => {
 
   return (
     <div className="h-screen bg-white flex flex-col">
+      <OrderTrackerJoiner orderId={OrderInformation.order.id} />
       <Header title="QRIS" withBackArrow={true} modalType="CANCELQRISPAYMENT" />
 
       <main className="flex flex-center flex-col flex-1 gap-[35px]">

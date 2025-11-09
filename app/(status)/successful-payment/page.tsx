@@ -2,14 +2,18 @@
 
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
+import { useCartStore } from "@/store/useCartStore";
+import { useOrderStore } from "@/store/useOrderStore";
 import { useTableStore } from "@/store/useTableStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const SuccessfulPaymenPage = () => {
+const SuccessfulPaymentPage = () => {
   const tableNumber = useTableStore((state) => state.tableNumber);
   const router = useRouter();
+  const clearCart = useCartStore((state) => state.clearCart);
+  const clearOrderData = useOrderStore((state) => state.clearOrderData);
 
   return (
     <div className="h-screen bg-white flex flex-col px-[20px] sm:px-[40px]">
@@ -37,6 +41,8 @@ const SuccessfulPaymenPage = () => {
         <Button
           className="w-full max-w-[348px]"
           onClick={() => {
+            clearCart();
+            clearOrderData();
             if (tableNumber) {
               router.push(`/menu/t/${tableNumber}`);
             } else {
@@ -51,4 +57,4 @@ const SuccessfulPaymenPage = () => {
   );
 };
 
-export default SuccessfulPaymenPage;
+export default SuccessfulPaymentPage;

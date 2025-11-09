@@ -3,6 +3,7 @@ import { Nunito, Poppins } from "next/font/google";
 import "../styles/globals.css";
 import { Providers } from "@/components/Providers";
 import { Toaster } from "sonner";
+import SocketQueryProvider from "@/components/SocketQueryProvider";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -32,7 +33,9 @@ export default function RootLayout({
         className={`${nunito.variable} ${poppins.variable} antialiased`}
         cz-shortcut-listen="true"
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <SocketQueryProvider>{children}</SocketQueryProvider>
+        </Providers>
         <Toaster richColors position="top-right" />
       </body>
     </html>

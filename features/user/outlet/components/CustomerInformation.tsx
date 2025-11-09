@@ -39,6 +39,7 @@ const CustomerInformation = () => {
   });
 
   const onSubmit = (data: FormValues) => {
+    console.log(data);
     const userPayload = {
       ...data,
       phone: data.phone || undefined,

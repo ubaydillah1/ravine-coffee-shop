@@ -36,6 +36,8 @@ const CustomerDetailOverlay = ({
   const [payment, setPayment] = useState<PaymentMethod>("CASH");
   const [error, setError] = useState("");
 
+  console.log(name);
+
   const { setUserInfo, setPaymentMethod, orderType, userInfo } =
     useUserInfoStore();
   const { user } = useAuthStore();

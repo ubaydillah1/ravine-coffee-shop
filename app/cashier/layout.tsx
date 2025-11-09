@@ -1,12 +1,14 @@
 import AuthGuard from "@/components/AuthGuard";
+import { CashierJoiner } from "@/components/CashierJoiner";
 import ErrorDialog from "@/components/ErrorDialog";
 import Sidebar from "@/features/cashier/components/Sidebar";
 import React from "react";
 
-const CashierPage = ({ children }: { children: React.ReactNode }) => {
+const CashierLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <div className="lg:flex h-screen overflow-hidden max-w-[1280px] mx-auto non-draggable hidden">
+        <CashierJoiner />
         <Sidebar />
         <AuthGuard allowedRoles={["CASHIER"]}>{children}</AuthGuard>
         <ErrorDialog />
@@ -22,4 +24,4 @@ const CashierPage = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default CashierPage;
+export default CashierLayout;

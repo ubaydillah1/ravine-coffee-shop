@@ -40,7 +40,7 @@ const CashierPaymentPage = () => {
     );
   }
 
-  const qrValue = `${config.BASE_URL}/api/cashier/order/${order.internalQrCode}`;
+  const qrValue = `${config.API_URL}/api/cashier/order/${order.internalQrCode}`;
 
   return (
     <div className="bg-white min-h-screen">
