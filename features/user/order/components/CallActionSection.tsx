@@ -38,7 +38,7 @@ const CallActionSection = ({ timeLeft }: { timeLeft: string }) => {
     const orderId = OrderInformation!.order.id;
     const result = await checkOrderStatus(orderId);
 
-    if (result.orderStatus === "COMPLETED") {
+    if (result.orderStatus === "INPROGRESS") {
       localStorage.removeItem("notes");
       clearUserInfo();
       clearCart();

@@ -2,7 +2,7 @@ import axiosInstance from "@/lib/axiosClient";
 import { ApiResponse } from "@/types/api";
 
 export type CheckOrderStatusResponse = {
-  orderStatus: "DRAFT" | "COMPLETED" | "INPROGRESS" | "OPENBILL" | "CANCELED";
+  orderStatus: "COMPLETED" | "INPROGRESS" | "OPENBILL" | "CANCELED";
 };
 
 export const checkOrderStatus = async (orderId: string) => {
