@@ -19,7 +19,7 @@ import { useRouter } from "next/navigation";
 import { useUserInfoStore } from "@/store/useUserInfoStore";
 import { useCartStore } from "@/store/useCartStore";
 import { simulatePayment } from "@/features/payment/api/simulatePayment";
-import { toastError } from "@/components/ui/sonner";
+import { toastError, toastSuccess } from "@/components/ui/sonner";
 
 const CallActionSection = ({ timeLeft }: { timeLeft: string }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -53,6 +53,9 @@ const CallActionSection = ({ timeLeft }: { timeLeft: string }) => {
     startPaymentSimulation(true);
     try {
       await simulatePayment(OrderInformation!.order.id);
+      toastSuccess(
+        "Success to simulate payment, check payment status to next."
+      );
     } catch {
       toastError("Failed to simulate payment");
     } finally {
