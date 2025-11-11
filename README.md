@@ -1,5 +1,5 @@
-# Ravine Coffee – Café Order Management System (Frontend)
-Frontend for a café order management system built with Next.js, streamlining customer orders, payments, and real-time updates.
+# Ravine Coffee – Cafe Order Management System (Frontend)
+Frontend for a cafe order management system built with Next.js, streamlining customer orders, payments, and real-time updates.
 *Realtime and WebSocket features work only when running locally due to client policy restrictions.*
 ## Demo
 - 🌐 User Path: [Live Demo](https://ravine-coffee.vercel.app/)  
@@ -11,7 +11,7 @@ Frontend for a café order management system built with Next.js, streamlining cu
 - Cashier: cashier1@gmail.com / cashier123  
 Visit /login to test different user roles.
 ## About
-Ravine Coffee is an in-store café order and management system designed to enhance the customer experience. Customers can place orders via QR code from their tables or at the cashier, with secure QRIS payments. The frontend enables real-time connections for customers, cashiers, and kitchen staff, tracking orders seamlessly.
+Ravine Coffee is an in-store cafe order and management system designed to enhance the customer experience. Customers can place orders via QR code from their tables or at the cashier, with secure QRIS payments. The frontend enables real-time connections for customers, cashiers, and kitchen staff, tracking orders seamlessly.
 ## Technology
 The frontend is built with Next.js for server-side rendering and routing, styled using Tailwind CSS. It utilizes TanStack Query for data fetching and caching, and Zustand for efficient state management. Infinite scroll enhances user experience for loading menus dynamically. Deployed on Vercel for fast performance and scalability.
 ## Key Stack
@@ -63,7 +63,7 @@ Check out [the Next.js GitHub repository](https://github.com/vercel/next.js) for
 ## Deployment
 Deploy easily on [Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme). See [Next.js deployment docs](https://nextjs.org/docs/app/building-your-application/deploying) for details.
 ## Main Dependencies
-- ⚛️ React  
+- ⚛️ Next Js
 - 🎨 Tailwind CSS  
 - 🔄 TanStack Query  
 - 🗃️ Zustand  
