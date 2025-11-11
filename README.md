@@ -54,17 +54,3 @@ pnpm dev
 # or  
 bun dev  
 ```  
-Open [http://localhost:3000](http://localhost:3000) in your browser. Edit `app/page.tsx` to update the page—it auto-reloads on changes.  
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to optimize and load [Geist](https://vercel.com/font).
-## Learn More
-- 📘 [Next.js Documentation](https://nextjs.org/docs) - Explore features and API.  
-- 🎓 [Learn Next.js](https://nextjs.org/learn) - Interactive tutorial.  
-Check out [the Next.js GitHub repository](https://github.com/vercel/next.js) for feedback and contributions!
-## Deployment
-Deploy easily on [Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme). See [Next.js deployment docs](https://nextjs.org/docs/app/building-your-application/deploying) for details.
-## Main Dependencies
-- ⚛️ Next Js
-- 🎨 Tailwind CSS  
-- 🔄 TanStack Query  
-- 🗃️ Zustand  
----
