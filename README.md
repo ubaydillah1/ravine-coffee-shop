@@ -15,7 +15,8 @@ Ravine Coffee is an in-store cafe order and management system designed to enhanc
 ## Technology
 The frontend is built with Next.js for server-side rendering and routing, styled using Tailwind CSS. It utilizes TanStack Query for data fetching and caching, and Zustand for efficient state management. Infinite scroll enhances user experience for loading menus dynamically. Deployed on Vercel for fast performance and scalability.
 ## Key Stack
-- ⚛️ Next.js  
+- ⚛️ Next.js
+- 🌊 Typescript
 - 🎨 Tailwind CSS  
 - 🔄 TanStack Query  
 - 🗃️ Zustand  
