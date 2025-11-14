@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Search from "@/public/assets/icons/search.svg";
+// import Search from "@/public/assets/icons/search.svg";
 // import Bell from "@/public/assets/icons/bell.svg";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -29,13 +29,13 @@ const Header = () => {
       </div>
 
       <div className="flex gap-[16px] sm:gap-[24px] items-center">
-        <Search
+        {/* <Search
           className={`size-[24px] ${
             pathname.includes("search")
               ? "text-neutral-n900 brightness-125"
               : ""
           }`}
-        />
+        /> */}
         {/* <Bell
           className={`size-[24px] ${
             pathname.includes("notifications")
