@@ -16,10 +16,10 @@ const SuccessfulPaymentPage = () => {
   const clearOrderData = useOrderStore((state) => state.clearOrderData);
 
   return (
-    <div className="h-screen bg-white flex flex-col px-[20px] sm:px-[40px]">
+    <div className="h-screen bg-white flex flex-col">
       <Header title="QRIS" withBackArrow={true} />
 
-      <main className="flex flex-center flex-col flex-1 gap-[35px]">
+      <main className="flex flex-center flex-col flex-1 gap-[35px] px-[20px]">
         <div className="text-center space-y-[24px]">
           <div className="size-[240px] mx-auto overflow-hidden relative">
             <Image
