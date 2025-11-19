@@ -91,7 +91,7 @@ export default function HorizontalBarChart({
             type="number"
             stroke="#6b7280"
             tickCount={11}
-            tickFormatter={(value) => `${value}%`}
+            tickFormatter={(value) => `${Math.round(Number(value))}%`}
             tickLine={false}
             axisLine={false}
             orientation="top"
@@ -108,7 +108,7 @@ export default function HorizontalBarChart({
               backgroundColor: "#f9fafb",
               border: "1px solid #e5e7eb",
             }}
-            formatter={(value) => `${value}%`}
+            formatter={(value) => `${Math.round(Number(value))}%`}
             cursor={{ fill: "#f5f5f5" }}
           />
           <Bar

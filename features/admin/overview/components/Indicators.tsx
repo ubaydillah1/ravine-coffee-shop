@@ -20,7 +20,8 @@ type IndicatorsProps = {
   isPending: boolean;
 };
 
-const formatRupiah = (amount: number) => `Rp${amount.toLocaleString("id-ID")}`;
+const formatRupiah = (amount: number) =>
+  `Rp${amount.toLocaleString("id-ID", { maximumFractionDigits: 0 })}`;
 
 const DUMMY_SKELETON_COUNT = 4;
 

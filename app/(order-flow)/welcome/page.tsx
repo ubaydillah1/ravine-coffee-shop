@@ -17,7 +17,6 @@ const WelcomePage = () => {
             <div key={index} className="flex flex-col items-center">
               <QRCode value={link} />
 
-              {/* Teks klik khusus mobile */}
               <a
                 href={link}
                 className="
@@ -28,7 +27,6 @@ const WelcomePage = () => {
                 Table {index + 1}
               </a>
 
-              {/* Teks biasa untuk desktop */}
               <p className="text-2xl mt-4 hidden md:block">Table {index + 1}</p>
             </div>
           );

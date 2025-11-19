@@ -118,7 +118,7 @@ const AddProductOverlay = ({
     reset({
       name: "",
       price: "",
-      category: defaultCategory, // Kembali ke default category saat clear
+      category: defaultCategory,
       description: "",
       image: null,
     });

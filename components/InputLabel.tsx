@@ -10,17 +10,17 @@ type InputLabelProps = {
   icon: "user" | "phone" | "email";
   type?: HTMLInputTypeAttribute;
   error?: string;
-} & InputHTMLAttributes<HTMLInputElement>; // Tambahkan ini untuk menerima semua prop input
+} & InputHTMLAttributes<HTMLInputElement>;
 
 const InputLabel = ({
   label,
   name,
   placeholder = "John Due",
-  type = "text", // Ubah dari "string" ke "text"
+  type = "text",
   icon,
   error,
   className = "",
-  ...props // Tangkap semua props lainnya
+  ...props
 }: InputLabelProps) => {
   return (
     <div className="flex flex-col gap-[8px] w-full">
@@ -45,7 +45,7 @@ const InputLabel = ({
           name={name}
           placeholder={placeholder}
           className="w-full focus:outline-none b3-r"
-          {...props} // Spread semua props ke input
+          {...props}
         />
       </div>
       {error && <span className="text-red-500 text-sm">{error}</span>}
