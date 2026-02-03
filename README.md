@@ -1,6 +1,6 @@
 # Ravine Coffee – Cafe Order Management System (Frontend)
 Frontend for a cafe order management system built with Next.js, streamlining customer orders, payments, and real-time updates.
-*Realtime and WebSocket features work only when running locally due to client policy restrictions.*
+*Realtime and WebSocket features work only when running locally.*
 ## Demo
 - 🌐 User Path: [Live Demo](https://ravine-coffee-shop.vercel.app/welcome)  
 - 🔑 Admin/Cashier Login: [Login Page](https://ravine-coffee-shop.vercel.app/login)  
